@@ -30,6 +30,8 @@ apis:
         type: Documentation
       - url: https://docs.together.ai/reference/chat-completions
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       OpenAI-compatible chat completions across hundreds of open-source and proprietary models including Llama, Qwen, DeepSeek, GLM, Kimi, and Mistral families with streaming, tool use, and structured outputs.
   - aid: together-ai:together-completions-api
@@ -43,6 +45,8 @@ apis:
     properties:
       - url: https://docs.together.ai/reference/completions
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Legacy text-completion endpoint for non-chat models, OpenAI-compatible.
   - aid: together-ai:together-embeddings-api
@@ -59,6 +63,8 @@ apis:
         type: Documentation
       - url: https://docs.together.ai/reference/embeddings
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Generates dense vector embeddings (e.g., multilingual-e5-large-instruct, BGE) for retrieval, RAG, and semantic-search workflows.
   - aid: together-ai:together-rerank-api
@@ -73,6 +79,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/rerank-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Reranks candidate passages against a query using cross-encoder models for higher-quality retrieval and RAG.
   - aid: together-ai:together-images-api
@@ -89,6 +97,8 @@ apis:
         type: Documentation
       - url: https://docs.together.ai/reference/images-generations
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Text-to-image generation across FLUX.1, FLUX.2, Nano Banana Pro, Stable Diffusion, and Dreamshaper model families.
   - aid: together-ai:together-video-api
@@ -103,6 +113,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/video-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Text-to-video and image-to-video generation across multiple quality and duration tiers.
   - aid: together-ai:together-audio-api
@@ -118,6 +130,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/audio-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Text-to-speech (MiniMax Speech, Cartesia Sonic, Kokoro, Orpheus) with sub-250ms latency, and speech-to-text (Whisper Large v3, Parakeet) with 40+ language support.
   - aid: together-ai:together-vision-api
@@ -132,6 +146,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/vision-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Multimodal vision and document understanding using models such as Qwen 3.5 (397B and 9B) and Kimi K2.5.
   - aid: together-ai:together-fine-tuning-api
@@ -148,6 +164,8 @@ apis:
         type: Documentation
       - url: https://docs.together.ai/reference/fine-tunes-create
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Supervised fine-tuning (LoRA and full) and DPO across the Together model catalog with managed training jobs and one-click deployment.
   - aid: together-ai:together-files-api
@@ -161,6 +179,8 @@ apis:
     properties:
       - url: https://docs.together.ai/reference/files
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Upload, list, retrieve, and delete training datasets and batch input files.
   - aid: together-ai:together-models-api
@@ -174,6 +194,8 @@ apis:
     properties:
       - url: https://docs.together.ai/reference/models
         type: API Reference
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Lists hundreds of available models with metadata, capabilities, context window, and pricing.
   - aid: together-ai:together-batch-api
@@ -187,6 +209,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/batch-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Asynchronous batch inference with up to 50% discount over synchronous rates; fetch results when complete.
   - aid: together-ai:together-code-interpreter-api
@@ -201,6 +225,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/code-interpreter-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Sandboxed Python execution alongside model calls for tool-using agents and code workflows.
   - aid: together-ai:together-evaluations-api
@@ -214,6 +240,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/evaluations-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       LLM-as-judge evaluations with automated scoring and reports for model comparisons.
   - aid: together-ai:together-dedicated-endpoints-api
@@ -228,6 +256,8 @@ apis:
     properties:
       - url: https://docs.together.ai/docs/dedicated-endpoints-overview
         type: Documentation
+      - url: openapi/together-ai-openapi.yml
+        type: OpenAPI
     description: >-
       Provision and manage dedicated GPU-backed inference endpoints (H100, B200) with hourly billing for predictable performance and isolation.
 common:
