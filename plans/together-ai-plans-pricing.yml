@@ -5,38 +5,258 @@ provider: Together AI
 providerId: together-ai
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - LLM
 - Inference
 - Open Source
 - Fine-tuning
+- GPU
 - Plans
-description: Placeholder plans/pricing artifact for Together AI. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+description: >-
+  Together AI offers transparent, usage-based pricing across serverless inference,
+  embeddings, rerank, image, video, and audio generation; managed fine-tuning;
+  asynchronous batch with up to 50% discount; and hourly dedicated/reserved
+  GPU compute. Per-model serverless rates vary widely - representative ranges
+  are captured below; verify current rates on the pricing page.
+notes: >-
+  All token rates are per 1M tokens. Image/video/audio rates are per image,
+  per video, or per 1M characters depending on modality. GPU rates are hourly.
 sources:
-- https://www.together.ai/
+- https://www.together.ai/pricing
+- https://docs.together.ai/
 plans:
-- id: together-ai-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
+- id: together-ai-serverless
+  name: Serverless Inference (Pay-as-you-go)
+  type: usage
+  description: >-
+    On-demand per-token / per-asset pricing for chat, embeddings, rerank,
+    image, video, and audio across the Together model catalog. Start free
+    with promotional credits, scale on demand without commitments.
   entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
+  - label: Chat (small)
+    name: chat_small
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: from $0.10/$0.15 per 1M (e.g., Qwen3.5 9B input/output)
+    userMultiplied: false
+  - label: Chat (mid)
+    name: chat_mid
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: ~$0.88/$0.88 per 1M (e.g., Llama 3.3 70B)
+    userMultiplied: false
+  - label: Chat (premium)
+    name: chat_premium
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $1.40-$7.00 per 1M (e.g., GLM-5.1, DeepSeek-R1)
+    userMultiplied: false
+  - label: Embeddings
+    name: embeddings
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: from $0.02 per 1M (multilingual-e5-large-instruct)
+    userMultiplied: false
+  - label: Image Generation
+    name: image_generation
+    type: usage
+    metric: images
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0006-$0.134 per image
+    userMultiplied: false
+  - label: Video Generation
+    name: video_generation
+    type: usage
+    metric: videos
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.14-$3.20 per video
+    userMultiplied: false
+  - label: Audio (TTS / STT)
+    name: audio
+    type: usage
+    metric: characters
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: $0.0015-$65.00 per 1M characters
+    userMultiplied: false
+  elements:
+  - name: Chat Completions
+  - name: Embeddings
+  - name: Rerank
+  - name: Images
+  - name: Video
+  - name: Audio
+  - name: Vision
+- id: together-ai-batch
+  name: Batch API
+  type: usage
+  description: >-
+    Asynchronous batch inference at up to 50% discount over the equivalent
+    serverless rate.
+  entries:
+  - label: Batch Tokens
+    name: batch_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: up to 50% off serverless rates
+    userMultiplied: false
+  elements:
+  - name: Batch Chat
+  - name: Batch Embeddings
+- id: together-ai-fine-tuning
+  name: Fine-Tuning
+  type: usage
+  description: >-
+    Supervised fine-tuning (LoRA and full) priced per 1M training tokens,
+    scaled by base-model size.
+  entries:
+  - label: Up to 16B (LoRA / Full)
+    name: ft_small
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: $0.48-$1.35 per 1M
+    userMultiplied: false
+  - label: 17B-69B
+    name: ft_medium
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: $1.50-$4.12 per 1M
+    userMultiplied: false
+  - label: 70B-100B
+    name: ft_large
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: $2.90-$8.00 per 1M
+    userMultiplied: false
+  - label: Specialized (DeepSeek-R1, GLM-5, Kimi)
+    name: ft_specialized
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1000000
+    price: $9-$100 per 1M
+    userMultiplied: false
+  elements:
+  - name: Supervised Fine-Tuning
+  - name: LoRA
+  - name: Full Fine-Tuning
+  - name: DPO
+- id: together-ai-dedicated
+  name: Dedicated Inference Endpoints
+  type: usage
+  description: >-
+    Reserved single-tenant GPU-backed inference endpoints billed hourly.
+  entries:
+  - label: 1x H100 - 1x B200 (hourly)
+    name: dedicated_hourly
+    type: usage
+    metric: hours
     limit: -1
     timeFrame: usage
     geo: global
     unit: 1
-    price: see https://www.together.ai/
+    price: $3.99-$9.95 per hour
     userMultiplied: false
   elements:
-  - name: Pending Reconciliation
+  - name: H100
+  - name: H200
+  - name: B200
+- id: together-ai-gpu-clusters
+  name: GPU Clusters
+  type: usage
+  description: >-
+    On-demand and reserved bare-metal GPU clusters for training and
+    self-managed inference.
+  entries:
+  - label: On-demand (hourly)
+    name: gpu_on_demand
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: $3.49-$7.49 per hour
+    userMultiplied: false
+  - label: Reserved (7-30+ days)
+    name: gpu_reserved
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: $2.99-$7.15 per hour (deeper discounts at 181+ days)
+    userMultiplied: false
+  elements:
+  - name: H100 Cluster
+  - name: H200 Cluster
+  - name: B200 Cluster
+- id: together-ai-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Volume commitments, custom capacity, dedicated regions, and
+    procurement-friendly contracts. Contact Together AI sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: SLA
+  - name: VPC
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

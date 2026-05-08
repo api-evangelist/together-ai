@@ -5,21 +5,29 @@ provider: Together AI
 providerId: together-ai
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - LLM
 - Inference
 - Open Source
 - Fine-tuning
+- GPU
 - FinOps
 - Cost Management
 - FOCUS
-description: FOCUS-aligned FinOps placeholder for Together AI. Pipeline will replace with the provider's
-  real billing-model details once researched.
-notes: Initial scaffold — billing model has not yet been reconciled.
+description: >-
+  FinOps view of Together AI spend. Together bills usage-based per-token rates
+  for serverless inference (chat, embeddings, rerank, vision, audio), per-asset
+  rates for image and video, per-1M-character rates for audio, per-token rates
+  for fine-tuning training, and hourly rates for dedicated endpoints and GPU
+  clusters (with reserved discounts).
+notes: >-
+  Per-model rates change frequently; verify against the Together pricing page at
+  reconciliation. Batch API consistently offers up to 50% off serverless rates.
 sources:
-- https://www.together.ai/
+- https://www.together.ai/pricing
+- https://docs.together.ai/
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
@@ -28,9 +36,9 @@ alignedWith:
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 publisherName: Together AI
-serviceCategory: AI
+serviceCategory: AI and Machine Learning
 billingModel:
-  pricingCategory: To Be Reconciled
+  pricingCategory: Usage-Based
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
@@ -38,30 +46,107 @@ billingModel:
   - Purchase
   - Adjustment
 focusColumns:
-  ServiceName: Together AI
-  ServiceCategory: AI
+  ServiceName: Together AI Cloud
+  ServiceCategory: AI and Machine Learning
   ProviderName: Together AI
   PublisherName: Together AI
   InvoiceIssuerName: Together AI
   BillingCurrency: USD
   ChargeCategory: Usage
+  PricingCategory: Usage-Based
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation against the provider's published metering.
-  unit: varies
+- name: input_tokens
+  description: Tokens sent in chat / completion requests, billed per 1M tokens per model.
+  unit: tokens
   aggregation: sum
   dimensions:
   - account
-  - resource
+  - model
+  - api
+- name: output_tokens
+  description: Tokens generated, billed per 1M tokens per model.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+  - api
+- name: embedding_tokens
+  description: Tokens processed for embeddings, billed per 1M tokens per model.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: rerank_documents
+  description: Documents reranked, billed per 1K or per 1M units depending on model.
+  unit: documents
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: image_generations
+  description: Image generation requests, billed per image per model/quality tier.
+  unit: images
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: video_generations
+  description: Video generation requests, billed per video per model/quality tier.
+  unit: videos
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: audio_characters
+  description: TTS / STT character counts, billed per 1M characters per model.
+  unit: characters
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+- name: fine_tuning_tokens
+  description: Training tokens for fine-tuning jobs, billed per 1M tokens per base-model size class.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - base_model
+  - method
+- name: dedicated_endpoint_hours
+  description: Wall-clock hours of dedicated inference endpoint runtime per GPU class.
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - account
+  - endpoint
+  - gpu_class
+- name: gpu_cluster_hours
+  description: Wall-clock hours of bare-metal GPU cluster runtime per GPU class and reservation tier.
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - account
+  - cluster
+  - gpu_class
+  - reservation_tier
+- name: batch_tokens
+  description: Tokens consumed via the Batch API at up to 50% discount versus serverless.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - model
 principles:
 - name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
+  description: Pull token / asset / hour usage from the Together console; export invoices monthly.
 - name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
+  description: Tag API keys per workload/team and join usage to internal cost centers.
 - name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
+  description: Move non-realtime workloads to Batch (-50%); pick smaller open-source models when quality permits; reserve GPU clusters for steady-state workloads.
 - name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  description: Assign owners per endpoint, fine-tuning job, and GPU cluster reservation.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

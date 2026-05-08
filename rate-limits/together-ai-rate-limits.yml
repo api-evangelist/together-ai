@@ -15,20 +15,51 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Together AI. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+description: >-
+  Together AI enforces per-account rate limits on serverless inference that
+  vary by model and account tier (Build / Scale / Enterprise as account
+  spend/credit grows). Limits include requests-per-minute (RPM) and
+  tokens-per-minute (TPM) per model. Specific per-model values are not
+  reconciled in this artifact - see the Together console for active limits
+  on your account.
+notes: >-
+  Per-model RPM/TPM limits are surfaced in the rate-limits page of the user
+  console. Dedicated and reserved deployments bypass the shared serverless
+  limits within the provisioned capacity.
 sources:
-- https://www.together.ai/
+- https://docs.together.ai/docs/rate-limits
+- https://www.together.ai/pricing
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: Requests Per Minute (RPM)
   scope: account
-  metric: varies
+  metric: requests
   limit: see provider documentation
-  notes: Pending reconciliation.
+  notes: Per-model RPM, varies by tier and model. Pending reconciliation.
+- name: Tokens Per Minute (TPM)
+  scope: account
+  metric: tokens
+  limit: see provider documentation
+  notes: Per-model TPM, varies by tier and model. Pending reconciliation.
+- name: Concurrent Fine-Tuning Jobs
+  scope: account
+  metric: jobs
+  limit: see provider documentation
+  notes: Concurrency cap on parallel fine-tuning jobs.
+- name: Batch Job Size / Concurrency
+  scope: account
+  metric: jobs
+  limit: see provider documentation
+  notes: Batch jobs are queued and do not consume serverless RPM/TPM directly.
+- name: Dedicated Endpoints
+  scope: endpoint
+  metric: requests
+  limit: bounded by provisioned GPU capacity
+  notes: Throughput is determined by the dedicated hardware sizing.
 policies:
+- name: Tiered Limits
+  description: Limits scale up automatically with account spend / credit balance and via Enterprise agreements.
 - name: Backoff Strategy
   description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
 maintainers:
