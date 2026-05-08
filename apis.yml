@@ -1,0 +1,29 @@
+aid: together-ai
+url: https://raw.githubusercontent.com/api-evangelist/together-ai/refs/heads/main/apis.yml
+name: Together AI
+x-type: company
+description: >-
+  Together AI is a cloud platform for running, training, and fine-tuning open-source LLMs at scale. The Together Inference and Fine-tuning APIs serve hundreds of open models with per-token pricing.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - LLM
+  - Inference
+  - Open Source
+  - Fine-tuning
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://www.together.ai/
+  - type: Plans
+    url: plans/together-ai-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/together-ai-rate-limits.yml
+  - type: FinOps
+    url: finops/together-ai-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
