@@ -1,7 +1,7 @@
 aid: together-ai
 url: https://raw.githubusercontent.com/api-evangelist/together-ai/refs/heads/main/apis.yml
 name: Together AI
-x-type: company
+kind: company
 description: >-
   Together AI is an AI acceleration cloud delivering fast, scalable, and reliable generative-AI infrastructure. The Together API serves open-source and proprietary foundation models for chat, embeddings, vision, audio, image and video generation, fine-tuning, code execution, and dedicated GPU compute.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -29,7 +29,7 @@ apis:
       - url: https://docs.together.ai/docs/chat-overview
         type: Documentation
       - url: https://docs.together.ai/reference/chat-completions
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -44,7 +44,7 @@ apis:
     baseURL: https://api.together.ai/v1
     properties:
       - url: https://docs.together.ai/reference/completions
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -62,7 +62,7 @@ apis:
       - url: https://docs.together.ai/docs/embeddings-overview
         type: Documentation
       - url: https://docs.together.ai/reference/embeddings
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -96,7 +96,7 @@ apis:
       - url: https://docs.together.ai/docs/images-overview
         type: Documentation
       - url: https://docs.together.ai/reference/images-generations
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -163,7 +163,7 @@ apis:
       - url: https://docs.together.ai/docs/fine-tuning-overview
         type: Documentation
       - url: https://docs.together.ai/reference/fine-tunes-create
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -178,7 +178,7 @@ apis:
     baseURL: https://api.together.ai/v1
     properties:
       - url: https://docs.together.ai/reference/files
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
@@ -193,7 +193,7 @@ apis:
     baseURL: https://api.together.ai/v1
     properties:
       - url: https://docs.together.ai/reference/models
-        type: API Reference
+        type: APIReference
       - url: openapi/together-ai-openapi.yml
         type: OpenAPI
     description: >-
