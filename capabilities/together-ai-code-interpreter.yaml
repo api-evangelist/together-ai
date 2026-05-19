@@ -1,0 +1,118 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Code Interpreter
+  description: 'Together APIs — Code Interpreter. 2 operations. Lead operation: Code Interpreter. Self-contained Naftiko capability
+    covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Code Interpreter
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-code-interpreter
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Code Interpreter business capability. Self-contained, no shared references.
+    resources:
+    - name: tci-execute
+      path: /tci/execute
+      operations:
+      - name: tciexecute
+        method: POST
+        description: Executes the given code snippet and returns the output. Without a session_id, a new session will be created
+          to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for
+          running multiple cod
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tci-sessions
+      path: /tci/sessions
+      operations:
+      - name: sessionslist
+        method: GET
+        description: Lists all your currently active sessions.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-code-interpreter-rest
+    port: 8080
+    description: REST adapter for Together APIs — Code Interpreter. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/tci/execute
+      name: tci-execute
+      description: REST surface for tci-execute.
+      operations:
+      - method: POST
+        name: tciexecute
+        description: Executes the given code snippet and returns the output. Without a session_id, a new session will be created
+          to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for
+          running multiple cod
+        call: together-ai-code-interpreter.tciexecute
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tci/sessions
+      name: tci-sessions
+      description: REST surface for tci-sessions.
+      operations:
+      - method: GET
+        name: sessionslist
+        description: Lists all your currently active sessions.
+        call: together-ai-code-interpreter.sessionslist
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-code-interpreter-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Code Interpreter. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: executes-given-code-snippet-and
+      description: Executes the given code snippet and returns the output. Without a session_id, a new session will be created
+        to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for running
+        multiple cod
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-code-interpreter.tciexecute
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lists-all-your-currently-active
+      description: Lists all your currently active sessions.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-code-interpreter.sessionslist
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,215 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — SharedVolumeService
+  description: 'Together APIs — SharedVolumeService. 5 operations. Lead operation: List all shared volumes.. Self-contained
+    Naftiko capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - SharedVolumeService
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-sharedvolumeservice
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — SharedVolumeService business capability. Self-contained, no shared references.
+    resources:
+    - name: compute-clusters-storage-volumes
+      path: /compute/clusters/storage/volumes
+      operations:
+      - name: sharedvolumeservicelist
+        method: GET
+        description: List all shared volumes.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: sharedvolumeserviceupdate
+        method: PUT
+        description: Update a shared volume.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: sharedvolumeservicecreate
+        method: POST
+        description: Create a shared volume.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: compute-clusters-storage-volumes-volume_id
+      path: /compute/clusters/storage/volumes/{volume_id}
+      operations:
+      - name: sharedvolumeserviceget
+        method: GET
+        description: Get shared volume by volume Id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: volume_id
+          in: path
+          type: string
+          required: true
+      - name: sharedvolumeservicedelete
+        method: DELETE
+        description: Delete shared volume by volume id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: volume_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-sharedvolumeservice-rest
+    port: 8080
+    description: REST adapter for Together APIs — SharedVolumeService. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/compute/clusters/storage/volumes
+      name: compute-clusters-storage-volumes
+      description: REST surface for compute-clusters-storage-volumes.
+      operations:
+      - method: GET
+        name: sharedvolumeservicelist
+        description: List all shared volumes.
+        call: together-ai-sharedvolumeservice.sharedvolumeservicelist
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: sharedvolumeserviceupdate
+        description: Update a shared volume.
+        call: together-ai-sharedvolumeservice.sharedvolumeserviceupdate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: sharedvolumeservicecreate
+        description: Create a shared volume.
+        call: together-ai-sharedvolumeservice.sharedvolumeservicecreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/compute/clusters/storage/volumes/{volume-id}
+      name: compute-clusters-storage-volumes-volume-id
+      description: REST surface for compute-clusters-storage-volumes-volume_id.
+      operations:
+      - method: GET
+        name: sharedvolumeserviceget
+        description: Get shared volume by volume Id.
+        call: together-ai-sharedvolumeservice.sharedvolumeserviceget
+        with:
+          volume_id: rest.volume_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: sharedvolumeservicedelete
+        description: Delete shared volume by volume id.
+        call: together-ai-sharedvolumeservice.sharedvolumeservicedelete
+        with:
+          volume_id: rest.volume_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-sharedvolumeservice-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — SharedVolumeService. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-shared-volumes
+      description: List all shared volumes.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-sharedvolumeservice.sharedvolumeservicelist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-shared-volume
+      description: Update a shared volume.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: together-ai-sharedvolumeservice.sharedvolumeserviceupdate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-shared-volume
+      description: Create a shared volume.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-sharedvolumeservice.sharedvolumeservicecreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-shared-volume-volume-id
+      description: Get shared volume by volume Id.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-sharedvolumeservice.sharedvolumeserviceget
+      with:
+        volume_id: tools.volume_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-shared-volume-volume-id
+      description: Delete shared volume by volume id.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: together-ai-sharedvolumeservice.sharedvolumeservicedelete
+      with:
+        volume_id: tools.volume_id
+      outputParameters:
+      - type: object
+        mapping: $.

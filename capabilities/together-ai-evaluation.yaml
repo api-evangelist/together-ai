@@ -1,0 +1,240 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — evaluation
+  description: 'Together APIs — evaluation. 5 operations. Lead operation: Create an evaluation job. Self-contained Naftiko
+    capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - evaluation
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-evaluation
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — evaluation business capability. Self-contained, no shared references.
+    resources:
+    - name: evaluation
+      path: /evaluation
+      operations:
+      - name: createevaluationjob
+        method: POST
+        description: Create an evaluation job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: getallevaluationjobs
+        method: GET
+        description: Get all evaluation jobs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+    - name: evaluation-model-list
+      path: /evaluation/model-list
+      operations:
+      - name: getmodellist
+        method: GET
+        description: Get model list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: model_source
+          in: query
+          type: string
+    - name: evaluation-id
+      path: /evaluation/{id}
+      operations:
+      - name: getevaluationjobdetails
+        method: GET
+        description: Get evaluation job details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: evaluation-id-status
+      path: /evaluation/{id}/status
+      operations:
+      - name: getevaluationjobstatusandresults
+        method: GET
+        description: Get evaluation job status and results
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-evaluation-rest
+    port: 8080
+    description: REST adapter for Together APIs — evaluation. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/evaluation
+      name: evaluation
+      description: REST surface for evaluation.
+      operations:
+      - method: POST
+        name: createevaluationjob
+        description: Create an evaluation job
+        call: together-ai-evaluation.createevaluationjob
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getallevaluationjobs
+        description: Get all evaluation jobs
+        call: together-ai-evaluation.getallevaluationjobs
+        with:
+          status: rest.status
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/evaluation/model-list
+      name: evaluation-model-list
+      description: REST surface for evaluation-model-list.
+      operations:
+      - method: GET
+        name: getmodellist
+        description: Get model list
+        call: together-ai-evaluation.getmodellist
+        with:
+          model_source: rest.model_source
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/evaluation/{id}
+      name: evaluation-id
+      description: REST surface for evaluation-id.
+      operations:
+      - method: GET
+        name: getevaluationjobdetails
+        description: Get evaluation job details
+        call: together-ai-evaluation.getevaluationjobdetails
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/evaluation/{id}/status
+      name: evaluation-id-status
+      description: REST surface for evaluation-id-status.
+      operations:
+      - method: GET
+        name: getevaluationjobstatusandresults
+        description: Get evaluation job status and results
+        call: together-ai-evaluation.getevaluationjobstatusandresults
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-evaluation-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — evaluation. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-evaluation-job
+      description: Create an evaluation job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-evaluation.createevaluationjob
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-evaluation-jobs
+      description: Get all evaluation jobs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-evaluation.getallevaluationjobs
+      with:
+        status: tools.status
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-model-list
+      description: Get model list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-evaluation.getmodellist
+      with:
+        model_source: tools.model_source
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-evaluation-job-details
+      description: Get evaluation job details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-evaluation.getevaluationjobdetails
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-evaluation-job-status-and
+      description: Get evaluation job status and results
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-evaluation.getevaluationjobstatusandresults
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

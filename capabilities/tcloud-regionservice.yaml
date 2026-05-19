@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: together-ai-tcloud — RegionService
+  description: 'together-ai-tcloud — RegionService. 1 operations. Lead operation: List regions and corresponding supported
+    driver versions. Self-contained Naftiko capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - RegionService
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: tcloud-regionservice
+    baseUri: ''
+    description: together-ai-tcloud — RegionService business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v1-regions
+      path: /api/v1/regions
+      operations:
+      - name: regionservicelist
+        method: GET
+        description: List regions and corresponding supported driver versions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: tcloud-regionservice-rest
+    port: 8080
+    description: REST adapter for together-ai-tcloud — RegionService. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v1/regions
+      name: api-v1-regions
+      description: REST surface for api-v1-regions.
+      operations:
+      - method: GET
+        name: regionservicelist
+        description: List regions and corresponding supported driver versions
+        call: tcloud-regionservice.regionservicelist
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: tcloud-regionservice-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for together-ai-tcloud — RegionService. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-regions-and-corresponding-supported
+      description: List regions and corresponding supported driver versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tcloud-regionservice.regionservicelist
+      outputParameters:
+      - type: object
+        mapping: $.

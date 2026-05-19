@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Hardware
+  description: 'Together APIs — Hardware. 1 operations. Lead operation: List available hardware configurations. Self-contained
+    Naftiko capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Hardware
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-hardware
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Hardware business capability. Self-contained, no shared references.
+    resources:
+    - name: hardware
+      path: /hardware
+      operations:
+      - name: listhardware
+        method: GET
+        description: List available hardware configurations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: model
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-hardware-rest
+    port: 8080
+    description: REST adapter for Together APIs — Hardware. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/hardware
+      name: hardware
+      description: REST surface for hardware.
+      operations:
+      - method: GET
+        name: listhardware
+        description: List available hardware configurations
+        call: together-ai-hardware.listhardware
+        with:
+          model: rest.model
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-hardware-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Hardware. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-hardware-configurations
+      description: List available hardware configurations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-hardware.listhardware
+      with:
+        model: tools.model
+      outputParameters:
+      - type: object
+        mapping: $.

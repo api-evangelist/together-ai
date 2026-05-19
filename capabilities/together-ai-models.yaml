@@ -1,0 +1,113 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Models
+  description: 'Together APIs — Models. 2 operations. Lead operation: List all models. Self-contained Naftiko capability covering
+    one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Models
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-models
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Models business capability. Self-contained, no shared references.
+    resources:
+    - name: models
+      path: /models
+      operations:
+      - name: models
+        method: GET
+        description: List all models
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dedicated
+          in: query
+          type: boolean
+      - name: uploadmodel
+        method: POST
+        description: Upload a custom model or adapter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-models-rest
+    port: 8080
+    description: REST adapter for Together APIs — Models. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/models
+      name: models
+      description: REST surface for models.
+      operations:
+      - method: GET
+        name: models
+        description: List all models
+        call: together-ai-models.models
+        with:
+          dedicated: rest.dedicated
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: uploadmodel
+        description: Upload a custom model or adapter
+        call: together-ai-models.uploadmodel
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-models-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Models. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-all-models
+      description: List all models
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-models.models
+      with:
+        dedicated: tools.dedicated
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-custom-model-adapter
+      description: Upload a custom model or adapter
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-models.uploadmodel
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

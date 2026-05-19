@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Voices
+  description: 'Together APIs — Voices. 1 operations. Lead operation: Fetch available voices for each model. Self-contained
+    Naftiko capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Voices
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-voices
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Voices business capability. Self-contained, no shared references.
+    resources:
+    - name: voices
+      path: /voices
+      operations:
+      - name: fetchvoices
+        method: GET
+        description: Fetch available voices for each model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-voices-rest
+    port: 8080
+    description: REST adapter for Together APIs — Voices. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/voices
+      name: voices
+      description: REST surface for voices.
+      operations:
+      - method: GET
+        name: fetchvoices
+        description: Fetch available voices for each model
+        call: together-ai-voices.fetchvoices
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-voices-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Voices. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: fetch-available-voices-each-model
+      description: Fetch available voices for each model
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-voices.fetchvoices
+      outputParameters:
+      - type: object
+        mapping: $.

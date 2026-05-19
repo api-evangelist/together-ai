@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Completion
+  description: 'Together APIs — Completion. 1 operations. Lead operation: Create completion. Self-contained Naftiko capability
+    covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Completion
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-completion
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Completion business capability. Self-contained, no shared references.
+    resources:
+    - name: completions
+      path: /completions
+      operations:
+      - name: completions
+        method: POST
+        description: Create completion
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-completion-rest
+    port: 8080
+    description: REST adapter for Together APIs — Completion. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/completions
+      name: completions
+      description: REST surface for completions.
+      operations:
+      - method: POST
+        name: completions
+        description: Create completion
+        call: together-ai-completion.completions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-completion-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Completion. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-completion
+      description: Create completion
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-completion.completions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

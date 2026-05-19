@@ -1,0 +1,522 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — Fine-tuning
+  description: 'Together APIs — Fine-tuning. 12 operations. Lead operation: Create job. Self-contained Naftiko capability
+    covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - Fine-tuning
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-fine-tuning
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — Fine-tuning business capability. Self-contained, no shared references.
+    resources:
+    - name: fine-tunes
+      path: /fine-tunes
+      operations:
+      - name: post
+        method: POST
+        description: Create job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: get
+        method: GET
+        description: List all jobs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fine-tunes-estimate-price
+      path: /fine-tunes/estimate-price
+      operations:
+      - name: post
+        method: POST
+        description: Estimate price
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: fine-tunes-models-limits
+      path: /fine-tunes/models/limits
+      operations:
+      - name: get
+        method: GET
+        description: Get model limits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: model_name
+          in: query
+          type: string
+          required: true
+    - name: fine-tunes-models-supported
+      path: /fine-tunes/models/supported
+      operations:
+      - name: get
+        method: GET
+        description: List supported models
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fine-tunes-id
+      path: /fine-tunes/{id}
+      operations:
+      - name: get
+        method: GET
+        description: List job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: delete
+        method: DELETE
+        description: Delete a fine-tune job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: force
+          in: query
+          type: boolean
+    - name: fine-tunes-id-cancel
+      path: /fine-tunes/{id}/cancel
+      operations:
+      - name: post
+        method: POST
+        description: Cancel job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: fine-tunes-id-checkpoints
+      path: /fine-tunes/{id}/checkpoints
+      operations:
+      - name: get
+        method: GET
+        description: List checkpoints
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: fine-tunes-id-events
+      path: /fine-tunes/{id}/events
+      operations:
+      - name: get
+        method: GET
+        description: List job events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: fine-tunes-id-metrics
+      path: /fine-tunes/{id}/metrics
+      operations:
+      - name: get
+        method: GET
+        description: Get metrics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: finetune-download
+      path: /finetune/download
+      operations:
+      - name: get
+        method: GET
+        description: Download model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: ft_id
+          in: query
+          type: string
+          required: true
+        - name: checkpoint_step
+          in: query
+          type: integer
+        - name: checkpoint
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-fine-tuning-rest
+    port: 8080
+    description: REST adapter for Together APIs — Fine-tuning. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/fine-tunes
+      name: fine-tunes
+      description: REST surface for fine-tunes.
+      operations:
+      - method: POST
+        name: post
+        description: Create job
+        call: together-ai-fine-tuning.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: get
+        description: List all jobs
+        call: together-ai-fine-tuning.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/estimate-price
+      name: fine-tunes-estimate-price
+      description: REST surface for fine-tunes-estimate-price.
+      operations:
+      - method: POST
+        name: post
+        description: Estimate price
+        call: together-ai-fine-tuning.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/models/limits
+      name: fine-tunes-models-limits
+      description: REST surface for fine-tunes-models-limits.
+      operations:
+      - method: GET
+        name: get
+        description: Get model limits
+        call: together-ai-fine-tuning.get
+        with:
+          model_name: rest.model_name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/models/supported
+      name: fine-tunes-models-supported
+      description: REST surface for fine-tunes-models-supported.
+      operations:
+      - method: GET
+        name: get
+        description: List supported models
+        call: together-ai-fine-tuning.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/{id}
+      name: fine-tunes-id
+      description: REST surface for fine-tunes-id.
+      operations:
+      - method: GET
+        name: get
+        description: List job
+        call: together-ai-fine-tuning.get
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete a fine-tune job
+        call: together-ai-fine-tuning.delete
+        with:
+          id: rest.id
+          force: rest.force
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/{id}/cancel
+      name: fine-tunes-id-cancel
+      description: REST surface for fine-tunes-id-cancel.
+      operations:
+      - method: POST
+        name: post
+        description: Cancel job
+        call: together-ai-fine-tuning.post
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/{id}/checkpoints
+      name: fine-tunes-id-checkpoints
+      description: REST surface for fine-tunes-id-checkpoints.
+      operations:
+      - method: GET
+        name: get
+        description: List checkpoints
+        call: together-ai-fine-tuning.get
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/{id}/events
+      name: fine-tunes-id-events
+      description: REST surface for fine-tunes-id-events.
+      operations:
+      - method: GET
+        name: get
+        description: List job events
+        call: together-ai-fine-tuning.get
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fine-tunes/{id}/metrics
+      name: fine-tunes-id-metrics
+      description: REST surface for fine-tunes-id-metrics.
+      operations:
+      - method: GET
+        name: get
+        description: Get metrics
+        call: together-ai-fine-tuning.get
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/finetune/download
+      name: finetune-download
+      description: REST surface for finetune-download.
+      operations:
+      - method: GET
+        name: get
+        description: Download model
+        call: together-ai-fine-tuning.get
+        with:
+          ft_id: rest.ft_id
+          checkpoint_step: rest.checkpoint_step
+          checkpoint: rest.checkpoint
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-fine-tuning-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — Fine-tuning. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-job
+      description: Create job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-fine-tuning.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-jobs
+      description: List all jobs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: estimate-price
+      description: Estimate price
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-fine-tuning.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-model-limits
+      description: Get model limits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        model_name: tools.model_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-supported-models
+      description: List supported models
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-job
+      description: List job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-fine-tune-job
+      description: Delete a fine-tune job
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: together-ai-fine-tuning.delete
+      with:
+        id: tools.id
+        force: tools.force
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-job
+      description: Cancel job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-fine-tuning.post
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-checkpoints
+      description: List checkpoints
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-job-events
+      description: List job events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-metrics
+      description: Get metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: download-model
+      description: Download model
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-fine-tuning.get
+      with:
+        ft_id: tools.ft_id
+        checkpoint_step: tools.checkpoint_step
+        checkpoint: tools.checkpoint
+      outputParameters:
+      - type: object
+        mapping: $.

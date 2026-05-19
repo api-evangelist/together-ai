@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — DeploymentsStorage
+  description: 'Together APIs — DeploymentsStorage. 1 operations. Lead operation: Download a file. Self-contained Naftiko
+    capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - DeploymentsStorage
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-deploymentsstorage
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — DeploymentsStorage business capability. Self-contained, no shared references.
+    resources:
+    - name: deployments-storage-filename
+      path: /deployments/storage/{filename}
+      operations:
+      - name: get
+        method: GET
+        description: Download a file
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filename
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-deploymentsstorage-rest
+    port: 8080
+    description: REST adapter for Together APIs — DeploymentsStorage. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/deployments/storage/{filename}
+      name: deployments-storage-filename
+      description: REST surface for deployments-storage-filename.
+      operations:
+      - method: GET
+        name: get
+        description: Download a file
+        call: together-ai-deploymentsstorage.get
+        with:
+          filename: rest.filename
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-deploymentsstorage-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — DeploymentsStorage. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: download-file
+      description: Download a file
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-deploymentsstorage.get
+      with:
+        filename: tools.filename
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Together APIs — DeploymentsVolumes
+  description: 'Together APIs — DeploymentsVolumes. 2 operations. Lead operation: Get the list of project volumes. Self-contained
+    Naftiko capability covering one Together Ai business surface.'
+  tags:
+  - Together Ai
+  - DeploymentsVolumes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOGETHER_AI_API_KEY: TOGETHER_AI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: together-ai-deploymentsvolumes
+    baseUri: https://api.together.ai/v1
+    description: Together APIs — DeploymentsVolumes business capability. Self-contained, no shared references.
+    resources:
+    - name: deployments-storage-volumes
+      path: /deployments/storage/volumes
+      operations:
+      - name: get
+        method: GET
+        description: Get the list of project volumes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: post
+        method: POST
+        description: Create a new volume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOGETHER_AI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: together-ai-deploymentsvolumes-rest
+    port: 8080
+    description: REST adapter for Together APIs — DeploymentsVolumes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/deployments/storage/volumes
+      name: deployments-storage-volumes
+      description: REST surface for deployments-storage-volumes.
+      operations:
+      - method: GET
+        name: get
+        description: Get the list of project volumes
+        call: together-ai-deploymentsvolumes.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: post
+        description: Create a new volume
+        call: together-ai-deploymentsvolumes.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: together-ai-deploymentsvolumes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Together APIs — DeploymentsVolumes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-project-volumes
+      description: Get the list of project volumes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: together-ai-deploymentsvolumes.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-volume
+      description: Create a new volume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: together-ai-deploymentsvolumes.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
