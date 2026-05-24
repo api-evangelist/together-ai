@@ -330,6 +330,8 @@ common:
     url: rate-limits/together-ai-rate-limits.yml
   - type: FinOps
     url: finops/together-ai-finops.yml
+  - type: LLMsTxt
+    url: https://docs.together.ai/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
