@@ -1,0 +1,615 @@
+asyncapi: '2.6.0'
+info:
+  title: Together AI Streaming Inference API
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of Together AI's streaming (Server-Sent Events)
+    inference surface. Together AI exposes OpenAI-compatible HTTP endpoints that
+    upgrade to a `text/event-stream` response when the client sets `"stream": true`
+    in the request body. Each `data:` line in the response carries a JSON-encoded
+    chunk; the stream terminates with the sentinel `data: [DONE]`.
+
+    This document covers the three documented SSE-capable surfaces:
+
+      * `POST /chat/completions` — token-level deltas for chat models
+      * `POST /completions`      — token-level deltas for legacy text completion
+        models
+      * `POST /audio/speech`     — base64-encoded PCM/raw audio chunks for
+        text-to-speech models
+
+    Endpoints that do not stream (embeddings, image generations, rerank, files,
+    models, batch, fine-tuning, etc.) are intentionally omitted.
+  contact:
+    name: API Evangelist
+    url: https://apievangelist.com
+    email: kin@apievangelist.com
+  license:
+    name: Together AI Terms of Service
+    url: https://www.together.ai/terms-of-service
+
+defaultContentType: text/event-stream
+
+servers:
+  production:
+    url: api.together.xyz/v1
+    protocol: https
+    description: Together AI inference production base URL.
+    security:
+      - bearerAuth: []
+    bindings:
+      http:
+        bindingVersion: '0.3.0'
+
+channels:
+  /chat/completions:
+    description: |
+      OpenAI-compatible chat completions. Send a `POST` with `"stream": true`
+      and a chat `messages` array. The server responds with `text/event-stream`
+      and emits one `chat.completion.chunk` per token (or token group) followed
+      by a `[DONE]` sentinel.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    subscribe:
+      summary: Receive streaming chat completion chunks.
+      operationId: streamChatCompletions
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/ChatCompletionChunk'
+          - $ref: '#/components/messages/StreamDone'
+    publish:
+      summary: Open a streaming chat completion request.
+      operationId: createStreamingChatCompletion
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        $ref: '#/components/messages/ChatCompletionRequest'
+
+  /completions:
+    description: |
+      Legacy text completions endpoint. With `"stream": true` the server
+      returns `text/event-stream` emitting `completion.chunk` events terminated
+      by `[DONE]`.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    subscribe:
+      summary: Receive streaming text completion chunks.
+      operationId: streamCompletions
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/CompletionChunk'
+          - $ref: '#/components/messages/StreamDone'
+    publish:
+      summary: Open a streaming text completion request.
+      operationId: createStreamingCompletion
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        $ref: '#/components/messages/CompletionRequest'
+
+  /audio/speech:
+    description: |
+      Text-to-speech (TTS). When `"stream": true` the server responds with
+      `text/event-stream` emitting `audio.tts.chunk` events containing
+      base64-encoded raw PCM audio. When streaming, the only supported
+      `response_format` is `raw`. The stream terminates with `[DONE]`.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    subscribe:
+      summary: Receive streaming text-to-speech audio chunks.
+      operationId: streamAudioSpeech
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/AudioSpeechChunk'
+          - $ref: '#/components/messages/StreamDone'
+    publish:
+      summary: Open a streaming text-to-speech request.
+      operationId: createStreamingAudioSpeech
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: '0.3.0'
+      message:
+        $ref: '#/components/messages/AudioSpeechRequest'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: 'Together AI API key passed as `Authorization: Bearer <TOGETHER_API_KEY>`.'
+
+  messages:
+    ChatCompletionRequest:
+      name: ChatCompletionRequest
+      title: Chat Completion Request
+      summary: JSON body posted by the client to open a streaming chat session.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ChatCompletionRequestBody'
+
+    ChatCompletionChunk:
+      name: ChatCompletionChunk
+      title: Chat Completion Chunk
+      summary: A single `data:` event emitted while streaming a chat completion.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ChatCompletionChunk'
+
+    CompletionRequest:
+      name: CompletionRequest
+      title: Completion Request
+      summary: JSON body posted by the client to open a streaming text completion.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CompletionRequestBody'
+
+    CompletionChunk:
+      name: CompletionChunk
+      title: Completion Chunk
+      summary: A single `data:` event emitted while streaming a legacy text completion.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CompletionChunk'
+
+    AudioSpeechRequest:
+      name: AudioSpeechRequest
+      title: Audio Speech Request
+      summary: JSON body posted by the client to open a streaming TTS session.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AudioSpeechRequestBody'
+
+    AudioSpeechChunk:
+      name: AudioSpeechChunk
+      title: Audio Speech Chunk
+      summary: A single `data:` event carrying a base64-encoded audio segment.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AudioSpeechChunk'
+
+    StreamDone:
+      name: StreamDone
+      title: Stream Done Sentinel
+      summary: |
+        Final SSE event signalling the end of the stream. The literal payload
+        is `[DONE]` (not JSON).
+      contentType: text/plain
+      payload:
+        type: string
+        const: '[DONE]'
+
+  schemas:
+    # ---------- Chat Completions ----------
+
+    ChatCompletionRequestBody:
+      type: object
+      required:
+        - model
+        - messages
+      properties:
+        model:
+          type: string
+          description: Name of the model to query.
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        stream:
+          type: boolean
+          description: If true, stream tokens as Server-Sent Events.
+        max_tokens:
+          type: integer
+        stop:
+          type: array
+          items:
+            type: string
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        top_p:
+          type: number
+          format: float
+        top_k:
+          type: integer
+        min_p:
+          type: number
+          format: float
+        repetition_penalty:
+          type: number
+        presence_penalty:
+          type: number
+          minimum: -2.0
+          maximum: 2.0
+        frequency_penalty:
+          type: number
+          minimum: -2.0
+          maximum: 2.0
+        logprobs:
+          type: integer
+          minimum: 0
+          maximum: 20
+        echo:
+          type: boolean
+        n:
+          type: integer
+          minimum: 1
+          maximum: 128
+        logit_bias:
+          type: object
+          additionalProperties:
+            type: number
+        seed:
+          type: integer
+        safety_model:
+          type: string
+        context_length_exceeded_behavior:
+          type: string
+          enum: [truncate, error]
+        response_format:
+          type: object
+        tools:
+          type: array
+          items:
+            type: object
+        tool_choice: {}
+        function_call: {}
+        reasoning_effort:
+          type: string
+          enum: [low, medium, high]
+        reasoning:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        chat_template_kwargs:
+          type: object
+
+    ChatMessage:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant, tool, function]
+        content:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: object
+        name:
+          type: string
+        tool_calls:
+          type: array
+          items:
+            type: object
+        tool_call_id:
+          type: string
+        function_call:
+          type: object
+
+    ChatCompletionChunk:
+      type: object
+      description: |
+        One streamed chunk of a chat completion. Emitted on every `data:` line
+        until the terminal `[DONE]` sentinel.
+      required:
+        - id
+        - object
+        - created
+        - model
+        - choices
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          const: chat.completion.chunk
+        created:
+          type: integer
+          description: Unix timestamp (seconds) when the chunk was generated.
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatCompletionChunkChoice'
+        usage:
+          oneOf:
+            - $ref: '#/components/schemas/UsageData'
+            - type: 'null'
+          description: Present only on the final chunk.
+        warnings:
+          type: array
+          items:
+            type: object
+        system_fingerprint:
+          type: string
+
+    ChatCompletionChunkChoice:
+      type: object
+      required:
+        - index
+        - delta
+      properties:
+        index:
+          type: integer
+        delta:
+          $ref: '#/components/schemas/ChatCompletionChunkDelta'
+        finish_reason:
+          oneOf:
+            - type: string
+              enum: [stop, eos, length, tool_calls, function_call]
+            - type: 'null'
+          description: Present only on the final chunk.
+        seed:
+          oneOf:
+            - type: integer
+            - type: 'null'
+        logprobs:
+          oneOf:
+            - type: number
+            - type: 'null'
+        top_logprobs:
+          type: object
+
+    ChatCompletionChunkDelta:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant, function, tool]
+        content:
+          oneOf:
+            - type: string
+            - type: 'null'
+        reasoning:
+          oneOf:
+            - type: string
+            - type: 'null'
+        tool_calls:
+          type: array
+          items:
+            type: object
+        function_call:
+          type: object
+          description: Deprecated. Use `tool_calls`.
+        token_id:
+          type: integer
+
+    # ---------- Text Completions ----------
+
+    CompletionRequestBody:
+      type: object
+      required:
+        - model
+        - prompt
+      properties:
+        model:
+          type: string
+        prompt:
+          type: string
+        stream:
+          type: boolean
+        max_tokens:
+          type: integer
+        stop:
+          type: array
+          items:
+            type: string
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        top_p:
+          type: number
+          format: float
+        top_k:
+          type: integer
+        min_p:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        repetition_penalty:
+          type: number
+          format: float
+        logprobs:
+          type: integer
+          minimum: 0
+          maximum: 20
+        echo:
+          type: boolean
+        n:
+          type: integer
+          minimum: 1
+          maximum: 128
+        presence_penalty:
+          type: number
+          minimum: -2.0
+          maximum: 2.0
+        frequency_penalty:
+          type: number
+          minimum: -2.0
+          maximum: 2.0
+        logit_bias:
+          type: object
+          additionalProperties:
+            type: number
+        seed:
+          type: integer
+        safety_model:
+          type: string
+
+    CompletionChunk:
+      type: object
+      description: One streamed chunk of a legacy text completion.
+      required:
+        - id
+        - object
+        - created
+        - choices
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          const: completion.chunk
+        created:
+          type: integer
+        model:
+          type: string
+        token:
+          $ref: '#/components/schemas/CompletionToken'
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletionChunkChoice'
+        usage:
+          oneOf:
+            - $ref: '#/components/schemas/UsageData'
+            - type: 'null'
+        seed:
+          type: integer
+        finish_reason:
+          oneOf:
+            - type: string
+              enum: [stop, eos, length, tool_calls, function_call]
+            - type: 'null'
+
+    CompletionToken:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        logprob:
+          type: number
+        special:
+          type: boolean
+
+    CompletionChunkChoice:
+      type: object
+      properties:
+        text:
+          type: string
+        index:
+          type: integer
+        delta:
+          $ref: '#/components/schemas/CompletionChunkDelta'
+
+    CompletionChunkDelta:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant, function, tool]
+        content:
+          oneOf:
+            - type: string
+            - type: 'null'
+        token_id:
+          type: integer
+
+    # ---------- Audio Speech (TTS) ----------
+
+    AudioSpeechRequestBody:
+      type: object
+      required:
+        - model
+        - input
+        - voice
+      properties:
+        model:
+          type: string
+          description: TTS model identifier (e.g. `cartesia/sonic`, `hexgrad/Kokoro-82M`, `canopylabs/orpheus-3b-0.1-ft`).
+        input:
+          type: string
+          description: Text to convert to audio.
+        voice:
+          type: string
+          description: Model-specific voice identifier.
+        stream:
+          type: boolean
+          default: false
+          description: If true, output is streamed for several characters at a time instead of waiting for the full response.
+        response_format:
+          type: string
+          enum: [mp3, wav, raw]
+          default: wav
+          description: If streaming is true, the only supported format is `raw`.
+        response_encoding:
+          type: string
+          enum: [pcm_f32le, pcm_s16le, pcm_mulaw, pcm_alaw]
+          default: pcm_f32le
+        sample_rate:
+          type: integer
+          default: 44100
+          description: Sample rate in Hz.
+
+    AudioSpeechChunk:
+      type: object
+      description: One streamed audio chunk carrying base64-encoded raw audio.
+      required:
+        - object
+        - model
+        - b64
+      properties:
+        object:
+          type: string
+          const: audio.tts.chunk
+        model:
+          type: string
+        b64:
+          type: string
+          format: byte
+          description: Base64-encoded audio stream segment.
+
+    # ---------- Shared ----------
+
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer

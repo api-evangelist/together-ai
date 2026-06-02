@@ -14,7 +14,7 @@ tags:
   - GPU
   - Open Source AI
 created: '2026-05-08'
-modified: '2026-05-19'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
   - aid: together-ai:together-chat-completions-api
@@ -33,6 +33,8 @@ apis:
       type: APIReference
     - url: openapi/together-ai-openapi.yml
       type: OpenAPI
+    - url: asyncapi/together-ai-asyncapi.yml
+      type: AsyncAPI
     - type: NaftikoCapability
       url: capabilities/clusters-remediation.yaml
     - type: NaftikoCapability
@@ -112,6 +114,8 @@ apis:
       type: APIReference
     - url: openapi/together-ai-openapi.yml
       type: OpenAPI
+    - url: asyncapi/together-ai-asyncapi.yml
+      type: AsyncAPI
     description: Legacy text-completion endpoint for non-chat models, OpenAI-compatible.
   - aid: together-ai:together-embeddings-api
     name: Together Embeddings API
@@ -193,6 +197,8 @@ apis:
       type: Documentation
     - url: openapi/together-ai-openapi.yml
       type: OpenAPI
+    - url: asyncapi/together-ai-asyncapi.yml
+      type: AsyncAPI
     description: Text-to-speech (MiniMax Speech, Cartesia Sonic, Kokoro, Orpheus) with sub-250ms latency, and speech-to-text
       (Whisper Large v3, Parakeet) with 40+ language support.
   - aid: together-ai:together-vision-api
