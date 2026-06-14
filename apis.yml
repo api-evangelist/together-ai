@@ -2,342 +2,292 @@ aid: together-ai
 url: https://raw.githubusercontent.com/api-evangelist/together-ai/refs/heads/main/apis.yml
 name: Together AI
 kind: company
-description: Together AI is an AI acceleration cloud delivering fast, scalable, and reliable generative-AI infrastructure.
-  The Together API serves open-source and proprietary foundation models for chat, embeddings, vision, audio, image and video
-  generation, fine-tuning, code execution, and dedicated GPU compute.
+description: Together AI is an AI acceleration cloud delivering fast, scalable, and
+  reliable generative-AI infrastructure. The Together API serves open-source and proprietary
+  foundation models for chat, embeddings, vision, audio, image and video generation,
+  fine-tuning, code execution, and dedicated GPU compute.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - AI
-  - LLM
-  - Inference
-  - Foundation Models
-  - GPU
-  - Open Source AI
+- AI
+- LLM
+- Inference
+- Foundation Models
+- GPU
+- Open Source AI
 created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
-  - aid: together-ai:together-chat-completions-api
-    name: Together Chat Completions API
-    tags:
-    - Chat
-    - Completions
-    - LLM
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/reference/chat-completions
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/chat-overview
-      type: Documentation
-    - url: https://docs.together.ai/reference/chat-completions
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    - url: asyncapi/together-ai-asyncapi.yml
-      type: AsyncAPI
-    - type: NaftikoCapability
-      url: capabilities/clusters-remediation.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-audio.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-batches.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-chat.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-code-interpreter.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-completion.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-deployments.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-deploymentsstorage.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-deploymentsvolumes.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-embeddings.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-endpoints.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-files.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-fine-tuning.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-gpuclusterservice.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-hardware.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-images.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-jobs.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-models.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-queue.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-rl.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-regionservice.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-rerank.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-secrets.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-sharedvolumeservice.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-video.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-voices.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-volumes.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-endpoints-2.yaml
-    - type: NaftikoCapability
-      url: capabilities/together-ai-evaluation.yaml
-    - type: NaftikoCapability
-      url: capabilities/tcloud-gpuclusterservice.yaml
-    - type: NaftikoCapability
-      url: capabilities/tcloud-regionservice.yaml
-    - type: NaftikoCapability
-      url: capabilities/tcloud-sharedvolumeservice.yaml
-    description: OpenAI-compatible chat completions across hundreds of open-source and proprietary models including Llama, Qwen,
-      DeepSeek, GLM, Kimi, and Mistral families with streaming, tool use, and structured outputs.
-  - aid: together-ai:together-completions-api
-    name: Together Completions API
-    tags:
-    - Completions
-    - LLM
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/reference/completions
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/reference/completions
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    - url: asyncapi/together-ai-asyncapi.yml
-      type: AsyncAPI
-    description: Legacy text-completion endpoint for non-chat models, OpenAI-compatible.
-  - aid: together-ai:together-embeddings-api
-    name: Together Embeddings API
-    tags:
-    - Embeddings
-    - Vector
-    - Retrieval
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/embeddings-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/embeddings-overview
-      type: Documentation
-    - url: https://docs.together.ai/reference/embeddings
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Generates dense vector embeddings (e.g., multilingual-e5-large-instruct, BGE) for retrieval, RAG, and semantic-search
-      workflows.
-  - aid: together-ai:together-rerank-api
-    name: Together Rerank API
-    tags:
-    - Rerank
-    - Retrieval
-    - RAG
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/rerank-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/rerank-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Reranks candidate passages against a query using cross-encoder models for higher-quality retrieval and RAG.
-  - aid: together-ai:together-images-api
-    name: Together Images API
-    tags:
-    - Images
-    - Generation
-    - Diffusion
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/images-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/images-overview
-      type: Documentation
-    - url: https://docs.together.ai/reference/images-generations
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Text-to-image generation across FLUX.1, FLUX.2, Nano Banana Pro, Stable Diffusion, and Dreamshaper model families.
-  - aid: together-ai:together-video-api
-    name: Together Video API
-    tags:
-    - Video
-    - Generation
-    - Multimodal
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/video-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/video-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Text-to-video and image-to-video generation across multiple quality and duration tiers.
-  - aid: together-ai:together-audio-api
-    name: Together Audio API
-    tags:
-    - Audio
-    - Speech
-    - TTS
-    - STT
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/audio-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/audio-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    - url: asyncapi/together-ai-asyncapi.yml
-      type: AsyncAPI
-    description: Text-to-speech (MiniMax Speech, Cartesia Sonic, Kokoro, Orpheus) with sub-250ms latency, and speech-to-text
-      (Whisper Large v3, Parakeet) with 40+ language support.
-  - aid: together-ai:together-vision-api
-    name: Together Vision API
-    tags:
-    - Vision
-    - Multimodal
-    - Documents
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/vision-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/vision-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Multimodal vision and document understanding using models such as Qwen 3.5 (397B and 9B) and Kimi K2.5.
-  - aid: together-ai:together-fine-tuning-api
-    name: Together Fine-Tuning API
-    tags:
-    - Fine-Tuning
-    - LoRA
-    - Training
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/fine-tuning-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/fine-tuning-overview
-      type: Documentation
-    - url: https://docs.together.ai/reference/fine-tunes-create
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Supervised fine-tuning (LoRA and full) and DPO across the Together model catalog with managed training jobs
-      and one-click deployment.
-  - aid: together-ai:together-files-api
-    name: Together Files API
-    tags:
-    - Files
-    - Storage
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/reference/files
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/reference/files
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Upload, list, retrieve, and delete training datasets and batch input files.
-  - aid: together-ai:together-models-api
-    name: Together Models API
-    tags:
-    - Models
-    - Catalog
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/reference/models
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/reference/models
-      type: APIReference
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Lists hundreds of available models with metadata, capabilities, context window, and pricing.
-  - aid: together-ai:together-batch-api
-    name: Together Batch API
-    tags:
-    - Batch
-    - Async
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/batch-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/batch-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Asynchronous batch inference with up to 50% discount over synchronous rates; fetch results when complete.
-  - aid: together-ai:together-code-interpreter-api
-    name: Together Code Interpreter API
-    tags:
-    - Code
-    - Execution
-    - Sandbox
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/code-interpreter-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/code-interpreter-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Sandboxed Python execution alongside model calls for tool-using agents and code workflows.
-  - aid: together-ai:together-evaluations-api
-    name: Together Evaluations API
-    tags:
-    - Evaluations
-    - Quality
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/evaluations-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/evaluations-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: LLM-as-judge evaluations with automated scoring and reports for model comparisons.
-  - aid: together-ai:together-dedicated-endpoints-api
-    name: Together Dedicated Endpoints API
-    tags:
-    - Dedicated
-    - Endpoints
-    - Deployment
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.together.ai/docs/dedicated-endpoints-overview
-    baseURL: https://api.together.ai/v1
-    properties:
-    - url: https://docs.together.ai/docs/dedicated-endpoints-overview
-      type: Documentation
-    - url: openapi/together-ai-openapi.yml
-      type: OpenAPI
-    description: Provision and manage dedicated GPU-backed inference endpoints (H100, B200) with hourly billing for predictable
-      performance and isolation.
+- aid: together-ai:together-chat-completions-api
+  name: Together Chat Completions API
+  tags:
+  - Chat
+  - Completions
+  - LLM
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/reference/chat-completions
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/chat-overview
+    type: Documentation
+  - url: https://docs.together.ai/reference/chat-completions
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/together-ai-asyncapi.yml
+    type: AsyncAPI
+  - url: graphql/together-ai-graphql.md
+    type: GraphQL
+  description: OpenAI-compatible chat completions across hundreds of open-source and
+    proprietary models including Llama, Qwen, DeepSeek, GLM, Kimi, and Mistral families
+    with streaming, tool use, and structured outputs.
+- aid: together-ai:together-completions-api
+  name: Together Completions API
+  tags:
+  - Completions
+  - LLM
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/reference/completions
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/reference/completions
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/together-ai-asyncapi.yml
+    type: AsyncAPI
+  description: Legacy text-completion endpoint for non-chat models, OpenAI-compatible.
+- aid: together-ai:together-embeddings-api
+  name: Together Embeddings API
+  tags:
+  - Embeddings
+  - Vector
+  - Retrieval
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/embeddings-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/embeddings-overview
+    type: Documentation
+  - url: https://docs.together.ai/reference/embeddings
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Generates dense vector embeddings (e.g., multilingual-e5-large-instruct,
+    BGE) for retrieval, RAG, and semantic-search workflows.
+- aid: together-ai:together-rerank-api
+  name: Together Rerank API
+  tags:
+  - Rerank
+  - Retrieval
+  - RAG
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/rerank-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/rerank-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Reranks candidate passages against a query using cross-encoder models
+    for higher-quality retrieval and RAG.
+- aid: together-ai:together-images-api
+  name: Together Images API
+  tags:
+  - Images
+  - Generation
+  - Diffusion
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/images-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/images-overview
+    type: Documentation
+  - url: https://docs.together.ai/reference/images-generations
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Text-to-image generation across FLUX.1, FLUX.2, Nano Banana Pro, Stable
+    Diffusion, and Dreamshaper model families.
+- aid: together-ai:together-video-api
+  name: Together Video API
+  tags:
+  - Video
+  - Generation
+  - Multimodal
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/video-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/video-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Text-to-video and image-to-video generation across multiple quality
+    and duration tiers.
+- aid: together-ai:together-audio-api
+  name: Together Audio API
+  tags:
+  - Audio
+  - Speech
+  - TTS
+  - STT
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/audio-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/audio-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/together-ai-asyncapi.yml
+    type: AsyncAPI
+  description: Text-to-speech (MiniMax Speech, Cartesia Sonic, Kokoro, Orpheus) with
+    sub-250ms latency, and speech-to-text (Whisper Large v3, Parakeet) with 40+ language
+    support.
+- aid: together-ai:together-vision-api
+  name: Together Vision API
+  tags:
+  - Vision
+  - Multimodal
+  - Documents
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/vision-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/vision-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Multimodal vision and document understanding using models such as Qwen
+    3.5 (397B and 9B) and Kimi K2.5.
+- aid: together-ai:together-fine-tuning-api
+  name: Together Fine-Tuning API
+  tags:
+  - Fine-Tuning
+  - LoRA
+  - Training
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/fine-tuning-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/fine-tuning-overview
+    type: Documentation
+  - url: https://docs.together.ai/reference/fine-tunes-create
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Supervised fine-tuning (LoRA and full) and DPO across the Together
+    model catalog with managed training jobs and one-click deployment.
+- aid: together-ai:together-files-api
+  name: Together Files API
+  tags:
+  - Files
+  - Storage
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/reference/files
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/reference/files
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Upload, list, retrieve, and delete training datasets and batch input
+    files.
+- aid: together-ai:together-models-api
+  name: Together Models API
+  tags:
+  - Models
+  - Catalog
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/reference/models
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/reference/models
+    type: APIReference
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Lists hundreds of available models with metadata, capabilities, context
+    window, and pricing.
+- aid: together-ai:together-batch-api
+  name: Together Batch API
+  tags:
+  - Batch
+  - Async
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/batch-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/batch-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Asynchronous batch inference with up to 50% discount over synchronous
+    rates; fetch results when complete.
+- aid: together-ai:together-code-interpreter-api
+  name: Together Code Interpreter API
+  tags:
+  - Code
+  - Execution
+  - Sandbox
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/code-interpreter-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/code-interpreter-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Sandboxed Python execution alongside model calls for tool-using agents
+    and code workflows.
+- aid: together-ai:together-evaluations-api
+  name: Together Evaluations API
+  tags:
+  - Evaluations
+  - Quality
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/evaluations-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/evaluations-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: LLM-as-judge evaluations with automated scoring and reports for model
+    comparisons.
+- aid: together-ai:together-dedicated-endpoints-api
+  name: Together Dedicated Endpoints API
+  tags:
+  - Dedicated
+  - Endpoints
+  - Deployment
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.together.ai/docs/dedicated-endpoints-overview
+  baseURL: https://api.together.ai/v1
+  properties:
+  - url: https://docs.together.ai/docs/dedicated-endpoints-overview
+    type: Documentation
+  - url: openapi/together-ai-openapi.yml
+    type: OpenAPI
+  description: Provision and manage dedicated GPU-backed inference endpoints (H100,
+    B200) with hourly billing for predictable performance and isolation.
 common:
-  - type: GitHubOrganization
-    url: https://github.com/togethercomputer
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/togethercomputer
-  - type: Website
-    url: https://www.together.ai/
-  - type: Documentation
-    url: https://docs.together.ai/
-  - type: Plans
-    url: plans/together-ai-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/together-ai-rate-limits.yml
-  - type: FinOps
-    url: finops/together-ai-finops.yml
-  - type: LLMsTxt
-    url: https://docs.together.ai/llms.txt
+- type: GitHubOrganization
+  url: https://github.com/togethercomputer
+- type: LinkedIn
+  url: https://www.linkedin.com/company/togethercomputer
+- type: Website
+  url: https://www.together.ai/
+- type: Documentation
+  url: https://docs.together.ai/
+- type: Plans
+  url: plans/together-ai-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/together-ai-rate-limits.yml
+- type: FinOps
+  url: finops/together-ai-finops.yml
+- type: LLMsTxt
+  url: https://docs.together.ai/llms.txt
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

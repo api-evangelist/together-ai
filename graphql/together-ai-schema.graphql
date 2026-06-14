@@ -1,0 +1,809 @@
+"""
+Together AI GraphQL Schema
+Conceptual schema for the Together AI cloud API — fast, scalable inference
+over open-source and proprietary foundation models.
+"""
+
+# ──────────────────────────────────────────────
+# Scalars
+# ──────────────────────────────────────────────
+scalar DateTime
+scalar JSON
+scalar Float32
+
+# ──────────────────────────────────────────────
+# Enums
+# ──────────────────────────────────────────────
+enum ModelType {
+  CHAT
+  COMPLETION
+  EMBEDDING
+  RERANK
+  IMAGE
+  VIDEO
+  AUDIO_TTS
+  AUDIO_STT
+  CODE
+  VISION
+}
+
+enum ModelCapability {
+  FUNCTION_CALLING
+  STRUCTURED_OUTPUT
+  STREAMING
+  VISION
+  LONG_CONTEXT
+  TOOL_USE
+  CODE_EXECUTION
+  FINE_TUNABLE
+}
+
+enum FineTuningStatus {
+  PENDING
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum ImageFormat {
+  PNG
+  JPEG
+  WEBP
+  B64_JSON
+}
+
+enum EndpointStatus {
+  STARTING
+  RUNNING
+  STOPPED
+  FAILED
+  SCALING
+}
+
+enum DeploymentStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  DELETING
+  ERROR
+}
+
+enum AcceleratorType {
+  H100_SXM
+  H100_PCIE
+  A100_SXM
+  A100_PCIE
+  B200
+  A10G
+  T4
+  L40S
+}
+
+enum BatchStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum QueueStatus {
+  EMPTY
+  ACTIVE
+  CONGESTED
+  UNAVAILABLE
+}
+
+enum ContentFlagType {
+  HATE
+  HARASSMENT
+  SELF_HARM
+  SEXUAL
+  VIOLENCE
+  ILLEGAL_ACTIVITY
+  PII
+}
+
+enum FineTuningMethod {
+  LORA
+  FULL
+  DPO
+  QLORA
+}
+
+enum AudioOutputFormat {
+  MP3
+  WAV
+  FLAC
+  PCM
+  OPUS
+}
+
+# ──────────────────────────────────────────────
+# Core Model Types
+# ──────────────────────────────────────────────
+type ModelArchitecture {
+  attentionHeads: Int
+  hiddenSize: Int
+  numLayers: Int
+  vocabularySize: Int
+  maxPositionEmbeddings: Int
+  intermediateSize: Int
+  activationFunction: String
+}
+
+type ModelParameters {
+  totalParameters: Float
+  activeParameters: Float
+  expertCount: Int
+  activeExperts: Int
+}
+
+type ModelConfig {
+  maxTokens: Int
+  contextWindow: Int
+  maxOutputTokens: Int
+  stopSequences: [String!]
+  defaultTemperature: Float
+  defaultTopP: Float
+  defaultTopK: Int
+}
+
+type ModelDetails {
+  id: ID!
+  displayName: String!
+  organization: String!
+  type: ModelType!
+  capabilities: [ModelCapability!]!
+  architecture: ModelArchitecture
+  parameters: ModelParameters
+  config: ModelConfig!
+  description: String
+  license: String
+  huggingFaceUrl: String
+  deprecated: Boolean!
+  createdAt: DateTime
+}
+
+type Model {
+  id: ID!
+  name: String!
+  details: ModelDetails!
+  inputCostPerToken: Float
+  outputCostPerToken: Float
+  contextWindow: Int!
+  available: Boolean!
+  tags: [String!]!
+}
+
+# ──────────────────────────────────────────────
+# Chat & Completion Types
+# ──────────────────────────────────────────────
+type CompletionMessage {
+  role: String!
+  content: String!
+  name: String
+  toolCallId: String
+}
+
+type ToolCall {
+  id: ID!
+  type: String!
+  functionName: String!
+  functionArguments: String!
+}
+
+type CompletionChoice {
+  index: Int!
+  text: String
+  logprobs: JSON
+  finishReason: String
+}
+
+type CompletionDetails {
+  id: ID!
+  model: String!
+  object: String!
+  choices: [CompletionChoice!]!
+  usage: TokenUsage!
+  created: DateTime!
+}
+
+type CompletionRequest {
+  model: String!
+  prompt: String!
+  maxTokens: Int
+  temperature: Float
+  topP: Float
+  topK: Int
+  repetitionPenalty: Float
+  stop: [String!]
+  stream: Boolean
+  logprobs: Int
+  echo: Boolean
+  safetyModel: String
+}
+
+type ChatCompletionMessage {
+  role: String!
+  content: String
+  toolCalls: [ToolCall!]
+  toolCallId: String
+  name: String
+}
+
+type ChatCompletionChoice {
+  index: Int!
+  message: ChatCompletionMessage!
+  finishReason: String
+  logprobs: JSON
+}
+
+type ChatCompletion {
+  id: ID!
+  object: String!
+  created: DateTime!
+  model: String!
+  choices: [ChatCompletionChoice!]!
+  usage: TokenUsage!
+  systemFingerprint: String
+}
+
+# ──────────────────────────────────────────────
+# Embedding Types
+# ──────────────────────────────────────────────
+type EmbeddingVector {
+  index: Int!
+  object: String!
+  embedding: [Float32!]!
+}
+
+type EmbeddingResult {
+  id: ID!
+  object: String!
+  model: String!
+  data: [EmbeddingVector!]!
+  usage: TokenUsage!
+}
+
+type EmbeddingRequest {
+  model: String!
+  input: [String!]!
+  encodingFormat: String
+  dimensions: Int
+}
+
+# ──────────────────────────────────────────────
+# Rerank Types
+# ──────────────────────────────────────────────
+type RerankResult {
+  index: Int!
+  relevanceScore: Float!
+  document: String
+}
+
+type RerankResponse {
+  id: ID!
+  model: String!
+  results: [RerankResult!]!
+  usage: TokenUsage!
+}
+
+# ──────────────────────────────────────────────
+# Image Generation Types
+# ──────────────────────────────────────────────
+type ImageResult {
+  url: String
+  b64Json: String
+  seed: Int
+  format: ImageFormat!
+  revisedPrompt: String
+}
+
+type ImageGeneration {
+  id: ID!
+  model: String!
+  created: DateTime!
+  data: [ImageResult!]!
+  usage: UsageDetails
+}
+
+# ──────────────────────────────────────────────
+# Usage & Cost Types
+# ──────────────────────────────────────────────
+type TokenUsage {
+  promptTokens: Int!
+  completionTokens: Int!
+  totalTokens: Int!
+  cachedTokens: Int
+}
+
+type UsageDetails {
+  inputTokens: Int
+  outputTokens: Int
+  imageCount: Int
+  audioDurationSeconds: Float
+  totalCost: Float
+  currency: String
+}
+
+type CostEstimate {
+  model: String!
+  estimatedInputTokens: Int
+  estimatedOutputTokens: Int
+  estimatedCost: Float!
+  currency: String!
+  pricePerInputToken: Float
+  pricePerOutputToken: Float
+}
+
+type Usage {
+  id: ID!
+  period: String!
+  totalRequests: Int!
+  totalTokens: Int!
+  totalCost: Float!
+  currency: String!
+  breakdown: [UsageDetails!]!
+}
+
+# ──────────────────────────────────────────────
+# Fine-Tuning Types
+# ──────────────────────────────────────────────
+type TrainingData {
+  fileId: ID!
+  filename: String!
+  numExamples: Int
+  validationSplit: Float
+  format: String
+}
+
+type CheckpointMetrics {
+  trainLoss: Float
+  validationLoss: Float
+  trainTokenAccuracy: Float
+  validationTokenAccuracy: Float
+  step: Int!
+  epoch: Float
+}
+
+type Checkpoint {
+  id: ID!
+  jobId: ID!
+  step: Int!
+  epoch: Float
+  metrics: CheckpointMetrics!
+  modelPath: String
+  createdAt: DateTime!
+}
+
+type FineTuningDetails {
+  method: FineTuningMethod!
+  loraRank: Int
+  loraAlpha: Float
+  loraDropout: Float
+  learningRate: Float
+  epochs: Int
+  batchSize: Int
+  warmupRatio: Float
+  gradientAccumulationSteps: Int
+  weightDecay: Float
+}
+
+type TrainingFile {
+  id: ID!
+  filename: String!
+  size: Int!
+  purpose: String!
+  status: String!
+  createdAt: DateTime!
+  numLines: Int
+}
+
+type FineTuningJob {
+  id: ID!
+  model: String!
+  status: FineTuningStatus!
+  details: FineTuningDetails!
+  trainingFile: TrainingFile!
+  validationFile: TrainingFile
+  checkpoints: [Checkpoint!]!
+  fineTunedModelName: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  finishedAt: DateTime
+  events: [FineTuningEvent!]!
+}
+
+type FineTuningStatus {
+  jobId: ID!
+  status: FineTuningStatus!
+  progress: Float
+  currentStep: Int
+  totalSteps: Int
+  estimatedTimeRemaining: Int
+  message: String
+}
+
+type FineTuningEvent {
+  id: ID!
+  jobId: ID!
+  level: String!
+  message: String!
+  createdAt: DateTime!
+}
+
+# ──────────────────────────────────────────────
+# Dedicated Endpoints & Deployment Types
+# ──────────────────────────────────────────────
+type GPUDetails {
+  type: AcceleratorType!
+  count: Int!
+  memoryGb: Float!
+  computeCapability: String
+  nvlinkEnabled: Boolean
+}
+
+type DeploymentConfig {
+  minReplicas: Int!
+  maxReplicas: Int!
+  scaleToZero: Boolean!
+  autoscalingMetric: String
+  autoscalingTarget: Float
+  customDomain: String
+  envVars: JSON
+}
+
+type EndpointDetails {
+  id: ID!
+  name: String!
+  model: Model!
+  gpu: GPUDetails!
+  config: DeploymentConfig!
+  status: EndpointStatus!
+  baseUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  billingRate: Float
+  billingUnit: String
+}
+
+type EndpointStatus {
+  endpointId: ID!
+  status: EndpointStatus!
+  replicas: Int!
+  availableReplicas: Int!
+  pendingReplicas: Int!
+  lastHealthCheck: DateTime
+  message: String
+}
+
+type Endpoint {
+  id: ID!
+  name: String!
+  details: EndpointDetails!
+  status: EndpointStatus!
+  tags: [String!]!
+}
+
+type ModelDeployment {
+  id: ID!
+  modelId: String!
+  endpointId: ID!
+  status: DeploymentStatus!
+  config: DeploymentConfig!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ──────────────────────────────────────────────
+# Queue Types
+# ──────────────────────────────────────────────
+type QueueItem {
+  id: ID!
+  position: Int!
+  model: String!
+  requestType: String!
+  estimatedWaitSeconds: Int
+  createdAt: DateTime!
+}
+
+type QueueStatus {
+  model: String!
+  status: QueueStatus!
+  depth: Int!
+  estimatedWaitSeconds: Int
+  throughputRequestsPerSecond: Float
+  items: [QueueItem!]!
+}
+
+type Queue {
+  id: ID!
+  model: String!
+  status: QueueStatus!
+  capacity: Int!
+  updatedAt: DateTime!
+}
+
+# ──────────────────────────────────────────────
+# Batch Job Types
+# ──────────────────────────────────────────────
+type BatchDetails {
+  id: ID!
+  inputFileId: String!
+  outputFileId: String
+  errorFileId: String
+  model: String!
+  endpoint: String!
+  completionWindow: String!
+  requestCounts: BatchRequestCounts!
+  metadata: JSON
+}
+
+type BatchRequestCounts {
+  total: Int!
+  completed: Int!
+  failed: Int!
+}
+
+type BatchJob {
+  id: ID!
+  status: BatchStatus!
+  details: BatchDetails!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiresAt: DateTime
+  finalizingAt: DateTime
+  completedAt: DateTime
+  failedAt: DateTime
+  cancelledAt: DateTime
+  expiredAt: DateTime
+}
+
+# ──────────────────────────────────────────────
+# Moderation Types
+# ──────────────────────────────────────────────
+type ContentFlag {
+  type: ContentFlagType!
+  score: Float!
+  flagged: Boolean!
+  subcategory: String
+}
+
+type ModerationResult {
+  id: ID!
+  model: String!
+  input: String!
+  flagged: Boolean!
+  flags: [ContentFlag!]!
+  categories: JSON
+  categoryScores: JSON
+  createdAt: DateTime!
+}
+
+# ──────────────────────────────────────────────
+# Auth & API Key Types
+# ──────────────────────────────────────────────
+type APIKey {
+  id: ID!
+  name: String!
+  prefix: String!
+  createdAt: DateTime!
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  scopes: [String!]!
+  active: Boolean!
+}
+
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int
+  scope: String
+}
+
+# ──────────────────────────────────────────────
+# Rate Limit & Error Types
+# ──────────────────────────────────────────────
+type RateLimitInfo {
+  limitRequests: Int!
+  limitTokens: Int!
+  remainingRequests: Int!
+  remainingTokens: Int!
+  resetRequests: DateTime!
+  resetTokens: DateTime!
+  tier: String
+}
+
+type Error {
+  code: String!
+  message: String!
+  type: String!
+  param: String
+  internalCode: Int
+}
+
+# ──────────────────────────────────────────────
+# Audio Types
+# ──────────────────────────────────────────────
+type AudioSpeechResult {
+  id: ID!
+  model: String!
+  audioUrl: String
+  audioContent: String
+  format: AudioOutputFormat!
+  durationSeconds: Float
+  usage: UsageDetails
+}
+
+type AudioTranscriptionResult {
+  id: ID!
+  model: String!
+  text: String!
+  language: String
+  durationSeconds: Float
+  words: [TranscriptionWord!]
+  segments: [TranscriptionSegment!]
+  usage: UsageDetails
+}
+
+type TranscriptionWord {
+  word: String!
+  start: Float!
+  end: Float!
+  confidence: Float
+}
+
+type TranscriptionSegment {
+  id: Int!
+  text: String!
+  start: Float!
+  end: Float!
+  tokens: [Int!]
+  avgLogprob: Float
+  compressionRatio: Float
+  noSpeechProb: Float
+}
+
+# ──────────────────────────────────────────────
+# Root Query
+# ──────────────────────────────────────────────
+type Query {
+  # Models
+  models(type: ModelType, capability: ModelCapability, limit: Int, offset: Int): [Model!]!
+  model(id: ID!): Model
+  modelDetails(id: ID!): ModelDetails
+
+  # Chat / Completions
+  chatCompletion(id: ID!): ChatCompletion
+  completion(id: ID!): CompletionDetails
+
+  # Embeddings
+  embeddingResult(id: ID!): EmbeddingResult
+
+  # Fine-Tuning
+  fineTuningJobs(status: FineTuningStatus, limit: Int, offset: Int): [FineTuningJob!]!
+  fineTuningJob(id: ID!): FineTuningJob
+  fineTuningStatus(id: ID!): FineTuningStatus
+  checkpoints(jobId: ID!): [Checkpoint!]!
+
+  # Files
+  trainingFiles(purpose: String): [TrainingFile!]!
+  trainingFile(id: ID!): TrainingFile
+
+  # Images
+  imageGeneration(id: ID!): ImageGeneration
+
+  # Endpoints
+  endpoints(status: EndpointStatus): [Endpoint!]!
+  endpoint(id: ID!): Endpoint
+  endpointStatus(id: ID!): EndpointStatus
+
+  # Deployments
+  deployments: [ModelDeployment!]!
+  deployment(id: ID!): ModelDeployment
+
+  # Queues
+  queue(model: String!): Queue
+  queueStatus(model: String!): QueueStatus
+
+  # Batch
+  batchJobs(status: BatchStatus, limit: Int, offset: Int): [BatchJob!]!
+  batchJob(id: ID!): BatchJob
+
+  # Usage & Cost
+  usage(period: String!): Usage
+  costEstimate(model: String!, estimatedInputTokens: Int!, estimatedOutputTokens: Int!): CostEstimate
+
+  # Moderation
+  moderationResult(id: ID!): ModerationResult
+
+  # Auth
+  apiKeys: [APIKey!]!
+  apiKey(id: ID!): APIKey
+  rateLimitInfo(model: String): RateLimitInfo
+}
+
+# ──────────────────────────────────────────────
+# Root Mutation
+# ──────────────────────────────────────────────
+type Mutation {
+  # Chat / Completions
+  createChatCompletion(model: String!, messages: [JSON!]!, maxTokens: Int, temperature: Float, stream: Boolean, tools: [JSON!]): ChatCompletion!
+  createCompletion(input: JSON!): CompletionDetails!
+
+  # Embeddings
+  createEmbedding(model: String!, input: [String!]!, encodingFormat: String, dimensions: Int): EmbeddingResult!
+
+  # Images
+  createImageGeneration(model: String!, prompt: String!, n: Int, width: Int, height: Int, steps: Int, seed: Int, responseFormat: ImageFormat): ImageGeneration!
+
+  # Fine-Tuning
+  createFineTuningJob(model: String!, trainingFileId: ID!, validationFileId: ID, method: FineTuningMethod, hyperparameters: JSON): FineTuningJob!
+  cancelFineTuningJob(id: ID!): FineTuningJob!
+
+  # Files
+  uploadTrainingFile(filename: String!, purpose: String!, content: String!): TrainingFile!
+  deleteTrainingFile(id: ID!): Boolean!
+
+  # Endpoints
+  createEndpoint(name: String!, model: String!, acceleratorType: AcceleratorType!, acceleratorCount: Int!, config: JSON): Endpoint!
+  updateEndpoint(id: ID!, config: JSON!): Endpoint!
+  startEndpoint(id: ID!): Endpoint!
+  stopEndpoint(id: ID!): Endpoint!
+  deleteEndpoint(id: ID!): Boolean!
+
+  # Batch
+  createBatchJob(inputFileId: ID!, model: String!, endpoint: String!, completionWindow: String, metadata: JSON): BatchJob!
+  cancelBatchJob(id: ID!): BatchJob!
+
+  # Moderation
+  createModerationCheck(model: String!, input: String!): ModerationResult!
+
+  # Auth
+  createAPIKey(name: String!, scopes: [String!], expiresAt: DateTime): APIKey!
+  deleteAPIKey(id: ID!): Boolean!
+  rotateAPIKey(id: ID!): APIKey!
+}
+
+# ──────────────────────────────────────────────
+# Subscriptions
+# ──────────────────────────────────────────────
+type Subscription {
+  chatCompletionStream(model: String!, messages: [JSON!]!, maxTokens: Int, temperature: Float): ChatCompletionChunk!
+  completionStream(model: String!, prompt: String!, maxTokens: Int, temperature: Float): CompletionChunk!
+  fineTuningJobUpdated(jobId: ID!): FineTuningJob!
+  batchJobUpdated(jobId: ID!): BatchJob!
+  endpointStatusChanged(endpointId: ID!): EndpointStatus!
+}
+
+type ChatCompletionChunk {
+  id: ID!
+  object: String!
+  created: DateTime!
+  model: String!
+  choices: [ChatCompletionChunkChoice!]!
+}
+
+type ChatCompletionChunkChoice {
+  index: Int!
+  delta: ChatCompletionMessage!
+  finishReason: String
+}
+
+type CompletionChunk {
+  id: ID!
+  object: String!
+  created: DateTime!
+  model: String!
+  choices: [CompletionChunkChoice!]!
+}
+
+type CompletionChunkChoice {
+  index: Int!
+  text: String!
+  finishReason: String
+}
