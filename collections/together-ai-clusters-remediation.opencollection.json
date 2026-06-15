@@ -1,0 +1,211 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GET /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:instance_id/remediations/:remediation_id",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "remediation_id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Retrieve the status of a specific remdiation on a specific instance in a specific cluster."
+    },
+    {
+      "info": {
+        "name": "POST /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/approve",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:instance_id/remediations/:remediation_id/approve",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "remediation_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Approves a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be approved.\n\nOn APPROVE: state changes to PENDING and the remediation process begins.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after approval.\n"
+    },
+    {
+      "info": {
+        "name": "POST /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/cancel",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:instance_id/remediations/:remediation_id/cancel",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "remediation_id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Cancels a pending remediation.\n\nOnly remediations in PENDING_APPROVAL or PENDING state can be cancelled.\n"
+    },
+    {
+      "info": {
+        "name": "POST /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/reject",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:instance_id/remediations/:remediation_id/reject",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "remediation_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Rejects a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be rejected.\n\nOn REJECT: state changes to CANCELLED.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after rejection.\n"
+    },
+    {
+      "info": {
+        "name": "GET /compute/clusters/{cluster_id}/instances/{optional_instance_id}/remediations",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:optional_instance_id/remediations",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "optional_instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "pageSize",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "pageToken",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "state",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "orderBy",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "Lists remediations for an instance or cluster.\n"
+    },
+    {
+      "info": {
+        "name": "POST /compute/clusters/{cluster_id}/instances/{instance_id}/remediations",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id/instances/:instance_id/remediations",
+        "params": [
+          {
+            "name": "cluster_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "instance_id",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "remediation_id",
+            "value": "",
+            "type": "query"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates a new remediation for an instance.\n\nRemediations created via the API goes directly to PENDING state.\n\nOur system may trigger automated remediations that require approval. These remediations are created with PENDING_APPROVAL state.\nThe user must call /approve to start the actual remediation process.\nThese operations can also be rejected by calling /reject.\n"
+    }
+  ],
+  "bundled": true
+}

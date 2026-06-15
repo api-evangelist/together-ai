@@ -1,0 +1,2020 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Together APIs",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments"
+          },
+          "docs": "Get a list of all deployments in your project"
+        },
+        {
+          "info": {
+            "name": "Create a new deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/deployments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new deployment with specified configuration"
+        },
+        {
+          "info": {
+            "name": "Get a deployment by ID or name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific deployment by its ID or name"
+        },
+        {
+          "info": {
+            "name": "Update a deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.together.ai/v1/deployments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing deployment configuration"
+        },
+        {
+          "info": {
+            "name": "Delete a deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/deployments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing deployment"
+        },
+        {
+          "info": {
+            "name": "Get logs for a deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "replica_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve logs from a deployment, optionally filtered by replica ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secrets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of project secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/secrets"
+          },
+          "docs": "Retrieve all secrets in your project"
+        },
+        {
+          "info": {
+            "name": "Create a new secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/deployments/secrets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new secret to store sensitive configuration values"
+        },
+        {
+          "info": {
+            "name": "Get a secret by ID or name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/secrets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific secret by its ID or name"
+        },
+        {
+          "info": {
+            "name": "Update a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.together.ai/v1/deployments/secrets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing secret's value or metadata"
+        },
+        {
+          "info": {
+            "name": "Delete a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/deployments/secrets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing secret"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DeploymentsStorage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/storage/:filename",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a file by redirecting to a signed URL"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DeploymentsVolumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of project volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/storage/volumes"
+          },
+          "docs": "Retrieve all volumes in your project"
+        },
+        {
+          "info": {
+            "name": "Create a new volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/deployments/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new volume to preload files in deployments"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a volume by ID or name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/deployments/storage/volumes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific volume by its ID or name"
+        },
+        {
+          "info": {
+            "name": "Update a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.together.ai/v1/deployments/storage/volumes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing volume's configuration or contents"
+        },
+        {
+          "info": {
+            "name": "Delete a volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/deployments/storage/volumes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing volume"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Voices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch available voices for each model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/voices"
+          },
+          "docs": "Fetch available voices for each model"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Video",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch video metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/videos/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch video metadata"
+        },
+        {
+          "info": {
+            "name": "Create video",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/videos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a video"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Chat",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create chat completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a model response for a given chat conversation. Supports single queries and multi-turn conversations with system, user, and assistant messages."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Completion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate text completions for a given prompt using a language, code, or image model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Embeddings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create embedding",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/embeddings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate vector embeddings for one or more text inputs. Returns numerical arrays representing semantic meaning, useful for search, classification, and retrieval."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/models",
+            "params": [
+              {
+                "name": "dedicated",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all of Together's open-source models"
+        },
+        {
+          "info": {
+            "name": "Upload a custom model or adapter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/models",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload a custom model or adapter from Hugging Face or S3"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status of a specific job"
+        },
+        {
+          "info": {
+            "name": "List all jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/jobs"
+          },
+          "docs": "List all jobs and their statuses"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/images/generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use an image model to generate an image for a given prompt."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/files"
+          },
+          "docs": "List the metadata for all uploaded data files."
+        },
+        {
+          "info": {
+            "name": "Retrieve file metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the metadata for a single uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Delete a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a previously uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Get file contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/files/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the contents of a single uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/files/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "purpose",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file_name",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a file with specified purpose, file name, and file type."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fine-tuning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes"
+          },
+          "docs": "List the metadata for all fine-tuning jobs. Returns a list of FinetuneResponseTruncated objects."
+        },
+        {
+          "info": {
+            "name": "Create job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/fine-tunes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a fine-tuning job with the provided model and training data."
+        },
+        {
+          "info": {
+            "name": "Estimate price",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/fine-tunes/estimate-price",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Estimate the price of a fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the metadata for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "Delete a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/fine-tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List job events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/:id/events",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the events for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List checkpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/:id/checkpoints",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the checkpoints for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "Download model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/finetune/download",
+            "params": [
+              {
+                "name": "ft_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "checkpoint_step",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "checkpoint",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Receive a compressed fine-tuned model or checkpoint."
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/fine-tunes/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a currently running fine-tuning job. Returns a FinetuneResponseTruncated object."
+        },
+        {
+          "info": {
+            "name": "Get metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves recorded training metrics for a fine-tuning job in chronological order. All filter fields are optional — omit the body or send `{}` to retrieve all metrics.\n"
+        },
+        {
+          "info": {
+            "name": "List supported models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/models/supported"
+          },
+          "docs": "List models supported for fine-tuning."
+        },
+        {
+          "info": {
+            "name": "Get model limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/fine-tunes/models/limits",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get model limits for a specific fine-tuning model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rerank",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a rerank request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rerank",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerank a list of documents by relevance to a query. Returns a relevance score and ordering index for each document."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create audio generation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/audio/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate audio from input text"
+        },
+        {
+          "info": {
+            "name": "Real-time text-to-speech via WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/audio/speech/websocket",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "voice",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_partial_length",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, voice, max_partial_length, language)\n\n**Client Events:**\n- `tts_session.updated`: Update session parameters like voice. T"
+        },
+        {
+          "info": {
+            "name": "Create audio transcription request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Transcribes audio into text"
+        },
+        {
+          "info": {
+            "name": "Create audio translation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/audio/translations",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Translates audio into English"
+        },
+        {
+          "info": {
+            "name": "Real-time audio transcription via WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/realtime",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "input_audio_format",
+                "value": "",
+                "type": "query",
+                "description": "Audio format specification. Currently supports 16-bit PCM at 16kHz sample rate."
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for real-time audio transcription. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/realtime) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, input_audio_format)\n\n**Client Events:**\n- `input_audio_buffer.append`: Send audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"in"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "GPUClusterService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all GPU clusters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/compute/clusters"
+          },
+          "docs": "List all GPU clusters."
+        },
+        {
+          "info": {
+            "name": "Create GPU Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/compute/clusters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Instant Cluster on Together's high-performance GPU clusters.\nWith features like on-demand scaling, long-lived resizable high-bandwidth shared DC-local storage,\nKubernetes and Slurm cluster flavors, a REST API, and Terraform support,\nyou can run workloads flexibly without complex infrastructure management.\n"
+        },
+        {
+          "info": {
+            "name": "Get GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about a specific GPU cluster."
+        },
+        {
+          "info": {
+            "name": "Update a GPU Cluster.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.ai/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of an existing GPU cluster."
+        },
+        {
+          "info": {
+            "name": "Delete GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a GPU cluster by cluster ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RegionService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List regions and corresponding supported driver versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/compute/regions"
+          },
+          "docs": "List regions and corresponding supported driver versions"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SharedVolumeService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all shared volumes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/compute/clusters/storage/volumes"
+          },
+          "docs": "List all shared volumes."
+        },
+        {
+          "info": {
+            "name": "Create a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/compute/clusters/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Instant Clusters supports long-lived, resizable in-DC shared storage with user data persistence.\nYou can dynamically create and attach volumes to your cluster at cluster creation time, and resize as your data grows.\nAll shared storage is backed by multi-NIC bare metal paths, ensuring high-throughput and low-latency performance for shared storage.\n"
+        },
+        {
+          "info": {
+            "name": "Update a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.ai/v1/compute/clusters/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of an existing shared volume.\n"
+        },
+        {
+          "info": {
+            "name": "Get shared volume by volume Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/compute/clusters/storage/volumes/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about a specific shared volume."
+        },
+        {
+          "info": {
+            "name": "Delete shared volume by volume id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/compute/clusters/storage/volumes/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a shared volume. Note that if this volume is attached to a cluster, deleting will fail.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all available availability zones.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/clusters/availability-zones"
+          },
+          "docs": "List all available availability zones."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all endpoints, can be filtered by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/endpoints",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "usage_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mine",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of all endpoints associated with your account. You can filter the results by type (dedicated or serverless)."
+        },
+        {
+          "info": {
+            "name": "Create a dedicated endpoint, it will start automatically",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/endpoints",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new dedicated endpoint for serving models. The endpoint will automatically start after creation. You can deploy any supported model on hardware configurations that meet the model's requirements."
+        },
+        {
+          "info": {
+            "name": "Get endpoint by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves details about a specific endpoint, including its current state, configuration, and scaling settings."
+        },
+        {
+          "info": {
+            "name": "Update endpoint, this can also be used to start or stop a dedicated endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.together.ai/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing endpoint's configuration. You can modify the display name, autoscaling settings, or change the endpoint's state (start/stop)."
+        },
+        {
+          "info": {
+            "name": "Delete endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.ai/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently deletes an endpoint. This action cannot be undone."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Hardware",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available hardware configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/hardware",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of available hardware configurations for deploying models. When a model parameter is provided, it returns only hardware configurations compatible with that model, including their current availability status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Code Interpreter",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "tci/execute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/tci/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes the given code snippet and returns the output. Without a session_id, a new session will be created to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for running multiple code snippets in the same environment, because dependencies and similar things are persisted\nbetween calls to the same session.\n"
+        },
+        {
+          "info": {
+            "name": "sessions/list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/tci/sessions"
+          },
+          "docs": "Lists all your currently active sessions.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List batch jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/batches",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all batch jobs for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create a batch job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/batches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new batch job with the given input file and endpoint"
+        },
+        {
+          "info": {
+            "name": "Get a batch job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/batches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get details of a batch job by ID"
+        },
+        {
+          "info": {
+            "name": "Cancel a batch job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/batches/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a batch job by ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "evaluation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all evaluation jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/evaluation",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all evaluation jobs"
+        },
+        {
+          "info": {
+            "name": "Create an evaluation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/evaluation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an evaluation job"
+        },
+        {
+          "info": {
+            "name": "Get model list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/evaluation/model-list",
+            "params": [
+              {
+                "name": "model_source",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get model list"
+        },
+        {
+          "info": {
+            "name": "Get evaluation job details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/evaluation/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get evaluation job details"
+        },
+        {
+          "info": {
+            "name": "Get evaluation job status and results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/evaluation/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get evaluation job status and results"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Queue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel a queued job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/queue/cancel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a pending job. Only jobs in pending status can be canceled.\nRunning jobs cannot be stopped. Returns the job status after the\nattempt. If the job is not pending, returns 409 with the current status\nunchanged.\n"
+        },
+        {
+          "info": {
+            "name": "Get queue metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/queue/metrics",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the current queue statistics for a model, including pending and running job counts."
+        },
+        {
+          "info": {
+            "name": "Get job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/queue/status",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Poll the current status of a previously submitted job. Provide the request_id and model as query parameters."
+        },
+        {
+          "info": {
+            "name": "Submit a queued job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/queue/submit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new job to the queue for asynchronous processing. Jobs are\nprocessed in strict priority order (higher priority first, FIFO within\nthe same priority). Returns a request ID that can be used to poll status\nor cancel the job.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List training sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all training sessions."
+        },
+        {
+          "info": {
+            "name": "Create training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a training session and returns its details."
+        },
+        {
+          "info": {
+            "name": "Get training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets a training session by its ID and returns its details."
+        },
+        {
+          "info": {
+            "name": "Stop training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/stop",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stops a training session."
+        },
+        {
+          "info": {
+            "name": "Get forward-backward operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/forward-backward/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a forward-backward operation."
+        },
+        {
+          "info": {
+            "name": "Get optim-step operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/optim-step/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of an optim-step operation."
+        },
+        {
+          "info": {
+            "name": "Get sample operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/sample/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a sample operation."
+        },
+        {
+          "info": {
+            "name": "Forward-backward pass",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/forward-backward",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a forward-backward pass operation that will asynchronously compute gradients via backpropagation."
+        },
+        {
+          "info": {
+            "name": "Optimizer step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/optim-step",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits an optimizer step operation that will asynchronously apply accumulated gradients to update model parameters."
+        },
+        {
+          "info": {
+            "name": "Sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/sample",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a sample operation that will asynchronously generate text completions with logprobs."
+        },
+        {
+          "info": {
+            "name": "Create inference checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/inference-checkpoint",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Submits an operation that will asynchronously save the current LoRA adapter as an inference checkpoint and upload it to object storage."
+        },
+        {
+          "info": {
+            "name": "Get inference checkpoint operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/inference-checkpoint/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of an inference checkpoint operation."
+        },
+        {
+          "info": {
+            "name": "Save training checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/training-checkpoint",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Submits an operation that will asynchronously save the full training state (adapter + optimizer + step)."
+        },
+        {
+          "info": {
+            "name": "Get save training checkpoint operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/training-sessions/:session_id/operations/training-checkpoint/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a save training checkpoint operation."
+        },
+        {
+          "info": {
+            "name": "Download checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.ai/v1/rl/checkpoints/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns presigned URLs for downloading a checkpoint's model files. Only inference checkpoints support downloading."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

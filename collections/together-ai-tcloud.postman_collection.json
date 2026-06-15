@@ -1,0 +1,1088 @@
+{
+  "item": [
+    {
+      "id": "64a782cf-c2e0-422a-8c6d-9abe3e899fc8",
+      "name": "GPUClusterService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bab19c4d-2b87-487c-8a40-d454c62b2eea",
+          "name": "Update a GPU Cluster.",
+          "request": {
+            "name": "Update a GPU Cluster.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster_id\": \"<string>\",\n  \"cluster_type\": \"<enum>\",\n  \"num_gpus\": \"<uint32>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ca5751e-4827-4f60-b9ad-41ca4a7f9f6f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<string>\",\n  \"cluster_type\": \"<enum>\",\n  \"num_gpus\": \"<uint32>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"status\": \"WAITING_DATA_PLANE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39170896-d461-4839-879c-c2318f3d77d3",
+          "name": "Create GPU Cluster",
+          "request": {
+            "name": "Create GPU Cluster",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<enum>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"duration_days\": \"<uint32>\",\n  \"driver_version\": \"<enum>\",\n  \"billing_type\": \"<enum>\",\n  \"cluster_type\": \"<enum>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<uint32>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66a15a9f-52d3-40c3-8852-044647711a72",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<enum>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"duration_days\": \"<uint32>\",\n  \"driver_version\": \"<enum>\",\n  \"billing_type\": \"<enum>\",\n  \"cluster_type\": \"<enum>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<uint32>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"status\": \"WAITING_DATA_PLANE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "690f3da1-8a3f-44a7-abcc-667ce95a3c3f",
+          "name": "Get GPU cluster by cluster ID",
+          "request": {
+            "name": "Get GPU cluster by cluster ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e03a5197-abb4-4f90-98c5-cfd9ca1c4d22",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"cluster_type\": \"SLURM\",\n  \"region\": \"string\",\n  \"gpu_type\": \"RTX_6000_PCI\",\n  \"cluster_name\": \"string\",\n  \"duration_hours\": 6880,\n  \"driver_version\": \"CUDA_12_6_560\",\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 7755,\n      \"status\": \"string\"\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 9284,\n      \"status\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"control_plane_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 2743,\n      \"memory_gib\": 7456.756707429509,\n      \"network\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 7056,\n      \"memory_gib\": 1162.632645501176,\n      \"network\": \"string\"\n    }\n  ],\n  \"gpu_worker_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 6594,\n      \"num_gpus\": 4251,\n      \"memory_gib\": 6048.64280855564,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 267,\n      \"num_gpus\": 3390,\n      \"memory_gib\": 4212.685351415848,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"kube_config\": \"string\",\n  \"num_gpus\": 5657\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03d1e9de-9b0c-4fcf-b56f-950d2cb307b6",
+          "name": "Delete GPU cluster by cluster ID",
+          "request": {
+            "name": "Delete GPU cluster by cluster ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a67a5233-bc40-403a-b1ad-7f5342c883b9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8efbbb0c-3a3c-4ede-a9a4-b5dc2312adbd",
+          "name": "List all GPU clusters.",
+          "request": {
+            "name": "List all GPU clusters.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "014a0c24-a0bf-49ff-8d71-3d1c4bbca566",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clusters\": [\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"SLURM\",\n      \"region\": \"string\",\n      \"gpu_type\": \"RTX_6000_PCI\",\n      \"cluster_name\": \"string\",\n      \"duration_hours\": 5836,\n      \"driver_version\": \"CUDA_12_6_565\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 2709,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 4992,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 7225,\n          \"memory_gib\": 6702.7019537487195,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 6955,\n          \"memory_gib\": 4036.6666207734615,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 3895,\n          \"num_gpus\": 2033,\n          \"memory_gib\": 8616.10938629338,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 6148,\n          \"num_gpus\": 3037,\n          \"memory_gib\": 2977.4386310803657,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 9973\n    },\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"KUBERNETES\",\n      \"region\": \"string\",\n      \"gpu_type\": \"RTX_6000_PCI\",\n      \"cluster_name\": \"string\",\n      \"duration_hours\": 9959,\n      \"driver_version\": \"CUDA_12_5_555\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 633,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 7262,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 572,\n          \"memory_gib\": 5853.782986206047,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 2110,\n          \"memory_gib\": 322.1619785206442,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 4922,\n          \"num_gpus\": 6230,\n          \"memory_gib\": 2293.415758303259,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 7993,\n          \"num_gpus\": 148,\n          \"memory_gib\": 9100.943702148863,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 5009\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "faadade7-6a72-42ed-bad1-12e27b0de9b9",
+      "name": "RegionService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e6ce5f23-41f9-42d6-bb09-6c4a32cce8a3",
+          "name": "List regions and corresponding supported driver versions",
+          "request": {
+            "name": "List regions and corresponding supported driver versions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "196461a2-63d5-4ab4-93c8-ecdc231c68cd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regions\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"availability_zones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"availability_zones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f5c7863d-fac6-4424-a6f1-071a62888be1",
+      "name": "SharedVolumeService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01b65916-f83b-41fc-b5a7-e834af7078f1",
+          "name": "Update a shared volume.",
+          "request": {
+            "name": "Update a shared volume.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shared_volume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"volume_id\": \"<string>\",\n  \"size_tib\": \"<uint32>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "01e503a9-61e1-432b-a209-abe4045ffa7e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shared_volume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"volume_id\": \"<string>\",\n  \"size_tib\": \"<uint32>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volume_id\": \"string\",\n  \"volume_name\": \"string\",\n  \"size_tib\": 8496\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dd771ec-1ce9-4795-8225-af1aee5dad4e",
+          "name": "Create a shared volume.",
+          "request": {
+            "name": "Create a shared volume.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shared_volume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"volume_name\": \"<string>\",\n  \"size_tib\": \"<uint32>\",\n  \"region\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4a151e74-5436-4b6f-b140-f2fd0f32722c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shared_volume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"volume_name\": \"<string>\",\n  \"size_tib\": \"<uint32>\",\n  \"region\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volume_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7359d14b-e335-47fb-b176-758478139eb2",
+          "name": "Get shared volume by volume Id.",
+          "request": {
+            "name": "Get shared volume by volume Id.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shared_volume",
+                ":volume_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volume_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08acc2cb-7584-4747-bdad-2be28c4e44db",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shared_volume",
+                    ":volume_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volume_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volume_id\": \"string\",\n  \"volume_name\": \"string\",\n  \"size_tib\": 8496\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21a8ed65-e317-4cf2-9971-15a464fb3691",
+          "name": "Delete shared volume by volume id.",
+          "request": {
+            "name": "Delete shared volume by volume id.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shared_volume",
+                ":volume_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "volume_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f15e6237-e0ac-4405-936e-e02be390f9cf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shared_volume",
+                    ":volume_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "volume_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "430b1534-53a8-41e8-8063-551719992ebc",
+          "name": "List all shared volumes.",
+          "request": {
+            "name": "List all shared volumes.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "shared_volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f42d8e1-0819-4459-acf9-fdc5c4c214c4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "shared_volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 9371\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 1508\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ba1a055d-98ae-4374-aeef-2117c58ffb03",
+    "name": "Imported from OpenAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

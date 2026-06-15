@@ -1,0 +1,205 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Collection",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GPUClusterService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create GPU Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/gpu_cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create GPU Cluster"
+        },
+        {
+          "info": {
+            "name": "Update a GPU Cluster.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/gpu_cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GPU Cluster."
+        },
+        {
+          "info": {
+            "name": "Get GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/gpu_cluster/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get GPU cluster by cluster ID"
+        },
+        {
+          "info": {
+            "name": "Delete GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/gpu_cluster/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete GPU cluster by cluster ID"
+        },
+        {
+          "info": {
+            "name": "List all GPU clusters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/gpu_clusters"
+          },
+          "docs": "List all GPU clusters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RegionService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List regions and corresponding supported driver versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/regions"
+          },
+          "docs": "List regions and corresponding supported driver versions"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SharedVolumeService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shared_volume",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a shared volume."
+        },
+        {
+          "info": {
+            "name": "Update a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/shared_volume",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a shared volume."
+        },
+        {
+          "info": {
+            "name": "Get shared volume by volume Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shared_volume/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get shared volume by volume Id."
+        },
+        {
+          "info": {
+            "name": "Delete shared volume by volume id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/shared_volume/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete shared volume by volume id."
+        },
+        {
+          "info": {
+            "name": "List all shared volumes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shared_volumes"
+          },
+          "docs": "List all shared volumes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
