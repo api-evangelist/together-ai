@@ -6,7 +6,7 @@ description: Together AI is an AI acceleration cloud delivering fast, scalable, 
   reliable generative-AI infrastructure. The Together API serves open-source and proprietary
   foundation models for chat, embeddings, vision, audio, image and video generation,
   fine-tuning, code execution, and dedicated GPU compute.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - AI
 - LLM
@@ -24,7 +24,7 @@ apis:
   - Chat
   - Completions
   - LLM
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   properties:
@@ -46,7 +46,7 @@ apis:
   tags:
   - Completions
   - LLM
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/reference/completions
   baseURL: https://api.together.ai/v1
   properties:
@@ -63,7 +63,7 @@ apis:
   - Embeddings
   - Vector
   - Retrieval
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/embeddings-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -81,7 +81,7 @@ apis:
   - Rerank
   - Retrieval
   - RAG
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/rerank-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -97,7 +97,7 @@ apis:
   - Images
   - Generation
   - Diffusion
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/images-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -115,7 +115,7 @@ apis:
   - Video
   - Generation
   - Multimodal
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/video-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -132,7 +132,7 @@ apis:
   - Speech
   - TTS
   - STT
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/audio-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -151,7 +151,7 @@ apis:
   - Vision
   - Multimodal
   - Documents
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/vision-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -167,7 +167,7 @@ apis:
   - Fine-Tuning
   - LoRA
   - Training
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/fine-tuning-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -184,7 +184,7 @@ apis:
   tags:
   - Files
   - Storage
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/reference/files
   baseURL: https://api.together.ai/v1
   properties:
@@ -199,7 +199,7 @@ apis:
   tags:
   - Models
   - Catalog
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/reference/models
   baseURL: https://api.together.ai/v1
   properties:
@@ -214,7 +214,7 @@ apis:
   tags:
   - Batch
   - Async
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/batch-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -230,7 +230,7 @@ apis:
   - Code
   - Execution
   - Sandbox
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/code-interpreter-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -245,7 +245,7 @@ apis:
   tags:
   - Evaluations
   - Quality
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/evaluations-overview
   baseURL: https://api.together.ai/v1
   properties:
@@ -261,7 +261,7 @@ apis:
   - Dedicated
   - Endpoints
   - Deployment
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.together.ai/docs/dedicated-endpoints-overview
   baseURL: https://api.together.ai/v1
   properties:
