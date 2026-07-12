@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/together-ai-clusters-remediation-openapi.yml, openapi/together-ai-openapi.yml,
+  openapi/together-ai-tcloud-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/together-ai-clusters-remediation-openapi.yml
+  - openapi/together-ai-openapi.yml
+  - openapi/together-ai-tcloud-openapi.yml

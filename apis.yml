@@ -272,6 +272,12 @@ apis:
   description: Provision and manage dedicated GPU-backed inference endpoints (H100,
     B200) with hourly billing for predictable performance and isolation.
 common:
+- type: VulnerabilityDisclosure
+  url: security/together-ai-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/together-ai-domain-security.yml
+- type: Authentication
+  url: authentication/together-ai-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/togethercomputer
 - type: LinkedIn
@@ -288,6 +294,8 @@ common:
   url: finops/together-ai-finops.yml
 - type: LlmsText
   url: https://docs.together.ai/llms.txt
+- type: Blog
+  url: https://www.together.ai/blog/rss.xml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
