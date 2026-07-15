@@ -272,6 +272,8 @@ apis:
   description: Provision and manage dedicated GPU-backed inference endpoints (H100,
     B200) with hourly billing for predictable performance and isolation.
 common:
+- type: AgenticAccess
+  url: agentic-access/together-ai-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/together-ai-vulnerability-disclosure.yml
 - type: DomainSecurity
