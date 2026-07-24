@@ -1,0 +1,363 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Batches API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Batches
+paths:
+  /batches:
+    get:
+      tags:
+      - Batches
+      summary: List batch jobs
+      description: List all batch jobs for the authenticated user
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatches = client.batches.list()\n\nfor batch in batches:\n    print(batch.id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatches = client.batches.list_batches()\n\nfor batch in batches:\n    print(batch.id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batches = await client.batches.list();\n\nconsole.log(batches);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batches = await client.batches.list();\n\nconsole.log(batches);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/batches\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchJob'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+    post:
+      tags:
+      - Batches
+      summary: Create a batch job
+      description: Create a new batch job with the given input file and endpoint
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.create(input_file_id=\"file_id\", endpoint=\"/v1/chat/completions\")\n\nprint(batch.job)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.create_batch(\"file_id\", endpoint=\"/v1/chat/completions\")\n\nprint(batch.id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.create({\n  endpoint: \"/v1/chat/completions\",\n  input_file_id: \"file-id\",\n});\n\nconsole.log(batch);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.create({\n  endpoint: \"/v1/chat/completions\",\n  input_file_id: \"file-id\",\n});\n\nconsole.log(batch);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/batches\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n       \"endpoint\": \"/v1/chat/completions\",\n       \"input_file_id\": \"file-id\"\n     }'\n"
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBatchRequest'
+      responses:
+        '201':
+          description: Job created (potentially with warnings)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchJobWithWarning'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+  /batches/{id}:
+    get:
+      tags:
+      - Batches
+      summary: Get a batch job
+      description: Get details of a batch job by ID
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.retrieve(\"batch_id\")\n\nprint(batch)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.get_batch(\"batch_id\")\n\nprint(batch)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.retrieve(\"batch-id\");\n\nconsole.log(batch);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.retrieve(\"batch-id\");\n\nconsole.log(batch);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/batches/ID\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the batch job to retrieve
+          example: batch_job_abc123def456
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchJob'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+  /batches/{id}/cancel:
+    post:
+      tags:
+      - Batches
+      summary: Cancel a batch job
+      description: Cancel a batch job by ID
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.cancel(\"batch_id\")\n\nprint(batch)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nbatch = client.batches.cancel(\"batch_id\")\n\nprint(batch)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.cancel(\"batch-id\");\n\nconsole.log(batch);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst batch = await client.batches.cancel(\"batch-id\");\n\nconsole.log(batch);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/batches/ID/cancel\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the batch job to cancel
+          example: batch_job_abc123def456
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchJob'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchErrorResponse'
+components:
+  schemas:
+    BatchErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    CreateBatchRequest:
+      type: object
+      required:
+      - endpoint
+      - input_file_id
+      properties:
+        endpoint:
+          type: string
+          description: The endpoint to use for batch processing
+          example: /v1/chat/completions
+        input_file_id:
+          type: string
+          description: ID of the uploaded input file containing batch requests
+          example: file-abc123def456ghi789
+        completion_window:
+          type: string
+          description: Time window for batch completion (optional)
+          example: 24h
+        priority:
+          type: integer
+          description: Priority for batch processing (optional)
+          example: 1
+        model_id:
+          type: string
+          description: Model to use for processing batch requests
+          example: Qwen/Qwen3.5-9B
+    BatchJobWithWarning:
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/BatchJob'
+        warning:
+          type: string
+    BatchJob:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 01234567-8901-2345-6789-012345678901
+        user_id:
+          type: string
+          example: user_789xyz012
+        input_file_id:
+          type: string
+          example: file-input123abc456def
+        file_size_bytes:
+          type: integer
+          format: int64
+          example: 1048576
+          description: Size of input file in bytes
+        status:
+          $ref: '#/components/schemas/BatchJobStatus'
+        job_deadline:
+          type: string
+          format: date-time
+          example: '2024-01-15T15:30:00Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-01-15T14:30:00Z'
+        endpoint:
+          type: string
+          example: /v1/chat/completions
+        progress:
+          type: number
+          format: float64
+          example: 75
+          description: Completion progress (0.0 to 100)
+        model_id:
+          type: string
+          example: Qwen/Qwen3.5-9B
+          description: Model used for processing requests
+        output_file_id:
+          type: string
+          example: file-output789xyz012ghi
+        error_file_id:
+          type: string
+          example: file-errors456def789jkl
+        error:
+          type: string
+        completed_at:
+          type: string
+          format: date-time
+          example: '2024-01-15T15:45:30Z'
+    BatchJobStatus:
+      type: string
+      enum:
+      - VALIDATING
+      - IN_PROGRESS
+      - COMPLETED
+      - FAILED
+      - EXPIRED
+      - CANCELLED
+      example: IN_PROGRESS
+      description: Current status of the batch job
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

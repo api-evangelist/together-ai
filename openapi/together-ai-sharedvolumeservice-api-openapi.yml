@@ -1,0 +1,486 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio SharedVolumeService API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: SharedVolumeService
+paths:
+  /compute/clusters/storage/volumes:
+    get:
+      tags:
+      - SharedVolumeService
+      summary: List all shared volumes.
+      description: List all shared volumes.
+      operationId: SharedVolumeService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClustersSharedVolumes'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          volumes = client.beta.clusters.storage.list()
+
+          print(volumes)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volumes = await client.beta.clusters.storage.list();
+
+          console.log(volumes);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volumes = await client.beta.clusters.storage.list();
+
+          console.log(volumes);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/clusters/storages\n"
+    put:
+      tags:
+      - SharedVolumeService
+      summary: Update a shared volume.
+      description: 'Update the configuration of an existing shared volume.
+
+        '
+      operationId: SharedVolumeService_Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClustersSharedVolumeUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClustersSharedVolume'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "from together import Together\nclient = Together()\n\nvolume = client.beta.clusters.storage.update(\n  volume_id=\"12345-67890-12345-67890\",\n  size_tib=3\n)\nprint(volume)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst volume = await client.beta.clusters.storage.update({\n  volume_id: \"12345-67890-12345-67890\",\n  size_tib: 3\n});\nconsole.log(volume);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst volume = await client.beta.clusters.storage.update({\n  volume_id: \"12345-67890-12345-67890\",\n  size_tib: 3\n});\nconsole.log(volume);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X PUT \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      --data '{ \"volume_id\": \"12345-67890-12345-67890\", \"size_tib\": 3}' \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes\n"
+    post:
+      tags:
+      - SharedVolumeService
+      summary: Create a shared volume.
+      description: 'Instant Clusters supports long-lived, resizable in-DC shared storage with user data persistence.
+
+        You can dynamically create and attach volumes to your cluster at cluster creation time, and resize as your data grows.
+
+        All shared storage is backed by multi-NIC bare metal paths, ensuring high-throughput and low-latency performance for shared storage.
+
+        '
+      operationId: SharedVolumeService_Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClustersSharedVolumeCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClustersSharedVolume'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "from together import Together\nclient = Together()\n\nvolume = client.beta.clusters.storage.create(\n  volume_name=\"my-shared-volume\",\n  size_tib=2,\n  region=\"us-west-2\"\n)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst volume = await client.beta.clusters.storage.create({\n  volume_name: \"my-shared-volume\",\n  size_tib: 2,\n  region: \"us-west-2\"\n});\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst volume = await client.beta.clusters.storage.create({\n  volume_name: \"my-shared-volume\",\n  size_tib: 2,\n  region: \"us-west-2\"\n});\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      --data '{ \"volume_name\": \"my-shared-volume\", \"size_tib\": 2, \"region\": \"us-west-2\" }' \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes\n"
+  /compute/clusters/storage/volumes/{volume_id}:
+    get:
+      tags:
+      - SharedVolumeService
+      summary: Get shared volume by volume Id.
+      description: Retrieve information about a specific shared volume.
+      operationId: SharedVolumeService_Get
+      parameters:
+      - name: volume_id
+        in: path
+        required: true
+        schema:
+          description: The ID of the volume to retrieve
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClustersSharedVolume'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          volume = client.beta.clusters.storage.retrieve("volume_id")
+
+          print(volume)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volume = await client.beta.clusters.storage.retrieve("volume_id");
+
+          console.log(volume);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volume = await client.beta.clusters.storage.retrieve("volume_id");
+
+          console.log(volume);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes/${VOLUME_ID}\n"
+    delete:
+      tags:
+      - SharedVolumeService
+      summary: Delete shared volume by volume id.
+      description: 'Delete a shared volume. Note that if this volume is attached to a cluster, deleting will fail.
+
+        '
+      operationId: SharedVolumeService_Delete
+      parameters:
+      - name: volume_id
+        in: path
+        required: true
+        schema:
+          description: The ID of the volume to delete
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClustersSharedVolumeDeleteResponse'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          volume = client.beta.clusters.storage.delete("volume_id")
+
+          print(volume)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volume = await client.beta.clusters.storage.delete("volume_id");
+
+          console.log(volume);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const volume = await client.beta.clusters.storage.delete("volume_id");
+
+          console.log(volume);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl -X DELETE \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes/${VOLUME_ID}\n"
+  /api/v1/shared_volume:
+    put:
+      tags:
+      - SharedVolumeService
+      summary: Update a shared volume.
+      operationId: SharedVolumeService_Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SharedVolumeUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedVolumeInfo'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X PUT \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"volume_id\": \"12345-67890-12345-67890\", \"size_tib\": 3}' \\\n     https://manager.cloud.together.ai/api/v1/shared_volume\n"
+    post:
+      tags:
+      - SharedVolumeService
+      summary: Create a shared volume.
+      operationId: SharedVolumeService_Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SharedVolumeCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedVolumeCreateResponse'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"volume_name\": \"my-shared-volume\", \"size_tib\": 2, \"region\": \"us-west-2\" }' \\\n     https://manager.cloud.together.ai/api/v1/shared_volume\n"
+  /api/v1/shared_volume/{volume_id}:
+    get:
+      tags:
+      - SharedVolumeService
+      summary: Get shared volume by volume Id.
+      operationId: SharedVolumeService_Get
+      parameters:
+      - name: volume_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedVolumeInfo'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volume/${SHARED_VOLUME_ID}\n"
+    delete:
+      tags:
+      - SharedVolumeService
+      summary: Delete shared volume by volume id.
+      operationId: SharedVolumeService_Delete
+      parameters:
+      - name: volume_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedVolumeDeleteResponse'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X DELETE \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volume/${SHARED_VOLUME_ID}\n"
+  /api/v1/shared_volumes:
+    get:
+      tags:
+      - SharedVolumeService
+      summary: List all shared volumes.
+      operationId: SharedVolumeService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedVolumes'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volumes\n"
+components:
+  schemas:
+    GPUClustersSharedVolumeCreateRequest:
+      type: object
+      required:
+      - volume_name
+      - size_tib
+      - region
+      properties:
+        volume_name:
+          description: Customizable name of the volume to create.
+          type: string
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
+          type: integer
+        region:
+          type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
+    SharedVolumeCreateRequest:
+      type: object
+      properties:
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
+        region:
+          type: string
+    SharedVolumes:
+      type: object
+      properties:
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedVolumeInfo'
+    SharedVolumeDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    SharedVolumeInfo:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+    GPUClustersSharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          description: ID of the volume to update.
+          type: string
+        size_tib:
+          description: Size of the volume in whole tebibytes (TiB).
+          type: integer
+    GPUClustersSharedVolume:
+      type: object
+      required:
+      - volume_id
+      - volume_name
+      - size_tib
+      - status
+      properties:
+        volume_id:
+          description: ID of the volume.
+          type: string
+        volume_name:
+          description: Provided name of the volume.
+          type: string
+        size_tib:
+          description: Size of the volume in whole tebibytes (TiB).
+          type: integer
+        status:
+          description: Deployment status of the volume.
+          type: string
+          enum:
+          - available
+          - bound
+          - provisioning
+    GPUClustersSharedVolumeDeleteResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+    SharedVolumeCreateResponse:
+      type: object
+      properties:
+        volume_id:
+          type: string
+    GPUClustersSharedVolumes:
+      type: object
+      required:
+      - volumes
+      properties:
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClustersSharedVolume'
+    SharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

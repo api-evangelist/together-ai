@@ -1,0 +1,905 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio GPUClusterService API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: GPUClusterService
+paths:
+  /compute/clusters:
+    get:
+      tags:
+      - GPUClusterService
+      summary: List all GPU clusters.
+      description: List all GPU clusters.
+      operationId: GPUClusterService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusters'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.beta.clusters.list()\n\nprint(response.clusters)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.beta.clusters.list();\n\nconsole.log(response.clusters);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.beta.clusters.list();\n\nconsole.log(response.clusters);\n"
+    post:
+      tags:
+      - GPUClusterService
+      summary: Create GPU Cluster
+      description: 'Create an Instant Cluster on Together''s high-performance GPU clusters.
+
+        With features like on-demand scaling, long-lived resizable high-bandwidth shared DC-local storage,
+
+        Kubernetes and Slurm cluster flavors, a REST API, and Terraform support,
+
+        you can run workloads flexibly without complex infrastructure management.
+
+        '
+      operationId: GPUClusterService_Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClusterCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterInfo'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "from together import Together\n\nclient = Together()\n\nresponse = client.beta.clusters.create(\n  cluster_name=\"my-gpu-cluster\",\n  region=\"us-central-8\",\n  gpu_type=\"H100_SXM\",\n  num_gpus=8,\n  driver_version=\"CUDA_12_6_560\",\n  billint_type=\"ON_DEMAND\",\n)\n\nprint(response.cluster_id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (v2)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together();\n\nconst response = await client.beta.clusters.create({\n  cluster_name: \"my-gpu-cluster\",\n  region: \"us-central-8\",\n  gpu_type: \"H100_SXM\",\n  num_gpus: 8,\n  driver_version: \"CUDA_12_6_560\",\n  billint_type: \"ON_DEMAND\",\n});\n\nconsole.log(response.cluster_id)\n"
+      - lang: JavaScript
+        label: Together AI SDK (v2)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together();\n\nconst response = await client.beta.clusters.create({\n  cluster_name: \"my-gpu-cluster\",\n  region: \"us-central-8\",\n  gpu_type: \"H100_SXM\",\n  num_gpus: 8,\n  driver_version: \"CUDA_12_6_560\",\n  billint_type: \"ON_DEMAND\",\n});\n\nconsole.log(response.cluster_id)\n"
+      - lang: Shell
+        label: CLI
+        source: "curl -X POST \\\n      -H \"Authorization Bearer $TOGETHER_API_KEY\" \\\n      --data '{ \"region\": \"us-west-2\", \"gpu_type\": \"H100_SXM\", \"num_gpus\": 8, \"cluster_name\": \"my-gpu-cluster\", \"driver_version\": \"CUDA_12_6_560\" }' \\\n      https://api.together.ai/v1/compute/clusters\n"
+  /compute/clusters/{cluster_id}:
+    get:
+      tags:
+      - GPUClusterService
+      summary: Get GPU cluster by cluster ID
+      description: Retrieve information about a specific GPU cluster.
+      operationId: GPUClusterService_Get
+      parameters:
+      - name: cluster_id
+        in: path
+        required: true
+        schema:
+          description: The ID of the cluster to retrieve
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterInfo'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          cluster = client.beta.clusters.retrieve("cluster_id")
+
+          print(cluster)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const cluster = await client.beta.clusters.retrieve("cluster_id");
+
+          console.log(cluster);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const cluster = await client.beta.clusters.retrieve("cluster_id");
+
+          console.log(cluster);
+
+          '
+    put:
+      tags:
+      - GPUClusterService
+      summary: Update a GPU Cluster.
+      description: Update the configuration of an existing GPU cluster.
+      operationId: GPUClusterService_Update
+      parameters:
+      - name: cluster_id
+        in: path
+        required: true
+        schema:
+          description: The ID of the cluster to update
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClusterUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterInfo'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          cluster = client.beta.clusters.update("cluster_id", cluster_type="KUBERNETES", num_gpus=24)
+
+          print(cluster)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst cluster = await client.beta.clusters.update({\n  cluster_id: \"cluster_id\",\n  cluster_type: \"kubernetes\",\n  num_gpus: 24,\n})\nconsole.log(cluster)\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nconst client = new Together();\n\nconst cluster = await client.beta.clusters.update({\n  cluster_id: \"cluster_id\",\n  cluster_type: \"kubernetes\",\n  num_gpus: 24,\n})\nconsole.log(cluster)\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X PUT \\\n      -H \"Authorization Bearer $TOGETHER_API_KEY\" \\\n      --data '{ \"cluster_id\": \"cluster id\", \"cluster_type\": \"kubernetes\", \"num_gpus\": 24 }' \\\n      https://api.together.ai/v1/compute/clusters\n"
+    delete:
+      tags:
+      - GPUClusterService
+      summary: Delete GPU cluster by cluster ID
+      description: Delete a GPU cluster by cluster ID.
+      operationId: GPUClusterService_Delete
+      parameters:
+      - name: cluster_id
+        in: path
+        required: true
+        schema:
+          description: The ID of the cluster to delete
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - cluster_id
+                properties:
+                  cluster_id:
+                    type: string
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          cluster = client.beta.clusters.delete("cluster_id")
+
+          print(cluster)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const cluster = await client.beta.clusters.delete("cluster_id");
+
+          console.log(cluster);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const cluster = await client.beta.clusters.delete("cluster_id");
+
+          console.log(cluster);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl -X DELETE \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/clusters/${CLUSTER_ID}\n"
+  /api/v1/gpu_cluster:
+    put:
+      tags:
+      - GPUClusterService
+      summary: Update a GPU Cluster.
+      operationId: GPUClusterService_Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClusterUpdateRequest_2'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterUpdateResponse'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X PUT \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"cluster_id\": \"cluster id\", \"cluster_type\": \"kubernetes\", \"num_gpus\": 24 }' \\\n     https://manager.cloud.together.ai/api/v1/gpu_cluster\n"
+    post:
+      tags:
+      - GPUClusterService
+      summary: Create GPU Cluster
+      operationId: GPUClusterService_Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GPUClusterCreateRequest_2'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterCreateResponse'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"region\": \"us-west-2\", \"gpu_type\": \"H100_SXM\", \"num_gpus\": 8, \"cluster_name\": \"my-gpu-cluster\", \"duration_days\": 7, \"driver_version\": \"CUDA_12_6_560\" }' \\\n     https://manager.cloud.together.ai/api/v1/gpu_cluster\n"
+  /api/v1/gpu_cluster/{cluster_id}:
+    get:
+      tags:
+      - GPUClusterService
+      summary: Get GPU cluster by cluster ID
+      operationId: GPUClusterService_Get
+      parameters:
+      - name: cluster_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusterInfo_2'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/gpu_cluster/${CLUSTER_ID}\n"
+    delete:
+      tags:
+      - GPUClusterService
+      summary: Delete GPU cluster by cluster ID
+      operationId: GPUClusterService_Delete
+      parameters:
+      - name: cluster_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUCLusterDeleteResponse'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X DELETE \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/gpu_cluster/${CLUSTER_ID}\n"
+  /api/v1/gpu_clusters:
+    get:
+      tags:
+      - GPUClusterService
+      summary: List all GPU clusters.
+      operationId: GPUClusterService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GPUClusters_2'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/gpu_clusters\n"
+components:
+  schemas:
+    GPUCLusterDeleteResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+    GPUClusters:
+      type: object
+      required:
+      - clusters
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterInfo'
+    GPUClusters_2:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterInfo_2'
+    GPUClusterUpdateResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
+          type: string
+          format: enum
+    GPUClusterCreateRequest_2:
+      required:
+      - region
+      - gpu_type
+      - num_gpus
+      - cluster_name
+      - duration_days
+      - driver_version
+      - billing_type
+      type: object
+      properties:
+        cluster_type:
+          enum:
+          - UNKNOWN_TYPE
+          - KUBERNETES
+          - SLURM
+          type: string
+          description: GPU Cluster create request.
+          format: enum
+        region:
+          type: string
+          description: Region to create the GPU cluster in. Valid values are us-central-8 and us-central-4.
+        gpu_type:
+          enum:
+          - UNKNOWN_GPU_TYPE
+          - H100_SXM
+          - H200_SXM
+          - RTX_6000_PCI
+          type: string
+          description: Type of GPU to use in the cluster
+          format: enum
+        num_gpus:
+          type: integer
+          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+          format: int32
+        cluster_name:
+          type: string
+          description: Name of the GPU cluster.
+        duration_days:
+          type: integer
+          description: Duration in days to keep the cluster running.
+          format: uint32
+        driver_version:
+          enum:
+          - UNKNOWN_DRIVER
+          - CUDA_12_5_555
+          - CUDA_12_6_560
+          - CUDA_12_6_565
+          - CUDA_12_8_570
+          type: string
+          description: NVIDIA driver version to use in the cluster.
+          format: enum
+        shared_volume:
+          $ref: '#/components/schemas/SharedVolumeCreateRequest'
+        volume_id:
+          type: string
+        billing_type:
+          enum:
+          - UNSPECIFIED
+          - RESERVED
+          - ON_DEMAND
+          type: string
+          format: enum
+      description: GPU Cluster create request
+    GPUClusterCreateRequest:
+      description: GPU Cluster create request
+      required:
+      - region
+      - gpu_type
+      - num_gpus
+      - cluster_name
+      - cuda_version
+      - nvidia_driver_version
+      - billing_type
+      type: object
+      properties:
+        cluster_type:
+          description: Type of cluster to create.
+          type: string
+          enum:
+          - KUBERNETES
+          - SLURM
+        region:
+          description: Region to create the GPU cluster in. Usable regions can be found from `client.clusters.list_regions()`
+          type: string
+        gpu_type:
+          description: Type of GPU to use in the cluster
+          type: string
+          enum:
+          - H100_SXM
+          - H200_SXM
+          - RTX_6000_PCI
+          - L40_PCIE
+          - B200_SXM
+          - H100_SXM_INF
+        num_gpus:
+          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+          type: integer
+        cluster_name:
+          description: Name of the GPU cluster.
+          type: string
+        duration_days:
+          x-stainless-terraform-configurability: computed
+          description: Duration in days to keep the cluster running.
+          type: integer
+        shared_volume:
+          x-stainless-terraform-configurability: computed
+          $ref: '#/components/schemas/GPUClustersSharedVolumeCreateRequest'
+          description: Inline configuration to create a shared volume with the cluster creation.
+        volume_id:
+          description: ID of an existing volume to use with the cluster creation.
+          type: string
+        billing_type:
+          description: 'RESERVED billing types allow you to specify the duration of the cluster reservation via the duration_days field.
+
+            ON_DEMAND billing types will give you ownership of the cluster until you delete it.
+
+            SCHEDULED_CAPACITY billing types allow you to reserve capacity for a scheduled time window. You must specify the reservation_start_time and reservation_end_time with this request.
+
+            '
+          x-stainless-terraform-configurability: computed
+          type: string
+          enum:
+          - RESERVED
+          - ON_DEMAND
+          - SCHEDULED_CAPACITY
+        gpu_node_failover_enabled:
+          type: boolean
+          default: false
+          description: Whether automated GPU node failover should be enabled for this cluster. By default, it is disabled.
+        auto_scaled:
+          type: boolean
+          default: false
+          description: Whether GPU cluster should be auto-scaled based on the workload. By default, it is not auto-scaled.
+        auto_scale_max_gpus:
+          type: integer
+          description: Maximum number of GPUs to which the cluster can be auto-scaled up. This field is required if auto_scaled is true.
+        slurm_shm_size_gib:
+          type: integer
+          description: Shared memory size in GiB for Slurm cluster. This field is required if cluster_type is SLURM.
+        capacity_pool_id:
+          type: string
+          description: ID of the capacity pool to use for the cluster. This field is optional and only applicable if the cluster is created from a capacity pool.
+        reservation_start_time:
+          type: string
+          description: Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster will be provisioned immediately.
+          format: date-time
+        reservation_end_time:
+          type: string
+          description: Reservation end time of the cluster. This field is required for SCHEDULED billing to specify the reservation end time for the cluster.
+          format: date-time
+        install_traefik:
+          type: boolean
+          default: false
+          description: Whether to install Traefik ingress controller in the cluster. This field is only applicable for Kubernetes clusters and is false by default.
+        cuda_version:
+          type: string
+          description: CUDA version for this cluster. For example, 12.5
+        nvidia_driver_version:
+          type: string
+          description: Nvidia driver version for this cluster. For example, 550. Only some combination of cuda_version and nvidia_driver_version are supported.
+        slurm_image:
+          type: string
+          description: Custom Slurm image for Slurm clusters.
+    GPUClusterUpdateRequest_2:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        cluster_type:
+          enum:
+          - UNKNOWN_TYPE
+          - KUBERNETES
+          - SLURM
+          type: string
+          format: enum
+        num_gpus:
+          type: integer
+          format: uint32
+    SharedVolumeCreateRequest:
+      type: object
+      properties:
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
+        region:
+          type: string
+    GPUClusterCreateResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
+          type: string
+          format: enum
+    GPUClusterGPUWorkerNode:
+      type: object
+      required:
+      - node_id
+      - node_name
+      - status
+      - host_name
+      - num_cpu_cores
+      - num_gpus
+      - memory_gib
+      - networks
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+        num_gpus:
+          type: integer
+        memory_gib:
+          type: number
+        networks:
+          type: array
+          items:
+            type: string
+        instance_id:
+          type: string
+    GPUClusterGPUWorkerNode_2:
+      type: object
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+          format: uint32
+        num_gpus:
+          type: integer
+          format: uint32
+        memory_gib:
+          type: number
+          format: float
+        networks:
+          type: array
+          items:
+            type: string
+    GPUClusterVolume_2:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+        status:
+          type: string
+    GPUClusterControlPlaneNode:
+      type: object
+      required:
+      - node_id
+      - node_name
+      - status
+      - host_name
+      - num_cpu_cores
+      - memory_gib
+      - network
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+        memory_gib:
+          type: number
+        network:
+          type: string
+    GPUClusterInfo:
+      type: object
+      required:
+      - cluster_id
+      - cluster_type
+      - region
+      - gpu_type
+      - cluster_name
+      - cuda_version
+      - nvidia_driver_version
+      - volumes
+      - status
+      - control_plane_nodes
+      - gpu_worker_nodes
+      - kube_config
+      - num_gpus
+      properties:
+        cluster_id:
+          type: string
+        cluster_type:
+          description: Type of cluster.
+          enum:
+          - KUBERNETES
+          - SLURM
+        region:
+          type: string
+        gpu_type:
+          enum:
+          - H100_SXM
+          - H200_SXM
+          - RTX_6000_PCI
+          - L40_PCIE
+          - B200_SXM
+          - H100_SXM_INF
+        cluster_name:
+          type: string
+        duration_hours:
+          type: integer
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterVolume'
+        status:
+          description: Current status of the GPU cluster.
+          enum:
+          - WaitingForControlPlaneNodes
+          - WaitingForDataPlaneNodes
+          - WaitingForSubnet
+          - WaitingForSharedVolume
+          - InstallingDrivers
+          - RunningAcceptanceTests
+          - Paused
+          - OnDemandComputePaused
+          - Ready
+          - Degraded
+          - Deleting
+        control_plane_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterControlPlaneNode'
+        gpu_worker_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterGPUWorkerNode'
+        kube_config:
+          type: string
+        num_gpus:
+          type: integer
+        slurm_shm_size_gib:
+          type: integer
+        capacity_pool_id:
+          type: string
+        reservation_start_time:
+          type: string
+          format: date-time
+        reservation_end_time:
+          type: string
+          format: date-time
+        install_traefik:
+          type: boolean
+        cuda_version:
+          type: string
+        nvidia_driver_version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    GPUClusterVolume:
+      type: object
+      required:
+      - volume_id
+      - volume_name
+      - size_tib
+      - status
+      properties:
+        volume_id:
+          type: string
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+        status:
+          type: string
+    GPUClusterControlPlaneNode_2:
+      type: object
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+          format: uint32
+        memory_gib:
+          type: number
+          format: float
+        network:
+          type: string
+    GPUClusterUpdateRequest:
+      type: object
+      properties:
+        cluster_type:
+          description: Type of cluster to update.
+          enum:
+          - KUBERNETES
+          - SLURM
+        num_gpus:
+          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+          type: integer
+        reservation_end_time:
+          type: string
+          description: Timestamp at which the cluster should be decommissioned. Only accepted for prepaid clusters.
+          format: date-time
+    GPUClustersSharedVolumeCreateRequest:
+      type: object
+      required:
+      - volume_name
+      - size_tib
+      - region
+      properties:
+        volume_name:
+          description: Customizable name of the volume to create.
+          type: string
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
+          type: integer
+        region:
+          type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
+    GPUClusterInfo_2:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        cluster_type:
+          enum:
+          - UNKNOWN_TYPE
+          - KUBERNETES
+          - SLURM
+          type: string
+          format: enum
+        region:
+          type: string
+        gpu_type:
+          enum:
+          - UNKNOWN_GPU_TYPE
+          - H100_SXM
+          - H200_SXM
+          - RTX_6000_PCI
+          type: string
+          format: enum
+        cluster_name:
+          type: string
+        duration_hours:
+          type: integer
+          format: uint32
+        driver_version:
+          enum:
+          - UNKNOWN_DRIVER
+          - CUDA_12_5_555
+          - CUDA_12_6_560
+          - CUDA_12_6_565
+          - CUDA_12_8_570
+          type: string
+          format: enum
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterVolume_2'
+        status:
+          type: string
+        control_plane_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterControlPlaneNode_2'
+        gpu_worker_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterGPUWorkerNode_2'
+        kube_config:
+          type: string
+        num_gpus:
+          type: integer
+          format: int32
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

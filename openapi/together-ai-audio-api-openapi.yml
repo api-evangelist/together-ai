@@ -1,0 +1,739 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Audio
+paths:
+  /audio/speech:
+    post:
+      tags:
+      - Audio
+      summary: Create audio generation request
+      description: Generate audio from input text
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.audio.speech.with_streaming_response.create(\n    model=\"cartesia/sonic-2\",\n    input=\"The quick brown fox jumps over the lazy dog.\",\n    voice=\"laidback woman\",\n)\n\nwith response as stream:\n  stream.stream_to_file(\"audio.wav\")\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.audio.speech.create(\n    model=\"cartesia/sonic-2\",\n    input=\"The quick brown fox jumps over the lazy dog.\",\n    voice=\"laidback woman\",\n)\n\nresponse.stream_to_file(\"audio.wav\")\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nimport { createWriteStream } from \"fs\";\nimport { join } from \"path\";\nimport { pipeline } from \"stream/promises\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.speech.create({\n  model: \"cartesia/sonic-2\",\n  input: \"The quick brown fox jumps over the lazy dog.\",\n  voice: \"laidback woman\",\n});\n\nconst filepath = join(process.cwd(), \"audio.wav\");\nconst writeStream = createWriteStream(filepath);\n\nif (response.body) {\n  await pipeline(response.body, writeStream);\n}\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nimport { createWriteStream } from \"fs\";\nimport { join } from \"path\";\nimport { pipeline } from \"stream/promises\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.speech.create({\n  model: \"cartesia/sonic-2\",\n  input: \"The quick brown fox jumps over the lazy dog.\",\n  voice: \"laidback woman\",\n});\n\nconst filepath = join(process.cwd(), \"audio.wav\");\nconst writeStream = createWriteStream(filepath);\n\nif (response.body) {\n  await pipeline(response.body, writeStream);\n}\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/audio/speech\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n       \"model\": \"cartesia/sonic-2\",\n       \"input\": \"The quick brown fox jumps over the lazy dog.\",\n       \"voice\": \"laidback woman\"\n     }' \\\n     --output audio.wav\n"
+      operationId: audio-speech
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioSpeechRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/AudioSpeechStreamResponse'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '429':
+          description: RateLimit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /audio/speech/websocket:
+    get:
+      tags:
+      - Audio
+      summary: Real-time text-to-speech via WebSocket
+      description: "Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, voice, max_partial_length, language)\n\n**Client Events:**\n- `tts_session.updated`: Update session parameters like voice. The `session` object also accepts an `extra_params` field for additional model-specific parameters that fine-tune speech generation behavior, such as `pronunciation_dict` (a list of pronunciation rules for specific characters or symbols, where each entry uses the format `\"<source>/<replacement>\"` (e.g., `[\"omg/oh my god\"]`) to override how the model pronounces matching tokens).\n  ```json\n  {\n    \"type\": \"tts_session.updated\",\n    \"session\": {\n      \"voice\": \"tara\",\n      \"extra_params\": {\n        \"pronunciation_dict\": [\"omg/oh my god\"]\n      }\n    }\n  }\n  ```\n- `input_text_buffer.append`: Send text chunks for TTS generation\n  ```json\n  {\n    \"type\": \"input_text_buffer.append\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `input_text_buffer.clear`: Clear the buffered text\n  ```json\n  {\n    \"type\": \"input_text_buffer.clear\"\n  }\n  ```\n- `input_text_buffer.commit`: Signal end of text input and process remaining text\n  ```json\n  {\n    \"type\": \"input_text_buffer.commit\"\n  }\n  ```\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"event_id\": \"evt_123456\",\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.tts.session\",\n      \"modalities\": [\"text\", \"audio\"],\n      \"model\": \"hexgrad/Kokoro-82M\",\n      \"voice\": \"tara\"\n    }\n  }\n  ```\n- `conversation.item.input_text.received`: Acknowledgment that text was received\n  ```json\n  {\n    \"type\": \"conversation.item.input_text.received\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `conversation.item.audio_output.delta`: Audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.delta\",\n    \"item_id\": \"tts_1\",\n    \"delta\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `conversation.item.audio_output.done`: Audio generation complete for an item\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.done\",\n    \"item_id\": \"tts_1\"\n  }\n  ```\n- `conversation.item.tts.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.tts.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Text Processing:**\n- Partial text (no sentence ending) is held in buffer until:\n  - We believe that the text is complete enough to be processed for TTS generation\n  - The partial text exceeds `max_partial_length` characters (default: 250)\n  - The `input_text_buffer.commit` event is received\n\n**Audio Format:**\n- Format: Raw PCM (s16le, mono)\n- Sample Rate: 24000 Hz\n- Encoding: Base64 (per delta event)\n- Delivered via `conversation.item.audio_output.delta` events\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Invalid text format errors (400)\n"
+      operationId: realtime-tts
+      x-codeSamples:
+      - lang: Python
+        label: Python WebSocket Client
+        source: "import asyncio\nimport websockets\nimport json\nimport base64\nimport os\n\nasync def generate_speech():\n    api_key = os.environ.get(\"TOGETHER_API_KEY\")\n    url = \"wss://api.together.ai/v1/audio/speech/websocket?model=hexgrad/Kokoro-82M&voice=af_heart\"\n\n    headers = {\n        \"Authorization\": f\"Bearer {api_key}\"\n    }\n\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        # Wait for session created\n        session_msg = await ws.recv()\n        session_data = json.loads(session_msg)\n        if session_data.get(\"type\") != \"session.created\":\n            print(f\"Failed to start session: {session_data}\")\n            return\n        print(f\"Session created: {session_data['session']['id']}\")\n\n        # Send text for TTS\n        text_chunks = [\n            \"Hello, this is a test.\",\n            \"This is the second sentence.\",\n            \"And this is the final one.\"\n        ]\n\n        async def send_text():\n            for chunk in text_chunks:\n                await ws.send(json.dumps({\n                    \"type\": \"input_text_buffer.append\",\n                    \"text\": chunk\n                }))\n                await asyncio.sleep(0.5)  # Simulate typing\n\n            # Commit to process any remaining text\n            await ws.send(json.dumps({\n                \"type\": \"input_text_buffer.commit\"\n            }))\n\n        async def receive_audio():\n            audio_data = bytearray()\n            async for message in ws:\n                data = json.loads(message)\n\n                if data[\"type\"] == \"conversation.item.input_text.received\":\n                    print(f\"Text received: {data['text']}\")\n                elif data[\"type\"] == \"conversation.item.audio_output.delta\":\n                    # Decode base64 audio chunk\n                    audio_chunk = base64.b64decode(data['delta'])\n                    audio_data.extend(audio_chunk)\n                    print(f\"Received audio chunk for item {data['item_id']}\")\n                elif data[\"type\"] == \"conversation.item.audio_output.done\":\n                    print(f\"Audio generation complete for item {data['item_id']}\")\n                elif data[\"type\"] == \"conversation.item.tts.failed\":\n                    error = data.get(\"error\", {})\n                    print(f\"Error: {error.get('message')}\")\n                    break\n\n            # Save the raw PCM samples to a file\n            with open(\"output.pcm\", \"wb\") as f:\n                f.write(audio_data)\n            print(\"Audio saved to output.pcm\")\n\n        # Run send and receive concurrently\n        await asyncio.gather(send_text(), receive_audio())\n\nasyncio.run(generate_speech())\n"
+      - lang: JavaScript
+        label: Node.js WebSocket Client
+        source: "import WebSocket from 'ws';\nimport fs from 'fs';\n\nconst apiKey = process.env.TOGETHER_API_KEY;\nconst url = 'wss://api.together.ai/v1/audio/speech/websocket?model=hexgrad/Kokoro-82M&voice=af_heart';\n\nconst ws = new WebSocket(url, {\n  headers: {\n    'Authorization': `Bearer ${apiKey}`\n  }\n});\n\nconst audioData = [];\n\nws.on('open', () => {\n  console.log('WebSocket connection established!');\n});\n\nws.on('message', (data) => {\n  const message = JSON.parse(data.toString());\n\n  if (message.type === 'session.created') {\n    console.log(`Session created: ${message.session.id}`);\n\n    // Send text chunks\n    const textChunks = [\n      \"Hello, this is a test.\",\n      \"This is the second sentence.\",\n      \"And this is the final one.\"\n    ];\n\n    textChunks.forEach((text, index) => {\n      setTimeout(() => {\n        ws.send(JSON.stringify({\n          type: 'input_text_buffer.append',\n          text: text\n        }));\n      }, index * 500);\n    });\n\n    // Commit after all chunks\n    setTimeout(() => {\n      ws.send(JSON.stringify({\n        type: 'input_text_buffer.commit'\n      }));\n    }, textChunks.length * 500 + 100);\n\n  } else if (message.type === 'conversation.item.input_text.received') {\n    console.log(`Text received: ${message.text}`);\n  } else if (message.type === 'conversation.item.audio_output.delta') {\n    // Decode base64 audio chunk\n    const audioChunk = Buffer.from(message.delta, 'base64');\n    audioData.push(audioChunk);\n    console.log(`Received audio chunk for item ${message.item_id}`);\n  } else if (message.type === 'conversation.item.audio_output.done') {\n    console.log(`Audio generation complete for item ${message.item_id}`);\n  } else if (message.type === 'conversation.item.tts.failed') {\n    const errorMessage = message.error?.message ?? 'Unknown error';\n    console.error(`Error: ${errorMessage}`);\n    ws.close();\n  }\n});\n\nws.on('close', () => {\n  // Save the raw PCM samples to a file\n  if (audioData.length > 0) {\n    const completeAudio = Buffer.concat(audioData);\n    fs.writeFileSync('output.pcm', completeAudio);\n    console.log('Audio saved to output.pcm');\n  }\n});\n\nws.on('error', (error) => {\n  console.error('WebSocket error:', error);\n});\n"
+      parameters:
+      - in: query
+        name: model
+        required: false
+        schema:
+          description: The TTS model to use for speech generation. Can also be set via `tts_session.updated` event.
+          type: string
+          enum:
+          - hexgrad/Kokoro-82M
+          - cartesia/sonic-english
+          default: hexgrad/Kokoro-82M
+      - in: query
+        name: voice
+        required: false
+        schema:
+          type: string
+          description: 'The voice to use for speech generation. Default is ''tara''.
+
+            Available voices vary by model. Can also be updated via `tts_session.updated` event.
+
+            '
+      - in: query
+        name: max_partial_length
+        required: false
+        schema:
+          type: integer
+          default: 250
+          description: 'Maximum number of characters in partial text before forcing TTS generation
+
+            even without a sentence ending. Helps reduce latency for long text without punctuation.
+
+            '
+      - in: query
+        name: language
+        required: false
+        schema:
+          type: string
+          default: en
+          example: en
+          description: 'Language or locale of input text. Accepts ISO 639-1 language codes (e.g., `en`, `fr`, `es`, `zh`) as well as locale codes for region-specific variants. Locale codes must be lowercase (e.g., `zh-hk` for Cantonese). Can also be set via `tts_session.updated` event.
+
+            '
+      responses:
+        '101':
+          description: "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.tts.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n"
+  /audio/transcriptions:
+    post:
+      tags:
+      - Audio
+      summary: Create audio transcription request
+      description: Transcribes audio into text
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = open(\"audio.wav\", \"rb\")\n\nresponse = client.audio.transcriptions.create(\n    model=\"openai/whisper-large-v3\",\n    file=file,\n)\n\nprint(response.text)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = open(\"audio.wav\", \"rb\")\n\nresponse = client.audio.transcriptions.create(\n    model=\"openai/whisper-large-v3\",\n    file=file,\n)\n\nprint(response.text)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nimport { readFileSync } from \"fs\";\nimport { join } from \"path\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst audioFilePath = join(process.cwd(), \"audio.wav\");\nconst audioBuffer = readFileSync(audioFilePath);\nconst audioFile = new File([audioBuffer], \"audio.wav\", { type: \"audio/wav\" });\n\nconst response = await client.audio.transcriptions.create({\n  model: \"openai/whisper-large-v3\",\n  file: audioFile,\n});\n\nconsole.log(response.text);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nimport { readFileSync } from \"fs\";\nimport { join } from \"path\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst audioFilePath = join(process.cwd(), \"audio.wav\");\nconst audioBuffer = readFileSync(audioFilePath);\nconst audioFile = new File([audioBuffer], \"audio.wav\", { type: \"audio/wav\" });\n\nconst response = await client.audio.transcriptions.create({\n  model: \"openai/whisper-large-v3\",\n  file: audioFile,\n});\n\nconsole.log(response.text);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/audio/transcriptions\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -F \"file=@audio.wav\" \\\n     -F \"model=openai/whisper-large-v3\"\n"
+      operationId: audio-transcriptions
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioTranscriptionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioTranscriptionResponse'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '429':
+          description: RateLimit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /audio/translations:
+    post:
+      tags:
+      - Audio
+      summary: Create audio translation request
+      description: Translates audio into English
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = open(\"audio.wav\", \"rb\")\n\nresponse = client.audio.translations.create(\n    model=\"openai/whisper-large-v3\",\n    file=file,\n    language=\"es\",\n)\n\nprint(response.text)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = open(\"audio.wav\", \"rb\")\n\nresponse = client.audio.translations.create(\n    model=\"openai/whisper-large-v3\",\n    file=file,\n    language=\"es\",\n)\n\nprint(response.text)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\nimport { readFileSync } from \"fs\";\nimport { join } from \"path\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst audioFilePath = join(process.cwd(), \"audio.wav\");\nconst audioBuffer = readFileSync(audioFilePath);\nconst audioFile = new File([audioBuffer], \"audio.wav\", { type: \"audio/wav\" });\n\nconst response = await client.audio.translations.create({\n  model: \"openai/whisper-large-v3\",\n  file: audioFile,\n  language: \"es\"\n});\n\nconsole.log(response.text);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\nimport { readFileSync } from \"fs\";\nimport { join } from \"path\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst audioFilePath = join(process.cwd(), \"audio.wav\");\nconst audioBuffer = readFileSync(audioFilePath);\nconst audioFile = new File([audioBuffer], \"audio.wav\", { type: \"audio/wav\" });\n\nconst response = await client.audio.translations.create({\n  model: \"openai/whisper-large-v3\",\n  file: audioFile,\n  language: \"es\"\n});\n\nconsole.log(response.text);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/audio/translations\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -F \"file=@audio.wav\" \\\n     -F \"model=openai/whisper-large-v3\" \\\n     -F \"language=es\"\n"
+      operationId: audio-translations
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioTranslationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioTranslationResponse'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '429':
+          description: RateLimit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /realtime:
+    get:
+      tags:
+      - Audio
+      summary: Real-time audio transcription via WebSocket
+      description: "Establishes a WebSocket connection for real-time audio transcription. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/realtime) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, input_audio_format)\n\n**Client Events:**\n- `input_audio_buffer.append`: Send audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"input_audio_buffer.append\",\n    \"audio\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `input_audio_buffer.commit`: Signal end of audio stream. When VAD is enabled, the server automatically detects speech boundaries and emits `completed` events. When VAD is disabled, you must send `commit` to trigger transcription of the buffered audio.\n  ```json\n  {\n    \"type\": \"input_audio_buffer.commit\"\n  }\n  ```\n- `transcription_session.updated`: Update session configuration, including Voice Activity Detection (VAD) parameters. Send this after receiving `session.created`. Can also be sent at any time during the session to change VAD settings.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n  To disable VAD entirely (manual commit mode), set `turn_detection` to `null`:\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": null\n    }\n  }\n  ```\n\n**Voice Activity Detection (VAD)**\n\nVAD controls how the server automatically detects speech segments in the audio stream. When enabled (the default), the server uses Silero VAD to identify speech regions and emits transcription events as each segment completes. When disabled, you must manually call `input_audio_buffer.commit` to trigger transcription.\n\nVAD can be configured in two ways:\n1. **Query parameters** at connection time: `turn_detection=server_vad&threshold=0.3&min_silence_duration_ms=500`\n2. **Session message** after connection: Send `transcription_session.updated` with a `turn_detection` object (see above)\n\nTo disable VAD at connection time, use `turn_detection=none` as a query parameter.\n\n**VAD Parameters:**\n\nAll parameters are optional — omitted fields use their defaults.\n\n| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `type` | string | `server_vad` | VAD mode. Use `server_vad` to enable, or set `turn_detection` to `null` to disable. |\n| `threshold` | float | `0.3` | Speech probability threshold (0.0–1.0). Audio frames with probability above this value are classified as speech. Lower values detect more speech but may increase false positives. For low-SNR audio (e.g., 8kHz phone calls), values of 0.01–0.2 may work better. |\n| `min_silence_duration_ms` | int | `500` | Minimum silence duration in milliseconds before ending a speech segment. Higher values merge nearby speech bursts into single segments. For phone calls with mid-sentence pauses, 2000–5000ms prevents over-segmentation. |\n| `min_speech_duration_ms` | int | `250` | Minimum speech segment duration in milliseconds. Segments shorter than this are discarded. Filters out brief noise bursts or clicks. |\n| `max_speech_duration_s` | float | `5.0` | Maximum speech segment duration in seconds. Segments longer than this are force-split at the longest internal silence gap. Useful for continuous speech without natural pauses. |\n| `speech_pad_ms` | int | `250` | Padding in milliseconds added to the start and end of each detected segment. Prevents clipping speech edges. When padding would cause adjacent segments to overlap, the gap is split at the midpoint instead. |\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.session\",\n      \"modalities\": [\"audio\"],\n      \"model\": \"openai/whisper-large-v3\"\n    }\n  }\n  ```\n- `transcription_session.updated`: Confirms session configuration was applied. Sent in response to a client `transcription_session.updated` message.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n- `conversation.item.input_audio_transcription.delta`: Partial transcription results\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.delta\",\n    \"delta\": \"The quick brown\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.completed`: Final transcription\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.completed\",\n    \"transcript\": \"The quick brown fox jumps over the lazy dog\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Unsupported audio format errors (400)\n"
+      operationId: realtime-transcription
+      x-codeSamples:
+      - lang: Python
+        label: Python WebSocket Client
+        source: "import asyncio\nimport websockets\nimport json\nimport base64\nimport os\n\nasync def transcribe_audio():\n    api_key = os.environ.get(\"TOGETHER_API_KEY\")\n    url = \"wss://api.together.ai/v1/realtime?model=openai/whisper-large-v3&input_audio_format=pcm_s16le_16000\"\n\n    headers = {\n        \"Authorization\": f\"Bearer {api_key}\"\n    }\n\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        # Read audio file\n        with open(\"audio.wav\", \"rb\") as f:\n            audio_data = f.read()\n\n        # Send audio in chunks with delay to simulate real-time\n        chunk_size = 8192\n        bytes_per_second = 16000 * 2  # 16kHz * 2 bytes (16-bit)\n        delay_per_chunk = chunk_size / bytes_per_second\n\n        for i in range(0, len(audio_data), chunk_size):\n            chunk = audio_data[i:i+chunk_size]\n            base64_chunk = base64.b64encode(chunk).decode('utf-8')\n            await ws.send(json.dumps({\n                \"type\": \"input_audio_buffer.append\",\n                \"audio\": base64_chunk\n            }))\n            # Simulate real-time streaming\n            if i + chunk_size < len(audio_data):\n                await asyncio.sleep(delay_per_chunk)\n\n        # Commit the audio buffer\n        await ws.send(json.dumps({\n            \"type\": \"input_audio_buffer.commit\"\n        }))\n\n        # Receive transcription results\n        async for message in ws:\n            data = json.loads(message)\n            if data[\"type\"] == \"conversation.item.input_audio_transcription.delta\":\n                print(f\"Partial: {data['delta']}\")\n            elif data[\"type\"] == \"conversation.item.input_audio_transcription.completed\":\n                print(f\"Final: {data['transcript']}\")\n                break\n            elif data[\"type\"] == \"conversation.item.input_audio_transcription.failed\":\n                error = data.get(\"error\", {})\n                print(f\"Error: {error.get('message')}\")\n                break\n\nasyncio.run(transcribe_audio())\n"
+      - lang: JavaScript
+        label: Node.js WebSocket Client
+        source: "import WebSocket from 'ws';\nimport fs from 'fs';\n\nconst apiKey = process.env.TOGETHER_API_KEY;\nconst url = 'wss://api.together.ai/v1/realtime?model=openai/whisper-large-v3&input_audio_format=pcm_s16le_16000';\n\nconst ws = new WebSocket(url, {\n  headers: {\n    'Authorization': `Bearer ${apiKey}`\n  }\n});\n\nws.on('open', async () => {\n  console.log('WebSocket connection established!');\n\n  // Read audio file\n  const audioData = fs.readFileSync('audio.wav');\n\n  // Send audio in chunks with delay to simulate real-time\n  const chunkSize = 8192;\n  const bytesPerSecond = 16000 * 2;  // 16kHz * 2 bytes (16-bit)\n  const delayPerChunk = (chunkSize / bytesPerSecond) * 1000;  // Convert to ms\n\n  for (let i = 0; i < audioData.length; i += chunkSize) {\n    const chunk = audioData.slice(i, i + chunkSize);\n    const base64Chunk = chunk.toString('base64');\n    ws.send(JSON.stringify({\n      type: 'input_audio_buffer.append',\n      audio: base64Chunk\n    }));\n\n    // Simulate real-time streaming\n    if (i + chunkSize < audioData.length) {\n      await new Promise(resolve => setTimeout(resolve, delayPerChunk));\n    }\n  }\n\n  // Commit audio buffer\n  ws.send(JSON.stringify({\n    type: 'input_audio_buffer.commit'\n  }));\n});\n\nws.on('message', (data) => {\n  const message = JSON.parse(data.toString());\n\n  if (message.type === 'conversation.item.input_audio_transcription.delta') {\n    console.log(`Partial: ${message.delta}`);\n  } else if (message.type === 'conversation.item.input_audio_transcription.completed') {\n    console.log(`Final: ${message.transcript}`);\n    ws.close();\n  } else if (message.type === 'conversation.item.input_audio_transcription.failed') {\n    const errorMessage = message.error?.message ?? message.message ?? 'Unknown error';\n    console.error(`Error: ${errorMessage}`);\n    ws.close();\n  }\n});\n\nws.on('error', (error) => {\n  console.error('WebSocket error:', error);\n});\n"
+      parameters:
+      - in: query
+        name: model
+        required: true
+        schema:
+          type: string
+          description: The Whisper model to use for transcription
+      - in: query
+        name: input_audio_format
+        required: true
+        schema:
+          type: string
+          enum:
+          - pcm_s16le_16000
+          default: pcm_s16le_16000
+        description: Audio format specification. Currently supports 16-bit PCM at 16kHz sample rate.
+      responses:
+        '101':
+          description: "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.input_audio_transcription.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n"
+components:
+  schemas:
+    AudioTranscriptionRequest:
+      type: object
+      required:
+      - file
+      properties:
+        file:
+          oneOf:
+          - $ref: '#/components/schemas/AudioFileBinary'
+          - $ref: '#/components/schemas/AudioFileUrl'
+          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
+        model:
+          type: string
+          description: Model to use for transcription
+          default: openai/whisper-large-v3
+          enum:
+          - openai/whisper-large-v3
+        language:
+          type: string
+          description: Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.
+          default: en
+          example: en
+        prompt:
+          type: string
+          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
+        response_format:
+          type: string
+          description: The format of the response
+          default: json
+          enum:
+          - json
+          - verbose_json
+        temperature:
+          type: number
+          format: float
+          description: Sampling temperature between 0.0 and 1.0
+          default: 0
+          minimum: 0
+          maximum: 1
+        timestamp_granularities:
+          oneOf:
+          - type: string
+            enum:
+            - segment
+            - word
+          - type: array
+            items:
+              type: string
+              enum:
+              - segment
+              - word
+            uniqueItems: true
+            minItems: 1
+            maxItems: 2
+          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
+          default: segment
+          example:
+          - word
+          - segment
+        diarize:
+          type: boolean
+          description: "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n"
+          default: false
+        min_speakers:
+          type: integer
+          description: Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
+        max_speakers:
+          type: integer
+          description: Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
+    AudioTranscriptionResponse:
+      oneOf:
+      - $ref: '#/components/schemas/AudioTranscriptionJsonResponse'
+      - $ref: '#/components/schemas/AudioTranscriptionVerboseJsonResponse'
+    AudioSpeechStreamEvent:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/AudioSpeechStreamChunk'
+    AudioTranscriptionSegment:
+      type: object
+      required:
+      - id
+      - start
+      - end
+      - text
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the segment
+          example: 0
+        start:
+          type: number
+          format: float
+          description: Start time of the segment in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the segment in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The text content of the segment
+          example: Hello, world!
+    AudioSpeechStreamResponse:
+      oneOf:
+      - $ref: '#/components/schemas/AudioSpeechStreamEvent'
+      - $ref: '#/components/schemas/StreamSentinel'
+    AudioTranslationVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The target language of the translation
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The translated text
+          example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of translation segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of translation words (only when timestamp_granularities includes 'word')
+    AudioFileBinary:
+      type: string
+      format: binary
+      description: Audio file to transcribe
+    StreamSentinel:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          title: stream_signal
+          type: string
+          enum:
+          - '[DONE]'
+    AudioTranscriptionWord:
+      type: object
+      required:
+      - word
+      - start
+      - end
+      properties:
+        word:
+          type: string
+          description: The word
+          example: Hello
+        start:
+          type: number
+          format: float
+          description: Start time of the word in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the word in seconds
+          example: 0.5
+        speaker_id:
+          type: string
+          description: The speaker id for the word (only when diarize is enabled)
+          example: SPEAKER_00
+    AudioFileUrl:
+      type: string
+      format: uri
+      description: Public HTTPS URL to audio file
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    AudioSpeechRequest:
+      type: object
+      required:
+      - model
+      - input
+      - voice
+      properties:
+        model:
+          description: 'The name of the model to query.<br> <br> [See all of Together AI''s chat models](https://docs.together.ai/docs/serverless-models#audio-models) The current supported tts models are: - cartesia/sonic - hexgrad/Kokoro-82M - canopylabs/orpheus-3b-0.1-ft
+
+            '
+          example: canopylabs/orpheus-3b-0.1-ft
+          anyOf:
+          - type: string
+            enum:
+            - cartesia/sonic
+            - hexgrad/Kokoro-82M
+            - canopylabs/orpheus-3b-0.1-ft
+          - type: string
+        input:
+          type: string
+          description: Input text to generate the audio for
+        voice:
+          description: 'The voice to use for generating the audio. The voices supported are different for each model. For eg - for canopylabs/orpheus-3b-0.1-ft, one of the voices supported is tara, for hexgrad/Kokoro-82M, one of the voices supported is af_alloy and for cartesia/sonic, one of the voices supported is "friendly sidekick". <br> <br> You can view the voices supported for each model using the /v1/voices endpoint sending the model name as the query parameter. [View all supported voices here](https://docs.together.ai/docs/text-to-speech#supported-voices). <br> <br> `hexgrad/Kokoro-82M` additionally supports voice mixing, where two or more voices are combined into a single blended voice by joining their names with `+` (e.g. `af_bella+af_heart`). Optional per-voice weights can be provided in parentheses (e.g. `af_bella(2)+af_heart(1)`). Other models require a single voice name.
+
+            '
+          type: string
+        response_format:
+          type: string
+          description: The format of audio output. Supported formats are mp3, wav, raw if streaming is false. If streaming is true, the only supported format is raw.
+          default: wav
+          enum:
+          - mp3
+          - wav
+          - raw
+        language:
+          type: string
+          description: 'Language or locale of input text. Accepts ISO 639-1 language codes (e.g., `en`, `fr`, `es`, `zh`) as well as locale codes for region-specific variants. Locale codes must be lowercase (e.g., `zh-hk` for Cantonese).
+
+            '
+          default: en
+          example: en
+        response_encoding:
+          type: string
+          description: Audio encoding of response. Only applicable when response_format is raw or pcm. Cartesia models respect this parameter and support all values. Orpheus, Kokoro, and Minimax models always return pcm_s16le regardless of this setting.
+          default: pcm_f32le
+          enum:
+          - pcm_f32le
+          - pcm_s16le
+          - pcm_mulaw
+          - pcm_alaw
+        sample_rate:
+          type: integer
+          default: 44100
+          description: Sampling rate in Hz for the output audio. Cartesia and Minimax models respect this parameter. Orpheus and Kokoro models always output at 24000 Hz regardless of this setting.
+        bit_rate:
+          type: integer
+          description: Bitrate of the MP3 audio output in bits per second. Only applicable when response_format is mp3. Higher values produce better audio quality at larger file sizes. Default is 128000. Currently supported on Cartesia models.
+          default: 128000
+          enum:
+          - 32000
+          - 64000
+          - 96000
+          - 128000
+          - 192000
+        stream:
+          type: boolean
+          default: false
+          description: 'If true, output is streamed for several characters at a time instead of waiting for the full response. The stream terminates with `data: [DONE]`. If false, return the encoded audio as octet stream'
+        extra_params:
+          type: object
+          description: Additional model-specific parameters that fine-tune speech generation behavior.
+          properties:
+            pronunciation_dict:
+              type: array
+              items:
+                type: string
+              description: A list of pronunciation rules for specific characters or symbols. Each entry uses the format `"<source>/<replacement>"` (e.g., `["omg/oh my god"]`) to override how the model pronounces matching tokens.
+              example:
+              - omg/oh my god
+    AudioTranscriptionJsonResponse:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: The transcribed text
+          example: Hello, world!
+    AudioTranslationRequest:
+      type: object
+      required:
+      - file
+      properties:
+        file:
+          oneOf:
+          - type: string
+            format: binary
+            description: Audio file to translate
+          - type: string
+            format: uri
+            description: Public HTTP/HTTPS URL to audio file
+          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
+        model:
+          type: string
+          description: Model to use for translation
+          default: openai/whisper-large-v3
+          enum:
+          - openai/whisper-large-v3
+        language:
+          type: string
+          description: Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.
+          default: en
+          example: en
+        prompt:
+          type: string
+          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
+        response_format:
+          type: string
+          description: The format of the response
+          default: json
+          enum:
+          - json
+          - verbose_json
+        temperature:
+          type: number
+          format: float
+          description: Sampling temperature between 0.0 and 1.0
+          default: 0
+          minimum: 0
+          maximum: 1
+        timestamp_granularities:
+          oneOf:
+          - type: string
+            enum:
+            - segment
+            - word
+          - type: array
+            items:
+              type: string
+              enum:
+              - segment
+              - word
+            uniqueItems: true
+            minItems: 1
+            maxItems: 2
+          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
+          default: segment
+          example:
+          - word
+          - segment
+    AudioTranscriptionVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The language of the audio
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The transcribed text
+          example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of transcription segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of transcription words (only when timestamp_granularities includes 'word')
+        speaker_segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSpeakerSegment'
+          description: Array of transcription speaker segments (only when diarize is enabled)
+    AudioTranslationResponse:
+      oneOf:
+      - $ref: '#/components/schemas/AudioTranslationJsonResponse'
+      - $ref: '#/components/schemas/AudioTranslationVerboseJsonResponse'
+    AudioSpeechStreamChunk:
+      type: object
+      required:
+      - object
+      - model
+      - b64
+      properties:
+        object:
+          description: The object type, which is always `audio.tts.chunk`.
+          const: audio.tts.chunk
+        model:
+          type: string
+          example: cartesia/sonic
+        b64:
+          type: string
+          description: base64 encoded audio stream
+    AudioTranscriptionSpeakerSegment:
+      type: object
+      required:
+      - speaker_id
+      - start
+      - end
+      - words
+      - text
+      - id
+      properties:
+        speaker_id:
+          type: string
+          description: The speaker identifier
+          example: SPEAKER_00
+        start:
+          type: number
+          format: float
+          description: Start time of the speaker segment in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the speaker segment in seconds
+          example: 30.02
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of words spoken by this speaker in this segment
+        text:
+          type: string
+          description: The full text spoken by this speaker in this segment
+          example: Hello, how are you doing today?
+        id:
+          type: integer
+          description: Unique identifier for the speaker segment
+          example: 1
+    AudioTranslationJsonResponse:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: The translated text
+          example: Hello, world!
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

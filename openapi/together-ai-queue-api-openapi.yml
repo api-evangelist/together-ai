@@ -1,0 +1,387 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Queue API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Queue
+paths:
+  /queue/cancel:
+    post:
+      description: 'Cancel a pending job. Only jobs in pending status can be canceled.
+
+        Running jobs cannot be stopped. Returns the job status after the
+
+        attempt. If the job is not pending, returns 409 with the current status
+
+        unchanged.
+
+        '
+      operationId: cancelQueueJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueCancelRequest'
+        description: Cancel request
+        required: true
+      responses:
+        '200':
+          description: Successfully canceled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueCancelResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '404':
+          description: Request not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '409':
+          description: Job could not be canceled (already completed/failed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueCancelResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+      summary: Cancel a queued job
+      tags:
+      - Queue
+  /queue/metrics:
+    get:
+      description: Get the current queue statistics for a model, including pending and running job counts.
+      operationId: getQueueMetrics
+      parameters:
+      - name: model
+        in: query
+        required: true
+        schema:
+          description: Model name to get metrics for
+          type: string
+      responses:
+        '200':
+          description: Queue metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueMetricsResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+      summary: Get queue metrics
+      tags:
+      - Queue
+  /queue/status:
+    get:
+      description: Poll the current status of a previously submitted job. Provide the request_id and model as query parameters.
+      operationId: getQueueJobStatus
+      parameters:
+      - name: request_id
+        in: query
+        required: true
+        schema:
+          description: Request ID returned from the submit endpoint
+          type: string
+      - name: model
+        in: query
+        required: true
+        schema:
+          description: Model name the job was submitted to
+          type: string
+      responses:
+        '200':
+          description: Status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueJobStatusResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '404':
+          description: Request not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+      summary: Get job status
+      tags:
+      - Queue
+  /queue/submit:
+    post:
+      description: 'Submit a new job to the queue for asynchronous processing. Jobs are
+
+        processed in strict priority order (higher priority first, FIFO within
+
+        the same priority). Returns a request ID that can be used to poll status
+
+        or cancel the job.
+
+        '
+      operationId: submitQueueJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueJobRequest'
+        description: Job request
+        required: true
+      responses:
+        '200':
+          description: Successfully queued request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueJobResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueError'
+      summary: Submit a queued job
+      tags:
+      - Queue
+components:
+  schemas:
+    QueueMetricsResponse:
+      type: object
+      required:
+      - messages_running
+      - messages_waiting
+      - total_jobs
+      properties:
+        messages_running:
+          description: Number of jobs currently being processed
+          type: integer
+        messages_waiting:
+          description: Number of jobs waiting to be claimed by a worker
+          type: integer
+        total_jobs:
+          description: Total number of active jobs (waiting + running)
+          type: integer
+    QueueJobStatusResponse:
+      required:
+      - request_id
+      - model
+      - status
+      properties:
+        claimed_at:
+          description: Timestamp when a worker claimed the job
+          format: date-time
+          type: string
+        created_at:
+          description: Timestamp when the job was created
+          format: date-time
+          type: string
+        done_at:
+          description: Timestamp when the job completed (done or failed)
+          format: date-time
+          type: string
+        info:
+          description: 'Job metadata. Contains keys from the submit request, plus any
+
+            modifications from the model or system (e.g. progress, retry
+
+            history).
+
+            '
+          additionalProperties: true
+          type: object
+        inputs:
+          description: Freeform model input, as submitted
+          additionalProperties: true
+          type: object
+        model:
+          description: Model identifier the job was submitted to
+          type: string
+        outputs:
+          description: Freeform model output, populated when the job reaches done status. Contents are model-specific.
+          additionalProperties: true
+          type: object
+        priority:
+          description: Job priority. Higher values are processed first.
+          type: integer
+        request_id:
+          description: The request ID that was returned from the submit endpoint
+          type: string
+        retries:
+          description: 'Number of times this job has been retried. Workers set a claim
+
+            timeout and must send periodic status updates to keep the job alive.
+
+            If no update is received within the timeout, the job is returned to
+
+            the queue and retried. After 3 retries the job is permanently
+
+            failed. Jobs explicitly failed by the model are not retried.
+
+            '
+          type: integer
+        status:
+          description: 'Current job status. Transitions: pending → running → done/failed. A pending job may also be canceled.
+
+            '
+          enum:
+          - pending
+          - running
+          - done
+          - failed
+          - canceled
+          type: string
+        warnings:
+          description: Non-fatal messages about the request (e.g. deprecation notices)
+          items:
+            type: string
+          type: array
+      type: object
+    QueueJobResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/QueueError'
+        requestId:
+          description: Unique identifier for the submitted job. Use this to poll status or cancel.
+          type: string
+      type: object
+    QueueError:
+      properties:
+        code:
+          description: Machine-readable error code
+          type: string
+        message:
+          description: Human-readable error message
+          type: string
+        param:
+          description: The parameter that caused the error, if applicable
+          type: string
+        type:
+          description: Error category (e.g. "invalid_request_error", "not_found_error")
+          type: string
+      type: object
+    QueueCancelResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: 'Job status after the cancel attempt. Only pending jobs can be
+
+            canceled. If the job is already running, done, or failed, the status
+
+            is returned unchanged.
+
+            '
+          type: string
+          enum:
+          - canceled
+          - running
+          - done
+          - failed
+    QueueJobRequest:
+      properties:
+        info:
+          description: 'Arbitrary JSON metadata stored with the job and returned in status
+
+            responses. The model and system may add or update keys during
+
+            processing.
+
+            '
+          additionalProperties: true
+          type: object
+        model:
+          description: Required model identifier
+          type: string
+        payload:
+          description: Freeform model input. Passed unchanged to the model. Contents are model-specific.
+          additionalProperties: true
+          type: object
+        priority:
+          default: 0
+          description: 'Job priority. Higher values are processed first (strict priority
+
+            ordering). Jobs with equal priority are processed in submission
+
+            order (FIFO).
+
+            '
+          type: integer
+      required:
+      - model
+      - payload
+      type: object
+    QueueCancelRequest:
+      properties:
+        model:
+          description: Model identifier the job was submitted to
+          type: string
+        request_id:
+          description: The request ID returned from the submit endpoint
+          type: string
+      required:
+      - model
+      - request_id
+      type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

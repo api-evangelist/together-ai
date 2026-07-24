@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Voices API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Voices
+paths:
+  /voices:
+    get:
+      tags:
+      - Voices
+      summary: Fetch available voices for each model
+      description: Fetch available voices for each model
+      operationId: fetchVoices
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListVoicesResponse'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.audio.voices.list()\n\nprint(response.data)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.audio.voices.list()\n\nprint(response.data)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.voices.list()\n\nconsole.log(response.data);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.voices.list()\n\nconsole.log(response.data);\n"
+components:
+  schemas:
+    ListVoicesResponse:
+      description: Response containing a list of models and their available voices.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelVoices'
+    ModelVoices:
+      description: Represents a model with its available voices.
+      type: object
+      required:
+      - model
+      - voices
+      properties:
+        model:
+          description: Model name.
+          type: string
+        voices:
+          description: List of available voices for the model.
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - name
+            properties:
+              id:
+                type: string
+              name:
+                description: Voice name to be used for audio inference.
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

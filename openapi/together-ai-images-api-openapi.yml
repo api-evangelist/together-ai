@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Images API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Images
+paths:
+  /images/generations:
+    post:
+      tags:
+      - Images
+      summary: Create image
+      description: Use an image model to generate an image for a given prompt.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.images.generate(\n    model=\"black-forest-labs/FLUX.1-schnell\",\n    steps=4,\n    prompt=\"A cartoon of an astronaut riding a horse on the moon\",\n)\n\nprint(response.data[0].url)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.images.generate(\n    model=\"black-forest-labs/FLUX.1-schnell\",\n    steps=4,\n    prompt=\"A cartoon of an astronaut riding a horse on the moon\",\n)\n\nprint(response.data[0].url)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.images.generate({\n  model: \"black-forest-labs/FLUX.1-schnell\",\n  prompt: \"A cartoon of an astronaut riding a horse on the moon\",\n});\n\nconsole.log(response.data[0].url);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.images.generate({\n  model: \"black-forest-labs/FLUX.1-schnell\",\n  prompt: \"A cartoon of an astronaut riding a horse on the moon\",\n});\n\nconsole.log(response.data[0].url);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/images/generations\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n       \"model\": \"black-forest-labs/FLUX.1-schnell\",\n       \"prompt\": \"A cartoon of an astronaut riding a horse on the moon\"\n     }'\n"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - prompt
+              - model
+              properties:
+                prompt:
+                  type: string
+                  description: A description of the desired images. Maximum length varies by model.
+                  example: cat floating in space, cinematic
+                model:
+                  type: string
+                  description: 'The model to use for image generation.<br> <br> [See all of Together AI''s image models](https://docs.together.ai/docs/serverless-models#image-models)
+
+                    '
+                  example: black-forest-labs/FLUX.1-schnell
+                  anyOf:
+                  - type: string
+                    enum:
+                    - black-forest-labs/FLUX.1-schnell-Free
+                    - black-forest-labs/FLUX.1-schnell
+                    - black-forest-labs/FLUX.1.1-pro
+                  - type: string
+                steps:
+                  type: integer
+                  default: 20
+                  description: Number of generation steps.
+                image_url:
+                  type: string
+                  description: URL of an image to use for image models that support it.
+                seed:
+                  type: integer
+                  description: Seed used for generation. Can be used to reproduce image generations.
+                n:
+                  type: integer
+                  default: 1
+                  description: Number of image results to generate.
+                height:
+                  type: integer
+                  default: 1024
+                  description: Height of the image to generate in number of pixels.
+                width:
+                  type: integer
+                  default: 1024
+                  description: Width of the image to generate in number of pixels.
+                negative_prompt:
+                  type: string
+                  description: The prompt or prompts not to guide the image generation.
+                response_format:
+                  type: string
+                  description: Format of the image response. Can be either a base64 string or a URL.
+                  enum:
+                  - base64
+                  - url
+                guidance_scale:
+                  type: number
+                  description: Adjusts the alignment of the generated image with the input prompt. Higher values (e.g., 8-10) make the output more faithful to the prompt, while lower values (e.g., 1-5) encourage more creative freedom.
+                  default: 3.5
+                output_format:
+                  type: string
+                  description: The format of the image response. Can be either be `jpeg` or `png`. Defaults to `jpeg`.
+                  default: jpeg
+                  enum:
+                  - jpeg
+                  - png
+                image_loras:
+                  description: An array of objects that define LoRAs (Low-Rank Adaptations) to influence the generated image.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - path
+                    - scale
+                    properties:
+                      path:
+                        type: string
+                        description: The URL of the LoRA to apply (e.g. https://huggingface.co/strangerzonehf/Flux-Midjourney-Mix2-LoRA).
+                      scale:
+                        type: number
+                        description: The strength of the LoRA's influence. Most LoRA's recommend a value of 1.
+                reference_images:
+                  description: An array of image URLs that guide the overall appearance and style of the generated image. These reference images influence the visual characteristics consistently across the generation.
+                  type: array
+                  items:
+                    type: string
+                    description: URL of a reference image to guide the image generation.
+                disable_safety_checker:
+                  type: boolean
+                  description: If true, disables the safety checker for image generation.
+      responses:
+        '200':
+          description: Image generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageResponse'
+components:
+  schemas:
+    ImageResponseDataUrl:
+      type: object
+      required:
+      - index
+      - url
+      - type
+      properties:
+        index:
+          type: integer
+        url:
+          type: string
+        type:
+          type: string
+          enum:
+          - url
+    ImageResponseDataB64:
+      type: object
+      required:
+      - index
+      - b64_json
+      - type
+      properties:
+        index:
+          type: integer
+        b64_json:
+          type: string
+        type:
+          type: string
+          enum:
+          - b64_json
+    ImageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          description: The object type, which is always `list`.
+          const: list
+        data:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ImageResponseDataB64'
+            - $ref: '#/components/schemas/ImageResponseDataUrl'
+            discriminator:
+              propertyName: type
+      required:
+      - id
+      - model
+      - object
+      - data
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

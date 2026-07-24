@@ -1,0 +1,680 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio evaluation API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: evaluation
+paths:
+  /evaluation:
+    post:
+      tags:
+      - evaluation
+      summary: Create an evaluation job
+      operationId: createEvaluationJob
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evals.create(\n    type=\"classify\",\n    parameters=ParametersEvaluationClassifyParameters(\n        judge=ParametersEvaluationClassifyParametersJudge(\n            model=\"openai/gpt-oss-120b\",\n            model_source=\"serverless\",\n            system_template=\"You are an expert evaluator...\",\n        ),\n        input_data_file_path=\"file-abc123\",\n        labels=[\"good\", \"bad\"],\n        pass_labels=[\"good\"],\n        model_to_evaluate=\"Qwen/Qwen3.5-9B\"\n    )\n)\n\nprint(response.workflow_id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evaluation.create(\n    type=\"classify\",\n    judge_model_name=\"openai/gpt-oss-120b\",\n    judge_system_template=\"You are an expert evaluator...\",\n    input_data_file_path=\"file-abc123\",\n    labels=[\"good\", \"bad\"],\n    pass_labels=[\"good\"],\n    model_to_evaluate=\"Qwen/Qwen3.5-9B\"\n)\n\nprint(response.workflow_id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.create({\n  type: 'classify',\n  parameters: {\n    judge: {\n      model: 'openai/gpt-oss-120b',\n      model_source: 'serverless',\n      system_template: 'You are an expert evaluator...',\n    },\n    input_data_file_path: 'file-abc123',\n    labels: ['good', 'bad'],\n    pass_labels: ['good'],\n    model_to_evaluate: 'Qwen/Qwen3.5-9B',\n  },\n});\n\nconsole.log(response.workflow_id);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.create({\n  type: 'classify',\n  parameters: {\n    judge: {\n      model: 'openai/gpt-oss-120b',\n      model_source: 'serverless',\n      system_template: 'You are an expert evaluator...',\n    },\n    input_data_file_path: 'file-abc123',\n    labels: ['good', 'bad'],\n    pass_labels: ['good'],\n    model_to_evaluate: 'Qwen/Qwen3.5-9B',\n  },\n});\n\nconsole.log(response.workflow_id);\n"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluationTypedRequest'
+      responses:
+        '200':
+          description: Evaluation job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResponse'
+        '400':
+          description: Invalid request format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Failed to create evaluation job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+    get:
+      tags:
+      - evaluation
+      summary: Get all evaluation jobs
+      operationId: getAllEvaluationJobs
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evals.list()\n\nfor job in response:\n    print(job.workflow_id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\njobs = client.evaluation.list()\n\nfor job in jobs:\n    print(job.workflow_id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.list();\n\nfor (const job of response) {\n  console.log(job.workflow_id);\n}\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.list();\n\nfor (const job of response) {\n  console.log(job.workflow_id);\n}\n"
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Filter evaluation jobs by status
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          description: Limit the number of results
+      responses:
+        '200':
+          description: evaluation jobs retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EvaluationJob'
+        '400':
+          description: Invalid request format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Error retrieving jobs from manager
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /evaluation/model-list:
+    get:
+      tags:
+      - evaluation
+      summary: Get model list
+      operationId: getModelList
+      parameters:
+      - name: model_source
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Filter models by source
+          default: all
+      responses:
+        '200':
+          description: Model list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  model_list:
+                    type: array
+                    items:
+                      type: string
+                      description: The name of the model
+        '400':
+          description: Invalid request format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Error retrieving model list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /evaluation/{id}:
+    get:
+      tags:
+      - evaluation
+      summary: Get evaluation job details
+      operationId: getEvaluationJobDetails
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evals.retrieve('eval_id')\n\nprint(response)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evaluation.retrieve('eval_id')\n\nprint(response)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.retrieve('eval_id');\n\nconsole.log(response);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.retrieve('eval_id');\n\nconsole.log(response);\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          description: The ID of the evaluation job to retrieve
+          type: string
+      responses:
+        '200':
+          description: Evaluation job details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationJob'
+        '404':
+          description: Evaluation job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Failed to get evaluation job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /evaluation/{id}/status:
+    get:
+      tags:
+      - evaluation
+      summary: Get evaluation job status and results
+      operationId: getEvaluationJobStatusAndResults
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evals.status('eval_id')\n\nprint(response.status)\nprint(response.results)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.evaluation.status('eval_id')\n\nprint(response.status)\nprint(response.results)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.status('eval_id');\n\nconsole.log(response.status);\nconsole.log(response.results);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.evals.status('eval_id');\n\nconsole.log(response.status);\nconsole.log(response.results);\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          description: The ID of the evaluation job to get the status of
+          type: string
+      responses:
+        '200':
+          description: Evaluation job status and results retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the evaluation job
+                    enum:
+                    - completed
+                    - error
+                    - user_error
+                    - running
+                    - queued
+                    - pending
+                  results:
+                    description: The results of the evaluation job
+                    oneOf:
+                    - $ref: '#/components/schemas/EvaluationClassifyResults'
+                    - $ref: '#/components/schemas/EvaluationScoreResults'
+                    - $ref: '#/components/schemas/EvaluationCompareResults'
+        '404':
+          description: Evaluation job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Failed to get evaluation job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+components:
+  schemas:
+    EvaluationJobStatusUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status at this update
+          example: pending
+        message:
+          type: string
+          description: Additional message for this update
+          example: Job is pending evaluation
+        timestamp:
+          type: string
+          format: date-time
+          description: When this update occurred
+          example: '2025-07-23T17:10:04.837888Z'
+    EvaluationClassifyResults:
+      type: object
+      properties:
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        invalid_label_count:
+          type: number
+          format: float
+          nullable: true
+          description: Number of invalid labels
+          example: 0
+        result_file_id:
+          type: string
+          description: Data File ID
+          example: file-1234-aefd
+        pass_percentage:
+          type: number
+          format: integer
+          nullable: true
+          description: Pecentage of pass labels.
+          example: 10
+        label_counts:
+          type: string
+          description: JSON string representing label counts
+          example: '{"yes": 10, "no": 0}'
+    EvaluationCompareResults:
+      type: object
+      properties:
+        num_samples:
+          type: integer
+          description: Total number of samples compared
+        A_wins:
+          type: integer
+          description: Number of times model A won
+        B_wins:
+          type: integer
+          description: Number of times model B won
+        Ties:
+          type: integer
+          description: Number of ties
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        result_file_id:
+          type: string
+          description: Data File ID
+    EvaluationScoreResults:
+      type: object
+      properties:
+        aggregated_scores:
+          type: object
+          properties:
+            mean_score:
+              type: number
+              format: float
+            std_score:
+              type: number
+              format: float
+            pass_percentage:
+              type: number
+              format: float
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        invalid_score_count:
+          type: number
+          format: integer
+          description: number of invalid scores generated from model
+        failed_samples:
+          type: number
+          format: integer
+          description: number of failed samples generated from model
+        result_file_id:
+          type: string
+          description: Data File ID
+          example: file-1234-aefd
+    EvaluationCompareParameters:
+      type: object
+      required:
+      - judge
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        model_a:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        model_b:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          description: Data file name
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    EvaluationModelRequest:
+      type: object
+      required:
+      - model
+      - max_tokens
+      - temperature
+      - system_template
+      - input_template
+      - model_source
+      properties:
+        model:
+          type: string
+          description: Name of the model to evaluate
+          example: Qwen/Qwen3.5-9B
+        max_tokens:
+          type: integer
+          minimum: 1
+          description: Maximum number of tokens to generate
+          example: 512
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+          description: Sampling temperature
+          example: 0.7
+        system_template:
+          type: string
+          description: System prompt template
+          example: Imagine you are helpful assistant
+        input_template:
+          type: string
+          description: Input prompt template
+          example: Please classify {{prompt}} based on the labels below
+        model_source:
+          type: string
+          description: Source of the model.
+          enum:
+          - serverless
+          - dedicated
+          - external
+        external_api_token:
+          type: string
+          description: Bearer/API token for external models.
+        external_base_url:
+          type: string
+          description: Base URL for external models. Must be OpenAI-compatible base URL
+        num_workers:
+          type: integer
+          minimum: 1
+          description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
+          example: 5
+    EvaluationScoreParameters:
+      type: object
+      required:
+      - judge
+      - min_score
+      - max_score
+      - pass_threshold
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        min_score:
+          type: number
+          format: float
+          example: 0
+          description: Minimum possible score
+        max_score:
+          type: number
+          format: float
+          example: 10
+          description: Maximum possible score
+        pass_threshold:
+          type: number
+          format: float
+          example: 7
+          description: Score threshold for passing
+        model_to_evaluate:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          example: file-01234567890123456789
+          description: Data file ID
+    EvaluationJudgeModelConfig:
+      type: object
+      required:
+      - model
+      - system_template
+      - model_source
+      properties:
+        model:
+          type: string
+          description: Name of the judge model
+          example: Qwen/Qwen3.5-9B
+        system_template:
+          type: string
+          description: System prompt template for the judge
+          example: Imagine you are a helpful assistant
+        model_source:
+          type: string
+          description: Source of the judge model.
+          enum:
+          - serverless
+          - dedicated
+          - external
+        external_api_token:
+          type: string
+          description: Bearer/API token for external judge models.
+        external_base_url:
+          type: string
+          description: Base URL for external judge models. Must be OpenAI-compatible base URL.
+        num_workers:
+          type: integer
+          minimum: 1
+          description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
+          example: 5
+        max_tokens:
+          type: integer
+          minimum: 1
+          description: Maximum number of tokens the judge model can generate. Defaults to 32768. Increase for reasoning models (e.g. Gemini, o-series) that consume output token budget for chain-of-thought.
+          example: 8192
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+          description: Sampling temperature for the judge model. Defaults to 0.05.
+          example: 0
+    EvaluationTypedRequest:
+      type: object
+      required:
+      - type
+      - parameters
+      properties:
+        type:
+          type: string
+          enum:
+          - classify
+          - score
+          - compare
+          description: The type of evaluation to perform
+          example: classify
+        parameters:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluationClassifyParameters'
+          - $ref: '#/components/schemas/EvaluationScoreParameters'
+          - $ref: '#/components/schemas/EvaluationCompareParameters'
+          description: Type-specific parameters for the evaluation
+    EvaluationResponse:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+          description: The ID of the created evaluation job
+          example: eval-1234-1244513
+        status:
+          type: string
+          enum:
+          - pending
+          description: Initial status of the job
+    EvaluationClassifyParameters:
+      type: object
+      required:
+      - judge
+      - labels
+      - pass_labels
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        labels:
+          type: array
+          items:
+            type: string
+          minItems: 2
+          description: List of possible classification labels
+          example:
+          - 'yes'
+          - 'no'
+        pass_labels:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of labels that are considered passing
+          example:
+          - 'yes'
+        model_to_evaluate:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          description: Data file ID
+          example: file-1234-aefd
+    EvaluationJob:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+          description: The evaluation job ID
+          example: eval-1234aedf
+        type:
+          type: string
+          enum:
+          - classify
+          - score
+          - compare
+          description: The type of evaluation
+          example: classify
+        owner_id:
+          type: string
+          description: ID of the job owner (admin only)
+        status:
+          type: string
+          enum:
+          - pending
+          - queued
+          - running
+          - completed
+          - error
+          - user_error
+          description: Current status of the job
+          example: completed
+        status_updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluationJobStatusUpdate'
+          description: History of status updates (admin only)
+        parameters:
+          type: object
+          description: The parameters used for this evaluation
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          description: When the job was created
+          example: '2025-07-23T17:10:04.837888Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: When the job was last updated
+          example: '2025-07-23T17:10:04.837888Z'
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluationClassifyResults'
+          - $ref: '#/components/schemas/EvaluationScoreResults'
+          - $ref: '#/components/schemas/EvaluationCompareResults'
+          - type: object
+            properties:
+              error:
+                type: string
+          nullable: true
+          description: Results of the evaluation (when completed)
+    EvaluationModelOrString:
+      oneOf:
+      - type: string
+        description: Field name in the input data
+      - $ref: '#/components/schemas/EvaluationModelRequest'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

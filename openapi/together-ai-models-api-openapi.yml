@@ -1,0 +1,287 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Models API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Models
+paths:
+  /models:
+    get:
+      tags:
+      - Models
+      summary: List all models
+      description: Lists all of Together's open-source models
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nmodels = client.models.list()\n\nfor model in models:\n    print(model.id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nmodels = client.models.list()\n\nfor model in models:\n    print(model.id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst models = await client.models.list();\n\nfor (const model of models) {\n  console.log(model.id);\n}\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst models = await client.models.list();\n\nfor (const model of models) {\n  console.log(model.id);\n}\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/models\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      operationId: models
+      parameters:
+      - name: dedicated
+        in: query
+        schema:
+          description: Filter models to only return dedicated models
+          type: boolean
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfoList'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '429':
+          description: RateLimit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '504':
+          description: Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+      deprecated: false
+    post:
+      tags:
+      - Models
+      summary: Upload a custom model or adapter
+      description: Upload a custom model or adapter from Hugging Face or S3
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.models.upload(\n    model_name=\"My-Fine-Tuned-Model\",\n    model_source=\"https://ml-models.s3.us-west-2.amazonaws.com/models/my-fine-tuned-model.tar.gz\",\n)\n\nprint(response.data.job_id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.models.upload(\n    \"My-Fine-Tuned-Model\",\n    \"https://ml-models.s3.us-west-2.amazonaws.com/models/my-fine-tuned-model.tar.gz\",\n)\n\nprint(response.job_id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.models.upload({\n  model_name: \"My-Fine-Tuned-Model\",\n  model_source: \"https://ml-models.s3.us-west-2.amazonaws.com/models/my-fine-tuned-model.tar.gz\",\n})\n\nconsole.log(response);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.models.upload({\n  model_name: \"My-Fine-Tuned-Model\",\n  model_source: \"https://ml-models.s3.us-west-2.amazonaws.com/models/my-fine-tuned-model.tar.gz\",\n})\n\nconsole.log(response);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/models\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n        \"model_name\": \"My-Fine-Tuned-Model\",\n        \"model_source\": \"https://ml-models.s3.us-west-2.amazonaws.com/models/my-fine-tuned-model.tar.gz\"\n      }'\n"
+      operationId: uploadModel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelUploadRequest'
+      responses:
+        '200':
+          description: Model / adapter upload job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelUploadSuccessResponse'
+components:
+  schemas:
+    ModelInfo:
+      type: object
+      required:
+      - id
+      - object
+      - created
+      - type
+      properties:
+        id:
+          type: string
+          example: Austism/chronos-hermes-13b
+        object:
+          description: The object type, which is always `model`.
+          const: model
+        created:
+          type: integer
+          example: 1692896905
+        type:
+          enum:
+          - chat
+          - language
+          - code
+          - image
+          - embedding
+          - moderation
+          - rerank
+          example: chat
+        display_name:
+          type: string
+          example: Chronos Hermes (13B)
+        organization:
+          type: string
+          example: Austism
+        link:
+          type: string
+        license:
+          type: string
+          example: other
+        context_length:
+          type: integer
+          example: 2048
+        pricing:
+          $ref: '#/components/schemas/Pricing'
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    ModelUploadRequest:
+      type: object
+      required:
+      - model_name
+      - model_source
+      properties:
+        model_name:
+          type: string
+          description: The name to give to your uploaded model
+          example: Qwen2.5-72B-Instruct
+        model_source:
+          type: string
+          description: The source location of the model (Hugging Face repo or S3 path)
+          example: unsloth/Qwen2.5-72B-Instruct
+        model_type:
+          type: string
+          description: Whether the model is a full model or an adapter
+          default: model
+          enum:
+          - model
+          - adapter
+          example: model
+        hf_token:
+          type: string
+          description: Hugging Face token (if uploading from Hugging Face)
+          example: hf_examplehuggingfacetoken
+        description:
+          type: string
+          description: A description of your model
+          example: Finetuned Qwen2.5-72B-Instruct by Unsloth
+        base_model:
+          type: string
+          description: The base model to use for an adapter if setting it to run against a serverless pool.  Only used for model_type `adapter`.
+          example: Qwen/Qwen2.5-72B-Instruct
+        lora_model:
+          type: string
+          description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
+          example: my_username/Qwen2.5-72B-Instruct-lora
+    ModelUploadSuccessResponse:
+      type: object
+      required:
+      - data
+      - message
+      properties:
+        data:
+          type: object
+          required:
+          - job_id
+          - model_name
+          - model_id
+          - model_source
+          properties:
+            job_id:
+              type: string
+              example: job-a15dad11-8d8e-4007-97c5-a211304de284
+            model_name:
+              type: string
+              example: necolinehubner/Qwen2.5-72B-Instruct
+            model_id:
+              type: string
+              example: model-c0e32dfc-637e-47b2-bf4e-e9b2e58c9da7
+            model_source:
+              type: string
+              example: huggingface
+        message:
+          type: string
+          example: Processing model weights. Job created.
+    Pricing:
+      type: object
+      required:
+      - hourly
+      - input
+      - output
+      - base
+      - finetune
+      properties:
+        base:
+          type: number
+          example: 0
+        finetune:
+          type: number
+          example: 0
+        hourly:
+          type: number
+          example: 0
+        input:
+          type: number
+          example: 0.3
+        output:
+          type: number
+          example: 0.3
+        cached_input:
+          type: number
+          example: 0.2
+    ModelInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ModelInfo'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

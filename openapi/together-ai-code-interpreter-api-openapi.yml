@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Code Interpreter API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Code Interpreter
+paths:
+  /tci/execute:
+    post:
+      tags:
+      - Code Interpreter
+      callbacks: {}
+      description: 'Executes the given code snippet and returns the output. Without a session_id, a new session will be created to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for running multiple code snippets in the same environment, because dependencies and similar things are persisted
+
+        between calls to the same session.
+
+        '
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.code_interpreter.execute(\n    code=\"print('Hello world!')\",\n    language=\"python\",\n)\n\nprint(response.data.outputs[0].data);\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.code_interpreter.run(\n    code=\"print('Hello world!')\",\n    language=\"python\",\n)\n\nprint(response.data.outputs[0].data);\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.codeInterpreter.execute({\n  code: \"print('Hello world!')\",\n  language: \"python\"\n});\n\nconsole.log(response.data?.outputs?.[0]?.data);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.codeInterpreter.execute({\n  code: \"print('Hello world!')\",\n  language: \"python\"\n});\n\nconsole.log(response.data?.outputs?.[0]?.data);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X POST \"https://api.together.ai/v1/tci/execute\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n       \"code\": \"print(\\'Hello world!\\')\",\n       \"language\": \"python\"\n     }'\n"
+      operationId: tci/execute
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteRequest'
+        description: Execute Request
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteResponse'
+          description: Execute Response
+  /tci/sessions:
+    get:
+      tags:
+      - Code Interpreter
+      callbacks: {}
+      description: 'Lists all your currently active sessions.
+
+        '
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.code_interpreter.sessions.list()\n\nfor session in response.data.sessions:\n    print(session.id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: '# together v1 does not support this method
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.codeInterpreter.sessions.list();\n\nfor (const session of response.data?.sessions) {\n  console.log(session.id);\n}\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.codeInterpreter.sessions.list();\n\nfor (const session of response.data?.sessions) {\n  console.log(session.id);\n}\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/tci/sessions\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      operationId: sessions/list
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionListResponse'
+          description: List Response
+components:
+  schemas:
+    ExecuteResponse:
+      title: ExecuteResponse
+      type: object
+      description: The result of the execution. If successful, `data` contains the result and `errors` will be null. If unsuccessful, `data` will be null and `errors` will contain the errors.
+      oneOf:
+      - title: SuccessfulExecution
+        type: object
+        required:
+        - data
+        - errors
+        properties:
+          errors:
+            type: 'null'
+          data:
+            type: object
+            nullable: false
+            required:
+            - session_id
+            - outputs
+            properties:
+              outputs:
+                type: array
+                items:
+                  discriminator:
+                    propertyName: type
+                  oneOf:
+                  - title: StreamOutput
+                    description: Outputs that were printed to stdout or stderr
+                    type: object
+                    required:
+                    - type
+                    - data
+                    properties:
+                      type:
+                        enum:
+                        - stdout
+                        - stderr
+                        type: string
+                      data:
+                        type: string
+                  - description: Errors and exceptions that occurred. If this output type is present, your code did not execute successfully.
+                    properties:
+                      data:
+                        type: string
+                      type:
+                        enum:
+                        - error
+                        type: string
+                    required:
+                    - type
+                    - data
+                    title: ErrorOutput
+                  - properties:
+                      data:
+                        properties:
+                          application/geo+json:
+                            type: object
+                            additionalProperties: true
+                          application/javascript:
+                            type: string
+                          application/json:
+                            type: object
+                            additionalProperties: true
+                          application/pdf:
+                            format: byte
+                            type: string
+                          application/vnd.vega.v5+json:
+                            type: object
+                            additionalProperties: true
+                          application/vnd.vegalite.v4+json:
+                            type: object
+                            additionalProperties: true
+                          image/gif:
+                            format: byte
+                            type: string
+                          image/jpeg:
+                            format: byte
+                            type: string
+                          image/png:
+                            format: byte
+                            type: string
+                          image/svg+xml:
+                            type: string
+                          text/html:
+                            type: string
+                          text/latex:
+                            type: string
+                          text/markdown:
+                            type: string
+                          text/plain:
+                            type: string
+                        type: object
+                      type:
+                        enum:
+                        - display_data
+                        - execute_result
+                        type: string
+                    required:
+                    - type
+                    - data
+                    title: DisplayorExecuteOutput
+                  title: InterpreterOutput
+              session_id:
+                type: string
+                description: Identifier of the current session. Used to make follow-up calls.
+                example: ses_abcDEF123
+                nullable: false
+              status:
+                type: string
+                enum:
+                - success
+                description: Status of the execution. Currently only supports success.
+      - title: FailedExecution
+        type: object
+        required:
+        - data
+        - errors
+        properties:
+          data:
+            type: 'null'
+          errors:
+            type: array
+            items:
+              title: Error
+              oneOf:
+              - type: string
+              - type: object
+                additionalProperties: true
+    SessionListResponse:
+      allOf:
+      - properties:
+          errors:
+            items:
+              oneOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+              title: Error
+            type: array
+        title: Response
+        type: object
+      - properties:
+          data:
+            properties:
+              sessions:
+                items:
+                  properties:
+                    execute_count:
+                      type: integer
+                    expires_at:
+                      format: date-time
+                      type: string
+                    id:
+                      description: Session Identifier. Used to make follow-up calls.
+                      example: ses_abcDEF123
+                      type: string
+                    last_execute_at:
+                      format: date-time
+                      type: string
+                    started_at:
+                      format: date-time
+                      type: string
+                  required:
+                  - execute_count
+                  - expires_at
+                  - id
+                  - last_execute_at
+                  - started_at
+                  type: object
+                type: array
+            required:
+            - sessions
+        type: object
+      title: SessionListResponse
+      type: object
+    ExecuteRequest:
+      title: ExecuteRequest
+      required:
+      - language
+      - code
+      properties:
+        code:
+          description: Code snippet to execute.
+          example: print('Hello, world!')
+          type: string
+        files:
+          description: Files to upload to the session. If present, files will be uploaded before executing the given code.
+          items:
+            properties:
+              content:
+                type: string
+              encoding:
+                description: Encoding of the file content. Use `string` for text files such as code, and `base64` for binary files, such as images.
+                enum:
+                - string
+                - base64
+                type: string
+              name:
+                type: string
+            required:
+            - name
+            - encoding
+            - content
+            type: object
+          type: array
+        language:
+          default: python
+          description: Programming language for the code to execute. Currently only supports Python, but more will be added.
+          enum:
+          - python
+        session_id:
+          description: Identifier of the current session. Used to make follow-up calls. Requests will return an error if the session does not belong to the caller or has expired.
+          example: ses_abcDEF123
+          nullable: false
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

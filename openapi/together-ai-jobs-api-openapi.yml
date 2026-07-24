@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Jobs API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Jobs
+paths:
+  /jobs/{jobId}:
+    get:
+      tags:
+      - Jobs
+      summary: Get job status
+      description: Get the status of a specific job
+      operationId: getJob
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          example: job-a15dad11-8d8e-4007-97c5-a211304de284
+          description: The ID of the job to retrieve
+          type: string
+      responses:
+        '200':
+          description: Job status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobInfoSuccessResponse'
+  /jobs:
+    get:
+      tags:
+      - Jobs
+      summary: List all jobs
+      description: List all jobs and their statuses
+      operationId: listJobs
+      responses:
+        '200':
+          description: Jobs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsInfoSuccessResponse'
+components:
+  schemas:
+    JobInfoSuccessResponse:
+      type: object
+      required:
+      - type
+      - job_id
+      - status
+      - status_updates
+      - args
+      - created_at
+      - updated_at
+      properties:
+        type:
+          type: string
+          example: model_upload
+        job_id:
+          type: string
+          example: job-a15dad11-8d8e-4007-97c5-a211304de284
+        status:
+          type: string
+          enum:
+          - Queued
+          - Running
+          - Complete
+          - Failed
+          example: Complete
+        status_updates:
+          type: array
+          items:
+            type: object
+            required:
+            - status
+            - message
+            - timestamp
+            properties:
+              status:
+                type: string
+                example: Complete
+              message:
+                type: string
+                example: Job is Complete
+              timestamp:
+                type: string
+                format: date-time
+                example: '2025-03-11T22:36:12Z'
+        args:
+          type: object
+          properties:
+            description:
+              type: string
+              example: Finetuned Qwen2.5-72B-Instruct by Unsloth
+            modelName:
+              type: string
+              example: necolinehubner/Qwen2.5-72B-Instruct
+            modelSource:
+              type: string
+              example: unsloth/Qwen2.5-72B-Instruct
+        created_at:
+          type: string
+          format: date-time
+          example: '2025-03-11T22:05:43Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2025-03-11T22:36:12Z'
+    JobsInfoSuccessResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobInfoSuccessResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

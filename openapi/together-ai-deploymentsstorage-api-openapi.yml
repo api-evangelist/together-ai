@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio DeploymentsStorage API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: DeploymentsStorage
+paths:
+  /deployments/storage/{filename}:
+    get:
+      description: Download a file by redirecting to a signed URL
+      summary: Download a file
+      tags:
+      - DeploymentsStorage
+      parameters:
+      - name: filename
+        in: path
+        required: true
+        schema:
+          description: Filename
+          type: string
+      responses:
+        '307':
+          description: Redirect to signed download URL
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

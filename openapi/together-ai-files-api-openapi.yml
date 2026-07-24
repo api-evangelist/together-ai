@@ -1,0 +1,364 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio Files API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: Files
+paths:
+  /files:
+    get:
+      tags:
+      - Files
+      summary: List all files
+      description: List the metadata for all uploaded data files.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.files.list()\n\nfor file in response.data:\n    print(file.id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.files.list()\n\nfor file in response.data:\n    print(file.id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.list();\n\nfor (const file of response.data) {\n  console.log(file.id);\n}\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.list();\n\nfor (const file of response.data) {\n  console.log(file.id);\n}\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/files\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      responses:
+        '200':
+          description: List of files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileList'
+  /files/{id}:
+    get:
+      tags:
+      - Files
+      summary: Retrieve file metadata
+      description: Retrieve the metadata for a single uploaded data file.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = client.files.retrieve(id=\"file-id\")\n\nprint(file)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = client.files.retrieve(id=\"file-id\")\n\nprint(file)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst file = await client.files.retrieve(\"file-id\");\n\nconsole.log(file);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst file = await client.files.retrieve(\"file-id\");\n\nconsole.log(file);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/files/ID\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          description: The ID of the file to retrieve
+          type: string
+      responses:
+        '200':
+          description: File retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+    delete:
+      tags:
+      - Files
+      summary: Delete a file
+      description: Delete a previously uploaded data file.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.files.delete(id=\"file-id\")\n\nprint(response)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nresponse = client.files.delete(id=\"file-id\")\n\nprint(response)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.delete(\"file-id\");\n\nconsole.log(response);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.delete(\"file-id\");\n\nconsole.log(response);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl -X \"DELETE\" \"https://api.together.ai/v1/files/file-id\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\"\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          description: The ID of the file to delete
+          type: string
+      responses:
+        '200':
+          description: File deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDeleteResponse'
+  /files/{id}/content:
+    get:
+      tags:
+      - Files
+      summary: Get file contents
+      description: Get the contents of a single uploaded data file.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nwith client.files.with_streaming_response.content(id=\"file-id\") as response:\n  for line in response.iter_lines():\n    print(line)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\nfile = client.files.retrieve_content(id=\"file-id\")\n\nprint(file.filename)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.content(\"file-id\");\nconst content = await response.text();\n\nconsole.log(content);\n"
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.files.content(\"file-id\");\nconst content = await response.text();\n\nconsole.log(content);\n"
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/files/file-id/content\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -H \"Content-Type: application/json\"\n"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          description: The ID of the file to get the content of
+          type: string
+      responses:
+        '200':
+          description: File content retrieved successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+  /files/upload:
+    post:
+      tags:
+      - Files
+      summary: Upload a file
+      description: Upload a file with specified purpose, file name, and file type.
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: "# Docs for v1 can be found by changing the above selector ^\nfrom together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\ncurrent_dir = os.path.dirname(os.path.abspath(__file__))\nfile_path = os.path.join(current_dir, \"data.jsonl\")\nfile = client.files.upload(file=file_path)\n\nprint(file.id)\n"
+      - lang: Python
+        label: Together AI SDK (v1)
+        source: "from together import Together\nimport os\n\nclient = Together(\n    api_key=os.environ.get(\"TOGETHER_API_KEY\"),\n)\n\ncurrent_dir = os.path.dirname(os.path.abspath(__file__))\nfile_path = os.path.join(current_dir, \"data.jsonl\")\nfile = client.files.upload(file=file_path)\n\nprint(file.id)\n"
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import { upload } from "together-ai/lib/upload"
+
+          import path from "path";
+
+          import { fileURLToPath } from "url";
+
+
+          const __filename = fileURLToPath(import.meta.url);
+
+          const __dirname = path.dirname(__filename);
+
+          const filepath = path.join(__dirname, "data.jsonl");
+
+          const file = await upload(filepath);
+
+
+          console.log(file.id);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import { upload } from "together-ai/lib/upload"
+
+          import path from "path";
+
+          import { fileURLToPath } from "url";
+
+
+          const __filename = fileURLToPath(import.meta.url);
+
+          const __dirname = path.dirname(__filename);
+
+          const filepath = path.join(__dirname, "data.jsonl");
+
+          const file = await upload(filepath);
+
+
+          console.log(file.id);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl \"https://api.together.ai/v1/files/upload\" \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     -F \"file=@/path/to/data.jsonl\" \\\n     -F \"file_name=data.jsonl\" \\\n     -F \"purpose=fine-tune\"\n"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - purpose
+              - file_name
+              - file
+              properties:
+                purpose:
+                  $ref: '#/components/schemas/FilePurpose'
+                file_name:
+                  type: string
+                  description: The name of the file being uploaded
+                  example: dataset.csv
+                file_type:
+                  $ref: '#/components/schemas/FileType'
+                file:
+                  type: string
+                  format: binary
+                  description: The content of the file being uploaded
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorData'
+components:
+  schemas:
+    FileType:
+      type: string
+      description: The type of the file
+      default: jsonl
+      example: jsonl
+      enum:
+      - csv
+      - jsonl
+      - parquet
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+    FilePurpose:
+      type: string
+      description: The purpose of the file
+      example: fine-tune
+      enum:
+      - fine-tune
+      - eval
+      - batch-api
+    FileResponse:
+      description: Structured information describing a file uploaded to Together.
+      type: object
+      required:
+      - id
+      - object
+      - created_at
+      - filename
+      - bytes
+      - purpose
+      - FileType
+      - Processed
+      properties:
+        id:
+          description: ID of the file.
+          type: string
+        object:
+          description: The object type, which is always `file`.
+          const: file
+        created_at:
+          description: The timestamp when the file was created.
+          type: integer
+        filename:
+          description: The name of the file as it was uploaded.
+          type: string
+          example: my_file.jsonl
+        bytes:
+          description: The number of bytes in the file.
+          type: integer
+        purpose:
+          description: The purpose of the file as it was uploaded.
+          $ref: '#/components/schemas/FilePurpose'
+        Processed:
+          description: Whether the file has been parsed and analyzed for correctness for fine-tuning.
+          type: boolean
+        FileType:
+          description: The type of the file such as `jsonl`, `csv`, or `parquet`.
+          $ref: '#/components/schemas/FileType'
+    FileList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default

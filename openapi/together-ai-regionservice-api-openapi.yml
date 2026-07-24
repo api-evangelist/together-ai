@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto Audio RegionService API
+  version: version not set
+servers:
+- url: https://api.together.xyz/v1
+security:
+- bearerAuth: []
+tags:
+- name: RegionService
+paths:
+  /compute/regions:
+    get:
+      tags:
+      - RegionService
+      summary: List regions and corresponding supported driver versions
+      operationId: RegionService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionListResponse'
+      x-codeSamples:
+      - lang: Python
+        label: Together AI SDK (v2)
+        source: 'from together import Together
+
+          client = Together()
+
+
+          regions = client.beta.clusters.list_regions()
+
+          print(regions)
+
+          '
+      - lang: TypeScript
+        label: Together AI SDK (TypeScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const regions = await client.beta.clusters.list_regions();
+
+          console.log(regions);
+
+          '
+      - lang: JavaScript
+        label: Together AI SDK (JavaScript)
+        source: 'import Together from "together-ai";
+
+          const client = new Together();
+
+
+          const regions = await client.beta.clusters.list_regions();
+
+          console.log(regions);
+
+          '
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/regions\n"
+  /api/v1/regions:
+    get:
+      tags:
+      - RegionService
+      summary: List regions and corresponding supported driver versions
+      operationId: RegionService_List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionListResponse_2'
+      x-codeSamples:
+      - lang: Shell
+        label: cURL
+        source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/regions\n"
+components:
+  schemas:
+    RegionListResponse:
+      type: object
+      required:
+      - regions
+      properties:
+        regions:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - supported_instance_types
+            - driver_versions
+            properties:
+              name:
+                description: Identifiable name of the region.
+                type: string
+              driver_versions:
+                description: List of supported identifiable cuda/nvidia driver versions pairs available in the region.
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterDriverVersionInfo'
+              supported_instance_types:
+                description: List of supported identifiable gpus available in the region.
+                type: array
+                items:
+                  type: string
+    ClusterDriverVersionInfo:
+      type: object
+      description: CUDA/NVIDIA driver versions pair available in the region to use in the create cluster request.
+      required:
+      - cuda_version
+      - nvidia_driver_version
+      properties:
+        cuda_version:
+          description: CUDA driver version.
+          type: string
+        nvidia_driver_version:
+          description: NVIDIA driver version.
+          type: string
+    Region:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        availability_zones:
+          type: array
+          items:
+            type: string
+        driver_versions:
+          type: array
+          items:
+            type: string
+    RegionListResponse_2:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default
