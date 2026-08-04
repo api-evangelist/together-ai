@@ -1,0 +1,554 @@
+openapi: 3.0.3
+info:
+  title: remediation.proto
+  version: version not set
+servers:
+  - url: https://api.together.xyz/v1
+security:
+  - bearerAuth: []
+paths:
+  /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}:
+    get:
+      description: >-
+        Retrieve the status of a specific remdiation on a specific instance in a
+        specific cluster.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            description: The ID of the cluster.
+            type: string
+        - name: instance_id
+          in: path
+          required: true
+          schema:
+            description: The `instance_id` of the GPU Worker node from the cluster.
+            type: string
+        - name: remediation_id
+          in: path
+          required: true
+          schema:
+            description: The UUID of the specific remediation.
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Remediation'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/approve:
+    post:
+      description: |
+        Approves a pending remediation.
+
+        Only remediations with state PENDING_APPROVAL can be approved.
+
+        On APPROVE: state changes to PENDING and the remediation process begins.
+        The reviewed_by, review_time, and review_comment fields are populated
+        on the remediation after approval.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: remediation_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBody'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Remediation'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/cancel:
+    post:
+      description: |
+        Cancels a pending remediation.
+
+        Only remediations in PENDING_APPROVAL or PENDING state can be cancelled.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: remediation_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Remediation'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/reject:
+    post:
+      description: |
+        Rejects a pending remediation.
+
+        Only remediations with state PENDING_APPROVAL can be rejected.
+
+        On REJECT: state changes to CANCELLED.
+        The reviewed_by, review_time, and review_comment fields are populated
+        on the remediation after rejection.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: remediation_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBody'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Remediation'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /compute/clusters/{cluster_id}/instances/{optional_instance_id}/remediations:
+    get:
+      description: |
+        Lists remediations for an instance or cluster.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: optional_instance_id
+          in: path
+          required: true
+          schema:
+            description: >
+              To list remediations on a specific node, pass the node's instance
+              ID.
+
+              To list remediations for all nodes in a cluster, pass `-` as a
+              wildcard for the instance ID.
+            type: string
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            description: Maximum results to return.
+            type: integer
+        - name: pageToken
+          in: query
+          required: false
+          schema:
+            description: Pagination token from previous request.
+            type: string
+        - name: state
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/v1RemediationStateFilter'
+        - name: orderBy
+          in: query
+          required: false
+          schema:
+            description: Order by expression.
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListRemediationsResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /compute/clusters/{cluster_id}/instances/{instance_id}/remediations:
+    post:
+      description: >
+        Creates a new remediation for an instance.
+
+
+        Remediations created via the API goes directly to PENDING state.
+
+
+        Our system may trigger automated remediations that require approval.
+        These remediations are created with PENDING_APPROVAL state.
+
+        The user must call /approve to start the actual remediation process.
+
+        These operations can also be rejected by calling /reject.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: remediation_id
+          in: query
+          required: false
+          schema:
+            description: User provided ID for idempotency.
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1Remediation'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1Remediation'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      x-bearer-format: bearer
+      x-default: default
+  schemas:
+    v1RemediationStateFilter:
+      description: >-
+        Filter by state(s). Returns remediations matching any of the specified
+        states.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved
+        before processing.
+      type: array
+      items:
+        type: string
+        enum:
+          - PENDING_APPROVAL
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - CANCELLED
+          - AUTO_RESOLVED
+    CommentBody:
+      type: object
+      properties:
+        comment:
+          type: string
+          description: Comment explaining the action.
+    protobufAny:
+      type: object
+      description: >
+        `Any` contains an arbitrary serialized protocol buffer message along
+        with a
+
+        URL that describes the type of the serialized message.
+
+
+        Protobuf library provides support to pack/unpack Any values in the form
+
+        of utility functions or additional generated methods of the Any type.
+      properties:
+        '@type':
+          type: string
+          description: >
+            A URL/resource name that uniquely identifies the type of the
+            serialized
+
+            protocol buffer message. This string must contain at least
+
+            one "/" character. The last segment of the URL's path must represent
+
+            the fully qualified name of the type (as in
+
+            `path/google.protobuf.Duration`). The name should be in a canonical
+            form
+
+            (e.g., leading "." is not accepted).
+      additionalProperties: true
+    rpcStatus:
+      type: object
+      required:
+        - code
+        - message
+        - details
+      description: >
+        The `Status` type defines a logical error model that is suitable for
+
+        different programming environments, including REST APIs and RPC APIs. It
+        is
+
+        used by [gRPC](https://github.com/grpc). Each `Status` message contains
+
+        three pieces of data: error code, error message, and error details.
+
+
+        You can find out more about this error model and how to work with it in
+        the
+
+        [API Design Guide](https://cloud.google.com/apis/design/errors).
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: |
+            The status code, which should be an enum value of
+            [google.rpc.Code][google.rpc.Code].
+        message:
+          type: string
+          description: >
+            A developer-facing error message, which should be in English. Any
+
+            user-facing error message should be localized and sent in the
+
+            [google.rpc.Status.details][google.rpc.Status.details] field, or
+            localized
+
+            by the client.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          description: >
+            A list of messages that carry the error details.  There is a common
+            set of
+
+            message types for APIs to use.
+    v1ListRemediationsResponse:
+      type: object
+      description: ListRemediationsResponse is the response for ListRemediations.
+      required:
+        - remediations
+        - has_next
+      properties:
+        remediations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v1Remediation'
+          description: The list of remediations.
+        next_page_token:
+          type: string
+          description: Token for the next page.
+        has_next:
+          type: boolean
+          description: Indicates if there are more results available.
+    v1Remediation:
+      type: object
+      required:
+        - id
+        - cluster_id
+        - instance_id
+        - mode
+        - trigger
+        - state
+      properties:
+        id:
+          type: string
+          readOnly: true
+        cluster_id:
+          type: string
+          readOnly: true
+        instance_id:
+          type: string
+          readOnly: true
+        mode:
+          $ref: '#/components/schemas/v1RemediationMode'
+        trigger:
+          $ref: '#/components/schemas/v1RemediationTrigger'
+          readOnly: true
+        state:
+          $ref: '#/components/schemas/v1RemediationState'
+          readOnly: true
+        reason:
+          type: string
+          description: User-provided reason for the remediation.
+        active_health_check_run_id:
+          type: string
+          description: Active health check run ID (UUID) that triggered this remediation.
+          readOnly: true
+        passive_health_check_event_id:
+          type: string
+          description: Passive health check event ID that triggered this remediation.
+          readOnly: true
+        requested_by:
+          type: string
+          description: Who requested the remediation.
+          readOnly: true
+        create_time:
+          type: string
+          format: date-time
+          description: When the remediation was created.
+          readOnly: true
+        reviewed_by:
+          type: string
+          description: Who reviewed the remediation.
+          readOnly: true
+        review_time:
+          type: string
+          format: date-time
+          description: When the remediation was reviewed.
+          readOnly: true
+        review_comment:
+          type: string
+          description: Review comment.
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          description: When processing started.
+          readOnly: true
+        end_time:
+          type: string
+          format: date-time
+          description: When the remediation completed.
+          readOnly: true
+        error_message:
+          type: string
+          description: Error message if the remediation failed.
+          readOnly: true
+        update_time:
+          type: string
+          format: date-time
+          description: When the remediation was last updated.
+          readOnly: true
+    v1RemediationMode:
+      type: string
+      enum:
+        - REMEDIATION_MODE_VM_ONLY
+        - REMEDIATION_MODE_HOST_AWARE
+      description: >
+        Remediation mode specifies how the remediation should be performed.
+
+
+        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on
+        any available host.
+
+        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and
+        provisions a new one on a different host.
+    v1RemediationState:
+      type: string
+      enum:
+        - PENDING_APPROVAL
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - CANCELLED
+        - AUTO_RESOLVED
+      description: >
+        RemediationState represents the lifecycle state of a remediation.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved
+        before processing.
+    v1RemediationTrigger:
+      type: string
+      enum:
+        - REMEDIATION_TRIGGER_MANUAL
+        - REMEDIATION_TRIGGER_AUTOMATED
+      description: >
+        RemediationTrigger specifies how the remediation was triggered.
+
+
+        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via
+        web UI or API call).
+
+        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that
+        requires approval.
