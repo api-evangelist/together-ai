@@ -1,0 +1,377 @@
+{
+  "item": [
+    {
+      "id": "1ce87acc-a3e8-43c9-8762-22f375e28186",
+      "name": "DeploymentsVolumes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "50d35762-e726-415d-8961-602cda7c4bab",
+          "name": "Get the list of project volumes",
+          "request": {
+            "name": "Get the list of project volumes",
+            "description": {
+              "content": "Retrieve all volumes in your project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                "storage",
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f39532be-36ae-4791-8f19-d5e69ce0c27a",
+              "name": "List of volumes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    "storage",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"content\": {\n        \"files\": [\n          {\n            \"last_modified\": \"string\",\n            \"name\": \"string\",\n            \"size\": 8411\n          },\n          {\n            \"last_modified\": \"string\",\n            \"name\": \"string\",\n            \"size\": 2171\n          }\n        ],\n        \"source_prefix\": \"models/\",\n        \"type\": \"files\"\n      },\n      \"created_at\": \"string\",\n      \"current_version\": 62,\n      \"id\": \"string\",\n      \"mounted_by\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name\": \"string\",\n      \"object\": \"string\",\n      \"type\": \"readOnly\",\n      \"updated_at\": \"string\",\n      \"version_history\": {\n        \"key_0\": {\n          \"content\": {\n            \"source_prefix\": \"models/\",\n            \"type\": \"files\"\n          },\n          \"mounted_by\": [\n            \"string\",\n            \"string\"\n          ],\n          \"version\": 7998\n        },\n        \"key_1\": {\n          \"content\": {\n            \"source_prefix\": \"models/\",\n            \"type\": \"files\"\n          },\n          \"mounted_by\": [\n            \"string\",\n            \"string\"\n          ],\n          \"version\": 1545\n        },\n        \"key_2\": {\n          \"content\": {\n            \"source_prefix\": \"models/\",\n            \"type\": \"files\"\n          },\n          \"mounted_by\": [\n            \"string\",\n            \"string\"\n          ],\n          \"version\": 888\n        },\n        \"key_3\": {\n          \"content\": {\n            \"source_prefix\": \"models/\",\n            \"type\": \"files\"\n          },\n          \"mounted_by\": [\n            \"string\",\n            \"string\"\n          ],\n          \"version\": 1384\n        }\n      }\n    },\n    {\n      \"content\": {\n        \"files\": [\n          {\n            \"last_modified\": \"string\",\n            \"name\": \"string\",\n            \"size\": 6338\n          },\n          {\n            \"last_modified\": \"string\",\n            \"name\": \"string\",\n            \"size\": 1877\n          }\n        ],\n        \"source_prefix\": \"models/\",\n        \"type\": \"files\"\n      },\n      \"created_at\": \"string\",\n      \"current_version\": 3802,\n      \"id\": \"string\",\n      \"mounted_by\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name\": \"string\",\n      \"object\": \"string\",\n      \"type\": \"readOnly\",\n      \"updated_at\": \"string\",\n      \"version_history\": {\n        \"key_0\": {\n          \"content\": {\n            \"source_prefix\": \"models/\",\n            \"type\": \"files\"\n          },\n          \"mounted_by\": [\n            \"string\",\n            \"string\"\n          ],\n          \"version\": 853\n        }\n      }\n    }\n  ],\n  \"object\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd64b233-a841-4da0-90ee-141232754ff8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    "storage",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05ae969a-b01e-48db-b690-01d39090f2e1",
+          "name": "Create a new volume",
+          "request": {
+            "name": "Create a new volume",
+            "description": {
+              "content": "Create a new volume to preload files in deployments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                "storage",
+                "volumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"source_prefix\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "907994ba-d2f7-4b72-82fa-47d3bd5fcc2f",
+              "name": "Volume created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    "storage",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"source_prefix\": \"models/\",\n    \"type\": \"files\"\n  },\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"files\": [\n      {\n        \"last_modified\": \"string\",\n        \"name\": \"string\",\n        \"size\": 4231\n      },\n      {\n        \"last_modified\": \"string\",\n        \"name\": \"string\",\n        \"size\": 6246\n      }\n    ],\n    \"source_prefix\": \"models/\",\n    \"type\": \"files\"\n  },\n  \"created_at\": \"string\",\n  \"current_version\": 9420,\n  \"id\": \"string\",\n  \"mounted_by\": [\n    \"string\",\n    \"string\"\n  ],\n  \"name\": \"string\",\n  \"object\": \"string\",\n  \"type\": \"<string>\",\n  \"updated_at\": \"string\",\n  \"version_history\": {\n    \"key_0\": {\n      \"content\": {\n        \"source_prefix\": \"models/\",\n        \"type\": \"files\"\n      },\n      \"mounted_by\": [\n        \"string\",\n        \"string\"\n      ],\n      \"version\": 6477\n    },\n    \"key_1\": {\n      \"content\": {\n        \"source_prefix\": \"models/\",\n        \"type\": \"files\"\n      },\n      \"mounted_by\": [\n        \"string\",\n        \"string\"\n      ],\n      \"version\": 4057\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e42b9338-6c49-402c-835f-aba61aa230ac",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    "storage",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"source_prefix\": \"models/\",\n    \"type\": \"files\"\n  },\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8816914-f39e-448e-991c-4723c76dc71b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    "storage",
+                    "volumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"source_prefix\": \"models/\",\n    \"type\": \"files\"\n  },\n  \"name\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f8789035-1f14-4ce0-9be2-54b55a751dcd",
+    "name": "remediation.proto Audio DeploymentsVolumes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

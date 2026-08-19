@@ -1,0 +1,197 @@
+{
+  "item": [
+    {
+      "id": "19d13e7c-b968-4532-a3a8-95b2d674f372",
+      "name": "RegionService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "27cb9e61-89c9-4236-a8b9-6b5a81b96750",
+          "name": "List regions and corresponding supported driver versions",
+          "request": {
+            "name": "List regions and corresponding supported driver versions",
+            "description": {},
+            "url": {
+              "path": [
+                "compute",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1299e538-4c55-4dcf-aba5-3d54a42c1dcf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regions\": [\n    {\n      \"name\": \"string\",\n      \"supported_instance_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        {\n          \"cuda_version\": \"string\",\n          \"nvidia_driver_version\": \"string\"\n        },\n        {\n          \"cuda_version\": \"string\",\n          \"nvidia_driver_version\": \"string\"\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"supported_instance_types\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        {\n          \"cuda_version\": \"string\",\n          \"nvidia_driver_version\": \"string\"\n        },\n        {\n          \"cuda_version\": \"string\",\n          \"nvidia_driver_version\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c00791ef-cee1-4278-b6e5-7fae9ae01f6b",
+          "name": "List regions and corresponding supported driver versions",
+          "request": {
+            "name": "List regions and corresponding supported driver versions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "863e5bb2-2253-4a7c-a37b-95cd49a3e6eb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regions\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"availability_zones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"availability_zones\": [\n        \"string\",\n        \"string\"\n      ],\n      \"driver_versions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b9770b92-4ee7-4174-9488-d49c3114f30e",
+    "name": "remediation.proto Audio RegionService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

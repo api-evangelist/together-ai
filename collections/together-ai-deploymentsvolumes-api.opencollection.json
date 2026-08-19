@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio DeploymentsVolumes API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DeploymentsVolumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of project volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/deployments/storage/volumes"
+          },
+          "docs": "Retrieve all volumes in your project"
+        },
+        {
+          "info": {
+            "name": "Create a new volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/deployments/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new volume to preload files in deployments"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

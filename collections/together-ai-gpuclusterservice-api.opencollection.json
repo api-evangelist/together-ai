@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio GPUClusterService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GPUClusterService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all GPU clusters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/compute/clusters"
+          },
+          "docs": "List all GPU clusters."
+        },
+        {
+          "info": {
+            "name": "Create GPU Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/compute/clusters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Instant Cluster on Together's high-performance GPU clusters.\nWith features like on-demand scaling, long-lived resizable high-bandwidth shared DC-local storage,\nKubernetes and Slurm cluster flavors, a REST API, and Terraform support,\nyou can run workloads flexibly without complex infrastructure management.\n"
+        },
+        {
+          "info": {
+            "name": "Get GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about a specific GPU cluster."
+        },
+        {
+          "info": {
+            "name": "Update a GPU Cluster.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of an existing GPU cluster."
+        },
+        {
+          "info": {
+            "name": "Delete GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/compute/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a GPU cluster by cluster ID."
+        },
+        {
+          "info": {
+            "name": "Create GPU Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/api/v1/gpu_cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create GPU Cluster"
+        },
+        {
+          "info": {
+            "name": "Update a GPU Cluster.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.xyz/v1/api/v1/gpu_cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a GPU Cluster."
+        },
+        {
+          "info": {
+            "name": "Get GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/api/v1/gpu_cluster/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get GPU cluster by cluster ID"
+        },
+        {
+          "info": {
+            "name": "Delete GPU cluster by cluster ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/api/v1/gpu_cluster/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete GPU cluster by cluster ID"
+        },
+        {
+          "info": {
+            "name": "List all GPU clusters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/api/v1/gpu_clusters"
+          },
+          "docs": "List all GPU clusters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

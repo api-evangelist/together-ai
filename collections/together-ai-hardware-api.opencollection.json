@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Hardware API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Hardware",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available hardware configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/hardware",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of available hardware configurations for deploying models. When a model parameter is provided, it returns only hardware configurations compatible with that model, including their current availability status.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1022 @@
+{
+  "item": [
+    {
+      "id": "1a59f7f6-fca1-407c-9892-7de30c9c53cf",
+      "name": "evaluation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44856539-e42d-4ad2-a194-380517b884d4",
+          "name": "Create an evaluation job",
+          "request": {
+            "name": "Create an evaluation job",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"parameters\": {\n    \"judge\": {\n      \"model\": \"<string>\",\n      \"system_template\": \"<string>\",\n      \"model_source\": \"<string>\",\n      \"external_api_token\": \"<string>\",\n      \"external_base_url\": \"<string>\",\n      \"num_workers\": \"<integer>\",\n      \"max_tokens\": \"<integer>\",\n      \"temperature\": \"<float>\"\n    },\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"pass_labels\": [\n      \"<string>\"\n    ],\n    \"input_data_file_path\": \"<string>\",\n    \"model_to_evaluate\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fece883f-deee-4fbc-aae8-849f3a84bad0",
+              "name": "Evaluation job created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"classify\",\n  \"parameters\": {\n    \"judge\": {\n      \"model\": \"Qwen/Qwen3.5-9B\",\n      \"system_template\": \"Imagine you are a helpful assistant\",\n      \"model_source\": \"<string>\",\n      \"external_api_token\": \"<string>\",\n      \"external_base_url\": \"<string>\",\n      \"num_workers\": 5,\n      \"max_tokens\": 8192,\n      \"temperature\": 0\n    },\n    \"labels\": [\n      \"yes\",\n      \"no\"\n    ],\n    \"pass_labels\": [\n      \"yes\"\n    ],\n    \"input_data_file_path\": \"file-1234-aefd\",\n    \"model_to_evaluate\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workflow_id\": \"eval-1234-1244513\",\n  \"status\": \"pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "904684df-966c-401a-926f-17ba11faeba7",
+              "name": "Invalid request format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"classify\",\n  \"parameters\": {\n    \"judge\": {\n      \"model\": \"Qwen/Qwen3.5-9B\",\n      \"system_template\": \"Imagine you are a helpful assistant\",\n      \"model_source\": \"<string>\",\n      \"external_api_token\": \"<string>\",\n      \"external_base_url\": \"<string>\",\n      \"num_workers\": 5,\n      \"max_tokens\": 8192,\n      \"temperature\": 0\n    },\n    \"labels\": [\n      \"yes\",\n      \"no\"\n    ],\n    \"pass_labels\": [\n      \"yes\"\n    ],\n    \"input_data_file_path\": \"file-1234-aefd\",\n    \"model_to_evaluate\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37d03c6f-e0fd-4c72-9258-21718b4126b1",
+              "name": "Failed to create evaluation job",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"classify\",\n  \"parameters\": {\n    \"judge\": {\n      \"model\": \"Qwen/Qwen3.5-9B\",\n      \"system_template\": \"Imagine you are a helpful assistant\",\n      \"model_source\": \"<string>\",\n      \"external_api_token\": \"<string>\",\n      \"external_base_url\": \"<string>\",\n      \"num_workers\": 5,\n      \"max_tokens\": 8192,\n      \"temperature\": 0\n    },\n    \"labels\": [\n      \"yes\",\n      \"no\"\n    ],\n    \"pass_labels\": [\n      \"yes\"\n    ],\n    \"input_data_file_path\": \"file-1234-aefd\",\n    \"model_to_evaluate\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cc7896c-e37f-4a77-80f9-e7feb6530fca",
+          "name": "Get all evaluation jobs",
+          "request": {
+            "name": "Get all evaluation jobs",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b80a0c9-ca25-4213-8a20-7183dcd2f0e6",
+              "name": "evaluation jobs retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"workflow_id\": \"eval-1234aedf\",\n    \"type\": \"classify\",\n    \"owner_id\": \"string\",\n    \"status\": \"completed\",\n    \"status_updates\": [\n      {\n        \"status\": \"pending\",\n        \"message\": \"Job is pending evaluation\",\n        \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n      },\n      {\n        \"status\": \"pending\",\n        \"message\": \"Job is pending evaluation\",\n        \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n      }\n    ],\n    \"parameters\": {\n      \"key_0\": false\n    },\n    \"created_at\": \"2025-07-23T17:10:04.837888Z\",\n    \"updated_at\": \"2025-07-23T17:10:04.837888Z\",\n    \"results\": {\n      \"generation_fail_count\": 0,\n      \"judge_fail_count\": 0,\n      \"invalid_label_count\": 0,\n      \"result_file_id\": \"file-1234-aefd\",\n      \"pass_percentage\": 10,\n      \"label_counts\": \"{\\\"yes\\\": 10, \\\"no\\\": 0}\"\n    }\n  },\n  {\n    \"workflow_id\": \"eval-1234aedf\",\n    \"type\": \"classify\",\n    \"owner_id\": \"string\",\n    \"status\": \"completed\",\n    \"status_updates\": [\n      {\n        \"status\": \"pending\",\n        \"message\": \"Job is pending evaluation\",\n        \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n      },\n      {\n        \"status\": \"pending\",\n        \"message\": \"Job is pending evaluation\",\n        \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n      }\n    ],\n    \"parameters\": {\n      \"key_0\": 1246.0249685549663,\n      \"key_1\": 2666.99099972855\n    },\n    \"created_at\": \"2025-07-23T17:10:04.837888Z\",\n    \"updated_at\": \"2025-07-23T17:10:04.837888Z\",\n    \"results\": {\n      \"generation_fail_count\": 0,\n      \"judge_fail_count\": 0,\n      \"invalid_label_count\": 0,\n      \"result_file_id\": \"file-1234-aefd\",\n      \"pass_percentage\": 10,\n      \"label_counts\": \"{\\\"yes\\\": 10, \\\"no\\\": 0}\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0df98c7a-7f78-4c16-af75-7507d892d3dc",
+              "name": "Invalid request format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4a06f61-b5e7-419e-bee3-f22b188e9218",
+              "name": "Error retrieving jobs from manager",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38e556ed-e3b5-4005-b7f3-366212606e7f",
+          "name": "Get model list",
+          "request": {
+            "name": "Get model list",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation",
+                "model-list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "model_source",
+                  "value": "all"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c975434c-b0bc-40c0-ad6b-d886b92e0792",
+              "name": "Model list retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    "model-list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model_source",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_list\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cbb453e-9af6-4ab7-9913-c552d808bcde",
+              "name": "Invalid request format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    "model-list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model_source",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c09cd2f-56ab-4ca8-a89c-51a277bcc1ad",
+              "name": "Error retrieving model list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    "model-list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model_source",
+                      "value": "all"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9e8394a-4d70-4849-95b3-f50c1097796c",
+          "name": "Get evaluation job details",
+          "request": {
+            "name": "Get evaluation job details",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8769c830-6bc6-47a3-953e-e0518cd46fbd",
+              "name": "Evaluation job details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workflow_id\": \"eval-1234aedf\",\n  \"type\": \"classify\",\n  \"owner_id\": \"string\",\n  \"status\": \"completed\",\n  \"status_updates\": [\n    {\n      \"status\": \"pending\",\n      \"message\": \"Job is pending evaluation\",\n      \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n    },\n    {\n      \"status\": \"pending\",\n      \"message\": \"Job is pending evaluation\",\n      \"timestamp\": \"2025-07-23T17:10:04.837888Z\"\n    }\n  ],\n  \"parameters\": {\n    \"key_0\": 5842.459927931408,\n    \"key_1\": \"string\",\n    \"key_2\": 9182\n  },\n  \"created_at\": \"2025-07-23T17:10:04.837888Z\",\n  \"updated_at\": \"2025-07-23T17:10:04.837888Z\",\n  \"results\": {\n    \"generation_fail_count\": 0,\n    \"judge_fail_count\": 0,\n    \"invalid_label_count\": 0,\n    \"result_file_id\": \"file-1234-aefd\",\n    \"pass_percentage\": 10,\n    \"label_counts\": \"{\\\"yes\\\": 10, \\\"no\\\": 0}\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f798571-c2bc-4f07-b46a-b34383e7d57e",
+              "name": "Evaluation job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3599e934-be3a-4138-819d-35d7d81c0149",
+              "name": "Failed to get evaluation job",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1110577f-e5e8-4c9f-a956-befc62ca6d29",
+          "name": "Get evaluation job status and results",
+          "request": {
+            "name": "Get evaluation job status and results",
+            "description": {},
+            "url": {
+              "path": [
+                "evaluation",
+                ":id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5d8ea63-670c-483c-8bf8-dcc8f9e5d5c1",
+              "name": "Evaluation job status and results retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"results\": {\n    \"generation_fail_count\": 0,\n    \"judge_fail_count\": 0,\n    \"invalid_label_count\": 0,\n    \"result_file_id\": \"file-1234-aefd\",\n    \"pass_percentage\": 10,\n    \"label_counts\": \"{\\\"yes\\\": 10, \\\"no\\\": 0}\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ab31349-dae0-4015-86ba-e3063a4e642b",
+              "name": "Evaluation job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "545075a3-110c-4b2b-832f-f8dbc7bfd315",
+              "name": "Failed to get evaluation job",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "evaluation",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cb02be09-8305-4491-866d-21b56c55f33d",
+    "name": "remediation.proto Audio evaluation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

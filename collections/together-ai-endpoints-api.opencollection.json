@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Endpoints API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all endpoints, can be filtered by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/endpoints",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "usage_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mine",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of all endpoints associated with your account. You can filter the results by type (dedicated or serverless)."
+        },
+        {
+          "info": {
+            "name": "Create a dedicated endpoint, it will start automatically",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/endpoints",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new dedicated endpoint for serving models. The endpoint will automatically start after creation. You can deploy any supported model on hardware configurations that meet the model's requirements."
+        },
+        {
+          "info": {
+            "name": "Get endpoint by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves details about a specific endpoint, including its current state, configuration, and scaling settings."
+        },
+        {
+          "info": {
+            "name": "Update endpoint, this can also be used to start or stop a dedicated endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.together.xyz/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing endpoint's configuration. You can modify the display name, autoscaling settings, or change the endpoint's state (start/stop)."
+        },
+        {
+          "info": {
+            "name": "Delete endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/endpoints/:endpointId",
+            "params": [
+              {
+                "name": "endpointId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently deletes an endpoint. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "List all available availability zones.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/clusters/availability-zones"
+          },
+          "docs": "List all available availability zones."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

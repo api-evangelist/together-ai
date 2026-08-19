@@ -1,0 +1,356 @@
+{
+  "item": [
+    {
+      "id": "84e0e2cf-564b-4a7b-bdf7-fa29f1373248",
+      "name": "Video",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c6402ea7-f807-4286-a9cc-03de482ea8e6",
+          "name": "Fetch video metadata",
+          "request": {
+            "name": "Fetch video metadata",
+            "description": {
+              "content": "Fetch video metadata",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v2",
+                "videos",
+                ":id"
+              ],
+              "host": [
+                "api",
+                "together",
+                "ai"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c75f9d9-8d9f-4f6a-b667-08e326631ca3",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "videos",
+                    ":id"
+                  ],
+                  "host": [
+                    "api",
+                    "together",
+                    "ai"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"status\": \"in_progress\",\n  \"size\": \"string\",\n  \"seconds\": \"string\",\n  \"created_at\": 9054.195583750005,\n  \"object\": {},\n  \"completed_at\": 7721.322822348068,\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": \"string\"\n  },\n  \"outputs\": {\n    \"cost\": 2044,\n    \"video_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21599d84-a75c-49a9-b1ce-0d53809c69cc",
+              "name": "Invalid request parameters.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "videos",
+                    ":id"
+                  ],
+                  "host": [
+                    "api",
+                    "together",
+                    "ai"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6519d1c6-f29c-4ddc-b66a-431d452db895",
+              "name": "Video ID not found.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "videos",
+                    ":id"
+                  ],
+                  "host": [
+                    "api",
+                    "together",
+                    "ai"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f1e63a7-c44d-4735-82ee-8aff3b612cf5",
+          "name": "Create video",
+          "request": {
+            "name": "Create video",
+            "description": {
+              "content": "Create a video",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v2",
+                "videos"
+              ],
+              "host": [
+                "api",
+                "together",
+                "ai"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"height\": \"<integer>\",\n  \"width\": \"<integer>\",\n  \"resolution\": \"<string>\",\n  \"ratio\": \"<string>\",\n  \"seconds\": \"<string>\",\n  \"fps\": \"<integer>\",\n  \"steps\": \"<integer>\",\n  \"seed\": \"<integer>\",\n  \"guidance_scale\": \"<integer>\",\n  \"output_format\": \"<string>\",\n  \"output_quality\": \"<integer>\",\n  \"negative_prompt\": \"<string>\",\n  \"generate_audio\": \"<boolean>\",\n  \"media\": {\n    \"frame_images\": [\n      {\n        \"input_image\": \"<string>\",\n        \"frame\": \"<number>\"\n      },\n      {\n        \"input_image\": \"<string>\",\n        \"frame\": \"<number>\"\n      }\n    ],\n    \"frame_videos\": [\n      {\n        \"video\": \"<string>\"\n      },\n      {\n        \"video\": \"<string>\"\n      }\n    ],\n    \"reference_images\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"reference_videos\": [\n      {\n        \"video\": \"<string>\"\n      },\n      {\n        \"video\": \"<string>\"\n      }\n    ],\n    \"source_video\": \"<string>\",\n    \"audio_inputs\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"frame_images\": [\n    {\n      \"input_image\": \"<string>\",\n      \"frame\": \"<number>\"\n    },\n    {\n      \"input_image\": \"<string>\",\n      \"frame\": \"<number>\"\n    }\n  ],\n  \"reference_images\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "37030f4e-3c73-4ccf-9113-319bc3f4fa8d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "videos"
+                  ],
+                  "host": [
+                    "api",
+                    "together",
+                    "ai"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"height\": \"<integer>\",\n  \"width\": \"<integer>\",\n  \"resolution\": \"<string>\",\n  \"ratio\": \"<string>\",\n  \"seconds\": \"<string>\",\n  \"fps\": \"<integer>\",\n  \"steps\": \"<integer>\",\n  \"seed\": \"<integer>\",\n  \"guidance_scale\": \"<integer>\",\n  \"output_format\": \"<string>\",\n  \"output_quality\": \"<integer>\",\n  \"negative_prompt\": \"<string>\",\n  \"generate_audio\": \"<boolean>\",\n  \"media\": {\n    \"frame_images\": [\n      {\n        \"input_image\": \"<string>\",\n        \"frame\": \"<number>\"\n      },\n      {\n        \"input_image\": \"<string>\",\n        \"frame\": \"<number>\"\n      }\n    ],\n    \"frame_videos\": [\n      {\n        \"video\": \"<string>\"\n      },\n      {\n        \"video\": \"<string>\"\n      }\n    ],\n    \"reference_images\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"reference_videos\": [\n      {\n        \"video\": \"<string>\"\n      },\n      {\n        \"video\": \"<string>\"\n      }\n    ],\n    \"source_video\": \"<string>\",\n    \"audio_inputs\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"frame_images\": [\n    {\n      \"input_image\": \"<string>\",\n      \"frame\": \"<number>\"\n    },\n    {\n      \"input_image\": \"<string>\",\n      \"frame\": \"<number>\"\n    }\n  ],\n  \"reference_images\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"status\": \"in_progress\",\n  \"size\": \"string\",\n  \"seconds\": \"string\",\n  \"created_at\": 9054.195583750005,\n  \"object\": {},\n  \"completed_at\": 7721.322822348068,\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": \"string\"\n  },\n  \"outputs\": {\n    \"cost\": 2044,\n    \"video_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f880d801-4c9b-4a7a-a7e5-71ac95d32374",
+    "name": "remediation.proto Audio Video API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

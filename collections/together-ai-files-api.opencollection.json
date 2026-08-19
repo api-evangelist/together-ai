@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Files API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/files"
+          },
+          "docs": "List the metadata for all uploaded data files."
+        },
+        {
+          "info": {
+            "name": "Retrieve file metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the metadata for a single uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Delete a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a previously uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Get file contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/files/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the contents of a single uploaded data file."
+        },
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/files/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "purpose",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file_name",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a file with specified purpose, file name, and file type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

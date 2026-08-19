@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create audio generation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/audio/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate audio from input text"
+        },
+        {
+          "info": {
+            "name": "Real-time text-to-speech via WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/audio/speech/websocket",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "voice",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_partial_length",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, voice, max_partial_length, language)\n\n**Client Events:**\n- `tts_session.updated`: Update session parameters like voice. T"
+        },
+        {
+          "info": {
+            "name": "Create audio transcription request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Transcribes audio into text"
+        },
+        {
+          "info": {
+            "name": "Create audio translation request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/audio/translations",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Translates audio into English"
+        },
+        {
+          "info": {
+            "name": "Real-time audio transcription via WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/realtime",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "input_audio_format",
+                "value": "",
+                "type": "query",
+                "description": "Audio format specification. Currently supports 16-bit PCM at 16kHz sample rate."
+              }
+            ]
+          },
+          "docs": "Establishes a WebSocket connection for real-time audio transcription. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/realtime) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, input_audio_format)\n\n**Client Events:**\n- `input_audio_buffer.append`: Send audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"in"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

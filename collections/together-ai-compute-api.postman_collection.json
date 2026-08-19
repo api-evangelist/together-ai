@@ -1,0 +1,1397 @@
+{
+  "item": [
+    {
+      "id": "850be821-030c-4823-a123-bc5feb7132fc",
+      "name": "Compute",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8572472-7b38-4cee-a504-715cd2a0aaba",
+          "name": "Retrieve the status of a specific remdiation on a specific instance in a specific cluster.",
+          "request": {
+            "name": "Retrieve the status of a specific remdiation on a specific instance in a specific cluster.",
+            "description": {
+              "content": "Retrieve the status of a specific remdiation on a specific instance in a specific cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":instance_id",
+                "remediations",
+                ":remediation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instance_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "remediation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a2f3bf7-009f-4f72-8686-5919ef76025b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"cluster_id\": \"string\",\n  \"instance_id\": \"string\",\n  \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n  \"trigger\": \"REMEDIATION_TRIGGER_MANUAL\",\n  \"state\": \"AUTO_RESOLVED\",\n  \"reason\": \"string\",\n  \"active_health_check_run_id\": \"string\",\n  \"passive_health_check_event_id\": \"string\",\n  \"requested_by\": \"string\",\n  \"create_time\": \"1979-03-20T22:08:24.450Z\",\n  \"reviewed_by\": \"string\",\n  \"review_time\": \"1992-08-04T22:45:07.632Z\",\n  \"review_comment\": \"string\",\n  \"start_time\": \"2016-10-14T22:08:26.241Z\",\n  \"end_time\": \"1984-02-11T18:28:05.030Z\",\n  \"error_message\": \"string\",\n  \"update_time\": \"1993-01-18T20:52:10.104Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01152f3b-c7d4-4b4c-9a53-6762bd31b2d6",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9851,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": 7673.483222331869,\n      \"key_1\": \"string\",\n      \"key_2\": true\n    },\n    {\n      \"@type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c12c4de-faa8-4da3-8df1-95d09f9a17ee",
+          "name": "Approves a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be approved.\n\nOn APPROVE: state changes to PENDING and the remediation process begins.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after approval.\n",
+          "request": {
+            "name": "Approves a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be approved.\n\nOn APPROVE: state changes to PENDING and the remediation process begins.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after approval.\n",
+            "description": {
+              "content": "Approves a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be approved.\n\nOn APPROVE: state changes to PENDING and the remediation process begins.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after approval.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":instance_id",
+                "remediations",
+                ":remediation_id",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instance_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "remediation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aacc5b78-db39-4389-97fe-14f8dc5dca38",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"cluster_id\": \"string\",\n  \"instance_id\": \"string\",\n  \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n  \"trigger\": \"REMEDIATION_TRIGGER_MANUAL\",\n  \"state\": \"AUTO_RESOLVED\",\n  \"reason\": \"string\",\n  \"active_health_check_run_id\": \"string\",\n  \"passive_health_check_event_id\": \"string\",\n  \"requested_by\": \"string\",\n  \"create_time\": \"1979-03-20T22:08:24.450Z\",\n  \"reviewed_by\": \"string\",\n  \"review_time\": \"1992-08-04T22:45:07.632Z\",\n  \"review_comment\": \"string\",\n  \"start_time\": \"2016-10-14T22:08:26.241Z\",\n  \"end_time\": \"1984-02-11T18:28:05.030Z\",\n  \"error_message\": \"string\",\n  \"update_time\": \"1993-01-18T20:52:10.104Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57636797-96cf-495d-bba8-3294caa6b494",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9025,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": 8603,\n      \"key_1\": false,\n      \"key_2\": 2342.408154745935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ee26039-10d5-464c-89ce-107e530cf413",
+          "name": "Cancels a pending remediation.\n\nOnly remediations in PENDING_APPROVAL or PENDING state can be cancelled.\n",
+          "request": {
+            "name": "Cancels a pending remediation.\n\nOnly remediations in PENDING_APPROVAL or PENDING state can be cancelled.\n",
+            "description": {
+              "content": "Cancels a pending remediation.\n\nOnly remediations in PENDING_APPROVAL or PENDING state can be cancelled.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":instance_id",
+                "remediations",
+                ":remediation_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instance_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "remediation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "91a38568-be36-478e-bf96-1c1601ad9271",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"cluster_id\": \"string\",\n  \"instance_id\": \"string\",\n  \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n  \"trigger\": \"REMEDIATION_TRIGGER_MANUAL\",\n  \"state\": \"AUTO_RESOLVED\",\n  \"reason\": \"string\",\n  \"active_health_check_run_id\": \"string\",\n  \"passive_health_check_event_id\": \"string\",\n  \"requested_by\": \"string\",\n  \"create_time\": \"1979-03-20T22:08:24.450Z\",\n  \"reviewed_by\": \"string\",\n  \"review_time\": \"1992-08-04T22:45:07.632Z\",\n  \"review_comment\": \"string\",\n  \"start_time\": \"2016-10-14T22:08:26.241Z\",\n  \"end_time\": \"1984-02-11T18:28:05.030Z\",\n  \"error_message\": \"string\",\n  \"update_time\": \"1993-01-18T20:52:10.104Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9395262f-89da-4d66-8c95-19f8ff81c856",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9025,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": 8603,\n      \"key_1\": false,\n      \"key_2\": 2342.408154745935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1837fe0f-1bd6-4e77-bed4-35d775cb0741",
+          "name": "Rejects a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be rejected.\n\nOn REJECT: state changes to CANCELLED.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after rejection.\n",
+          "request": {
+            "name": "Rejects a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be rejected.\n\nOn REJECT: state changes to CANCELLED.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after rejection.\n",
+            "description": {
+              "content": "Rejects a pending remediation.\n\nOnly remediations with state PENDING_APPROVAL can be rejected.\n\nOn REJECT: state changes to CANCELLED.\nThe reviewed_by, review_time, and review_comment fields are populated\non the remediation after rejection.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":instance_id",
+                "remediations",
+                ":remediation_id",
+                "reject"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instance_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "remediation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2eb03db0-274b-4e07-8dcb-9ab33bbf914d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"cluster_id\": \"string\",\n  \"instance_id\": \"string\",\n  \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n  \"trigger\": \"REMEDIATION_TRIGGER_MANUAL\",\n  \"state\": \"AUTO_RESOLVED\",\n  \"reason\": \"string\",\n  \"active_health_check_run_id\": \"string\",\n  \"passive_health_check_event_id\": \"string\",\n  \"requested_by\": \"string\",\n  \"create_time\": \"1979-03-20T22:08:24.450Z\",\n  \"reviewed_by\": \"string\",\n  \"review_time\": \"1992-08-04T22:45:07.632Z\",\n  \"review_comment\": \"string\",\n  \"start_time\": \"2016-10-14T22:08:26.241Z\",\n  \"end_time\": \"1984-02-11T18:28:05.030Z\",\n  \"error_message\": \"string\",\n  \"update_time\": \"1993-01-18T20:52:10.104Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0204b50-2f65-4a26-b304-153223d80b88",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations",
+                    ":remediation_id",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "remediation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9025,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": 8603,\n      \"key_1\": false,\n      \"key_2\": 2342.408154745935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82d79934-37b2-4034-9013-ffe0f489a94d",
+          "name": "Lists remediations for an instance or cluster.\n",
+          "request": {
+            "name": "Lists remediations for an instance or cluster.\n",
+            "description": {
+              "content": "Lists remediations for an instance or cluster.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":optional_instance_id",
+                "remediations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "optional_instance_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3b7d274d-a1d7-48a8-aa54-5d0322b51077",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":optional_instance_id",
+                    "remediations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "optional_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"remediations\": [\n    {\n      \"id\": \"string\",\n      \"cluster_id\": \"string\",\n      \"instance_id\": \"string\",\n      \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n      \"trigger\": \"REMEDIATION_TRIGGER_MANUAL\",\n      \"state\": \"PENDING_APPROVAL\",\n      \"reason\": \"string\",\n      \"active_health_check_run_id\": \"string\",\n      \"passive_health_check_event_id\": \"string\",\n      \"requested_by\": \"string\",\n      \"create_time\": \"1970-01-13T20:09:35.232Z\",\n      \"reviewed_by\": \"string\",\n      \"review_time\": \"1949-01-18T20:39:28.940Z\",\n      \"review_comment\": \"string\",\n      \"start_time\": \"2022-11-24T07:23:41.470Z\",\n      \"end_time\": \"2004-04-11T03:19:29.572Z\",\n      \"error_message\": \"string\",\n      \"update_time\": \"2005-07-20T09:02:07.661Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"cluster_id\": \"string\",\n      \"instance_id\": \"string\",\n      \"mode\": \"REMEDIATION_MODE_HOST_AWARE\",\n      \"trigger\": \"REMEDIATION_TRIGGER_AUTOMATED\",\n      \"state\": \"PENDING\",\n      \"reason\": \"string\",\n      \"active_health_check_run_id\": \"string\",\n      \"passive_health_check_event_id\": \"string\",\n      \"requested_by\": \"string\",\n      \"create_time\": \"1986-08-10T19:50:51.665Z\",\n      \"reviewed_by\": \"string\",\n      \"review_time\": \"1981-11-26T08:47:44.103Z\",\n      \"review_comment\": \"string\",\n      \"start_time\": \"2022-06-04T04:59:31.695Z\",\n      \"end_time\": \"1991-12-27T16:52:50.174Z\",\n      \"error_message\": \"string\",\n      \"update_time\": \"1954-04-25T07:36:59.193Z\"\n    }\n  ],\n  \"has_next\": true,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b8c45ce-6d12-4f8e-9fc2-e04cbc9b62fb",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":optional_instance_id",
+                    "remediations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "optional_instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9025,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": 8603,\n      \"key_1\": false,\n      \"key_2\": 2342.408154745935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2356ace-598e-4da9-8469-c2280109dfc6",
+          "name": "Creates a new remediation for an instance.\n\nRemediations created via the API goes directly to PENDING state.\n\nOur system may trigger automated remediations that require approval. These remediations are created with PENDING_APPROVAL state.\nThe user must call /approve to start the actual remediation process.\nThese operations can also be rejected by calling /reject.\n",
+          "request": {
+            "name": "Creates a new remediation for an instance.\n\nRemediations created via the API goes directly to PENDING state.\n\nOur system may trigger automated remediations that require approval. These remediations are created with PENDING_APPROVAL state.\nThe user must call /approve to start the actual remediation process.\nThese operations can also be rejected by calling /reject.\n",
+            "description": {
+              "content": "Creates a new remediation for an instance.\n\nRemediations created via the API goes directly to PENDING state.\n\nOur system may trigger automated remediations that require approval. These remediations are created with PENDING_APPROVAL state.\nThe user must call /approve to start the actual remediation process.\nThese operations can also be rejected by calling /reject.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id",
+                "instances",
+                ":instance_id",
+                "remediations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "remediation_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instance_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d204cf2-657b-47a2-ab6e-17c4832e90a6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "remediation_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mode\": \"<string>\",\n  \"id\": \"string\",\n  \"cluster_id\": \"string\",\n  \"instance_id\": \"string\",\n  \"trigger\": \"REMEDIATION_TRIGGER_AUTOMATED\",\n  \"state\": \"AUTO_RESOLVED\",\n  \"reason\": \"<string>\",\n  \"active_health_check_run_id\": \"string\",\n  \"passive_health_check_event_id\": \"string\",\n  \"requested_by\": \"string\",\n  \"create_time\": \"1952-06-18T04:54:01.234Z\",\n  \"reviewed_by\": \"string\",\n  \"review_time\": \"1977-08-17T04:15:26.472Z\",\n  \"review_comment\": \"string\",\n  \"start_time\": \"2001-11-23T00:39:56.267Z\",\n  \"end_time\": \"1948-08-18T15:20:06.528Z\",\n  \"error_message\": \"string\",\n  \"update_time\": \"2002-08-08T02:16:28.917Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a2a63ef-4f38-4dd5-9d25-dc708b4fb5bc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id",
+                    "instances",
+                    ":instance_id",
+                    "remediations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "remediation_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instance_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9025,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": 8603,\n      \"key_1\": false,\n      \"key_2\": 2342.408154745935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ac1b2495-f8cd-490e-be73-105d3971236b",
+    "name": "remediation.proto Audio Compute API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

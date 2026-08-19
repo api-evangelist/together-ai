@@ -1,0 +1,222 @@
+{
+  "item": [
+    {
+      "id": "9809c6b3-dc03-40de-97c7-1e5ea9272bc7",
+      "name": "Code Interpreter",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "92391ff4-5982-485a-b24d-8fe67747c952",
+          "name": "tci/execute",
+          "request": {
+            "name": "tci/execute",
+            "description": {
+              "content": "Executes the given code snippet and returns the output. Without a session_id, a new session will be created to run the code. If you do pass in a valid session_id, the code will be run in that session. This is useful for running multiple code snippets in the same environment, because dependencies and similar things are persisted\nbetween calls to the same session.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tci",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language\": \"python\",\n  \"code\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"session_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "812de01b-0eb2-4fc6-9e42-dfd51f8a3788",
+              "name": "Execute Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tci",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"language\": \"python\",\n  \"code\": \"print('Hello, world!')\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"session_id\": \"ses_abcDEF123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"session_id\": \"ses_abcDEF123\",\n    \"outputs\": [\n      {\n        \"type\": \"stderr\",\n        \"data\": \"string\"\n      },\n      {\n        \"type\": \"stdout\",\n        \"data\": \"string\"\n      }\n    ],\n    \"status\": \"success\"\n  },\n  \"errors\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96be18e4-47fe-48c0-b147-7bb14973259b",
+          "name": "sessions/list",
+          "request": {
+            "name": "sessions/list",
+            "description": {
+              "content": "Lists all your currently active sessions.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tci",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4594e292-af51-476a-b9a7-06fcc6d21af0",
+              "name": "List Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tci",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"data\": {\n    \"sessions\": [\n      {\n        \"execute_count\": 5418,\n        \"expires_at\": \"1948-09-11T10:49:35.191Z\",\n        \"id\": \"ses_abcDEF123\",\n        \"last_execute_at\": \"1990-08-21T02:12:46.407Z\",\n        \"started_at\": \"1947-03-25T23:45:46.522Z\"\n      },\n      {\n        \"execute_count\": 4535,\n        \"expires_at\": \"1974-09-12T13:17:05.299Z\",\n        \"id\": \"ses_abcDEF123\",\n        \"last_execute_at\": \"2022-10-09T09:45:53.969Z\",\n        \"started_at\": \"1976-06-22T18:29:06.022Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3296c6e6-ed2d-4163-9540-d335ef4e2b79",
+    "name": "remediation.proto Audio Code Interpreter API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

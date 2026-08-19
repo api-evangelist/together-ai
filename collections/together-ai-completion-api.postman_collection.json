@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "afc7a882-b4f2-4cbb-a733-3c853f36926f",
+      "name": "Completion",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c13eadf-2f7a-4b57-93da-fc56c1459452",
+          "name": "Create completion",
+          "request": {
+            "name": "Create completion",
+            "description": {
+              "content": "Generate text completions for a given prompt using a language, code, or image model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"key_0\": \"<float>\",\n    \"key_1\": \"<float>\",\n    \"key_2\": \"<float>\"\n  },\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d1600f31-fecb-4c28-ae57-a201e056afd7",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"choices\": [\n    {\n      \"text\": \"The capital of France is Paris. It's located in the north-central part of the country and is one of the most populous and visited cities in the world, known for its iconic landmarks like the Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, and more. Paris is also the capital of the Île-de-France region and is a major global center for art, fashion, gastronomy, and culture.\",\n      \"seed\": 2572,\n      \"finish_reason\": \"length\",\n      \"logprobs\": {\n        \"token_ids\": [\n          4258.911840290554,\n          9397.336063591885\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          9460.04046775263,\n          9469.929764152283\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 1791.4952325464228\n        }\n      }\n    },\n    {\n      \"text\": \"The capital of France is Paris. It's located in the north-central part of the country and is one of the most populous and visited cities in the world, known for its iconic landmarks like the Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, and more. Paris is also the capital of the Île-de-France region and is a major global center for art, fashion, gastronomy, and culture.\",\n      \"seed\": 3239,\n      \"finish_reason\": \"tool_calls\",\n      \"logprobs\": {\n        \"token_ids\": [\n          7529.473528198907,\n          7941.393445308547\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          2189.162047008216,\n          4440.338837438805\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 720.0750153127943,\n          \"key_1\": 7672.664875972457\n        }\n      }\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 8378,\n    \"completion_tokens\": 8783,\n    \"total_tokens\": 794\n  },\n  \"created\": 7426,\n  \"prompt\": [\n    {\n      \"text\": \"<s>[INST] What is the capital of France? [/INST]\",\n      \"logprobs\": {\n        \"token_ids\": [\n          1128.346478101785,\n          1789.0705362784975\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          7714.616137375146,\n          5283.506645558581\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 3424.393492102937\n        }\n      }\n    },\n    {\n      \"text\": \"<s>[INST] What is the capital of France? [/INST]\",\n      \"logprobs\": {\n        \"token_ids\": [\n          7883.8687743534065,\n          3317.932925060385\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          8718.99050015757,\n          2346.6979402040333\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 7783.8376069044225,\n          \"key_1\": 1501.1474753892096\n        }\n      }\n    }\n  ],\n  \"model\": \"string\",\n  \"object\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f91d0dc-3be8-47db-95d1-8c4275676de2",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64e81a38-666c-4c39-8989-a564aa842d51",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540445c7-a038-40b3-a88f-17d29037f93c",
+              "name": "NotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8220ab8f-5570-4c0b-99db-c5e704124632",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d234896-0521-4243-aca1-25a52056da95",
+              "name": "Overloaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d181164c-a92e-4416-86e9-4d48bb304202",
+              "name": "Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<s>[INST] What is the capital of France? [/INST]\",\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"repetition_penalty\": \"<float>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"safety_model\": \"<string>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f570dea0-456e-445c-a779-1354c917729a",
+    "name": "remediation.proto Audio Completion API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

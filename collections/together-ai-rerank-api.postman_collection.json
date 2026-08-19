@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "f86dcf2a-9f19-4039-9fee-4ab58ee8a7b8",
+      "name": "Rerank",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0e829035-ad46-49f6-b863-c098cc95b008",
+          "name": "Create a rerank request",
+          "request": {
+            "name": "Create a rerank request",
+            "description": {
+              "content": "Rerank a list of documents by relevance to a query. Returns a relevance score and ordering index for each document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rerank"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"<string>\",\n  \"documents\": [\n    {\n      \"key_0\": 3173,\n      \"key_1\": false\n    },\n    {\n      \"key_0\": 8448.19377182383,\n      \"key_1\": 179.18186607243203\n    }\n  ],\n  \"top_n\": \"<integer>\",\n  \"return_documents\": \"<boolean>\",\n  \"rank_fields\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65d3d0a6-7b24-487b-af7a-85de4b322a46",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": {},\n  \"model\": \"salesforce/turboranker-0.8-3778-6328\",\n  \"results\": [\n    {\n      \"index\": 0,\n      \"relevance_score\": 0.29980177813003117,\n      \"document\": {\n        \"text\": \"{\\\"title\\\":\\\"Llama\\\",\\\"text\\\":\\\"The llama is a domesticated South American camelid, widely used as a meat and pack animal by Andean cultures since the pre-Columbian era.\\\"}\"\n      }\n    },\n    {\n      \"index\": 2,\n      \"relevance_score\": 0.2752447527354349,\n      \"document\": {\n        \"text\": \"{\\\"title\\\":\\\"Guanaco\\\",\\\"text\\\":\\\"The guanaco is a camelid native to South America, closely related to the llama. Guanacos are one of two wild South American camelids; the other species is the vicuña, which lives at higher elevations.\\\"}\"\n      }\n    }\n  ],\n  \"id\": \"9dfa1a09-5ebc-4a40-970f-586cb8f4ae47\",\n  \"usage\": {\n    \"prompt_tokens\": 1837,\n    \"completion_tokens\": 0,\n    \"total_tokens\": 1837\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94251098-054f-4cc1-bb55-f2c8ef75f0be",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb666e0a-6dab-4602-8fa7-6b00d19bc1a5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fece05b2-bef2-4aee-9bd3-93d5d0957acf",
+              "name": "NotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7f35844-ed55-48df-a3c7-211ffde9018d",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9f6cce-8d8a-40a2-98d9-9384cd6ccbce",
+              "name": "Overloaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5966f168-1130-478e-b1cd-54aa215a6d1e",
+              "name": "Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rerank"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"query\": \"What animals can I find near Peru?\",\n  \"documents\": [\n    {\n      \"key_0\": 786.8034165487969\n    },\n    {\n      \"key_0\": 6119.713974705011\n    }\n  ],\n  \"top_n\": 2,\n  \"return_documents\": true,\n  \"rank_fields\": [\n    \"title\",\n    \"text\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "56be242c-2222-428a-85f1-000b21f07762",
+    "name": "remediation.proto Audio Rerank API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

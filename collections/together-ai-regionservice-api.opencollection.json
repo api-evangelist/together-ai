@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio RegionService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RegionService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List regions and corresponding supported driver versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/compute/regions"
+          },
+          "docs": "List regions and corresponding supported driver versions"
+        },
+        {
+          "info": {
+            "name": "List regions and corresponding supported driver versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/api/v1/regions"
+          },
+          "docs": "List regions and corresponding supported driver versions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,215 @@
+{
+  "item": [
+    {
+      "id": "793d9e29-e6ba-43d8-aa74-ec0aab268516",
+      "name": "Jobs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fa9bb7f8-2aa1-49e6-9b7d-238ae2aa0b0c",
+          "name": "Get job status",
+          "request": {
+            "name": "Get job status",
+            "description": {
+              "content": "Get the status of a specific job",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0828831-b389-4dc5-8b11-d813ceb35ad7",
+              "name": "Job status retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"model_upload\",\n  \"job_id\": \"job-a15dad11-8d8e-4007-97c5-a211304de284\",\n  \"status\": \"Complete\",\n  \"status_updates\": [\n    {\n      \"status\": \"Complete\",\n      \"message\": \"Job is Complete\",\n      \"timestamp\": \"2025-03-11T22:36:12Z\"\n    },\n    {\n      \"status\": \"Complete\",\n      \"message\": \"Job is Complete\",\n      \"timestamp\": \"2025-03-11T22:36:12Z\"\n    }\n  ],\n  \"args\": {\n    \"description\": \"Finetuned Qwen2.5-72B-Instruct by Unsloth\",\n    \"modelName\": \"necolinehubner/Qwen2.5-72B-Instruct\",\n    \"modelSource\": \"unsloth/Qwen2.5-72B-Instruct\"\n  },\n  \"created_at\": \"2025-03-11T22:05:43Z\",\n  \"updated_at\": \"2025-03-11T22:36:12Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f32ab7c-fe87-411d-b24f-73af2fae97ce",
+          "name": "List all jobs",
+          "request": {
+            "name": "List all jobs",
+            "description": {
+              "content": "List all jobs and their statuses",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ea18e0f-6557-45fd-a788-611d1eccf434",
+              "name": "Jobs retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"type\": \"model_upload\",\n      \"job_id\": \"job-a15dad11-8d8e-4007-97c5-a211304de284\",\n      \"status\": \"Complete\",\n      \"status_updates\": [\n        {\n          \"status\": \"Complete\",\n          \"message\": \"Job is Complete\",\n          \"timestamp\": \"2025-03-11T22:36:12Z\"\n        },\n        {\n          \"status\": \"Complete\",\n          \"message\": \"Job is Complete\",\n          \"timestamp\": \"2025-03-11T22:36:12Z\"\n        }\n      ],\n      \"args\": {\n        \"description\": \"Finetuned Qwen2.5-72B-Instruct by Unsloth\",\n        \"modelName\": \"necolinehubner/Qwen2.5-72B-Instruct\",\n        \"modelSource\": \"unsloth/Qwen2.5-72B-Instruct\"\n      },\n      \"created_at\": \"2025-03-11T22:05:43Z\",\n      \"updated_at\": \"2025-03-11T22:36:12Z\"\n    },\n    {\n      \"type\": \"model_upload\",\n      \"job_id\": \"job-a15dad11-8d8e-4007-97c5-a211304de284\",\n      \"status\": \"Complete\",\n      \"status_updates\": [\n        {\n          \"status\": \"Complete\",\n          \"message\": \"Job is Complete\",\n          \"timestamp\": \"2025-03-11T22:36:12Z\"\n        },\n        {\n          \"status\": \"Complete\",\n          \"message\": \"Job is Complete\",\n          \"timestamp\": \"2025-03-11T22:36:12Z\"\n        }\n      ],\n      \"args\": {\n        \"description\": \"Finetuned Qwen2.5-72B-Instruct by Unsloth\",\n        \"modelName\": \"necolinehubner/Qwen2.5-72B-Instruct\",\n        \"modelSource\": \"unsloth/Qwen2.5-72B-Instruct\"\n      },\n      \"created_at\": \"2025-03-11T22:05:43Z\",\n      \"updated_at\": \"2025-03-11T22:36:12Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ff64a9fb-edc5-4758-801e-6b1dd7670fa1",
+    "name": "remediation.proto Audio Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

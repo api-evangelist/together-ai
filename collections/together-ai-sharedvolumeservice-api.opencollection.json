@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio SharedVolumeService API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SharedVolumeService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all shared volumes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/compute/clusters/storage/volumes"
+          },
+          "docs": "List all shared volumes."
+        },
+        {
+          "info": {
+            "name": "Create a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/compute/clusters/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Instant Clusters supports long-lived, resizable in-DC shared storage with user data persistence.\nYou can dynamically create and attach volumes to your cluster at cluster creation time, and resize as your data grows.\nAll shared storage is backed by multi-NIC bare metal paths, ensuring high-throughput and low-latency performance for shared storage.\n"
+        },
+        {
+          "info": {
+            "name": "Update a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.xyz/v1/compute/clusters/storage/volumes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of an existing shared volume.\n"
+        },
+        {
+          "info": {
+            "name": "Get shared volume by volume Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/compute/clusters/storage/volumes/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about a specific shared volume."
+        },
+        {
+          "info": {
+            "name": "Delete shared volume by volume id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/compute/clusters/storage/volumes/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a shared volume. Note that if this volume is attached to a cluster, deleting will fail.\n"
+        },
+        {
+          "info": {
+            "name": "Create a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/api/v1/shared_volume",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a shared volume."
+        },
+        {
+          "info": {
+            "name": "Update a shared volume.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.together.xyz/v1/api/v1/shared_volume",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a shared volume."
+        },
+        {
+          "info": {
+            "name": "Get shared volume by volume Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/api/v1/shared_volume/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get shared volume by volume Id."
+        },
+        {
+          "info": {
+            "name": "Delete shared volume by volume id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/api/v1/shared_volume/:volume_id",
+            "params": [
+              {
+                "name": "volume_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete shared volume by volume id."
+        },
+        {
+          "info": {
+            "name": "List all shared volumes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/api/v1/shared_volumes"
+          },
+          "docs": "List all shared volumes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Queue API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel a queued job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/queue/cancel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a pending job. Only jobs in pending status can be canceled.\nRunning jobs cannot be stopped. Returns the job status after the\nattempt. If the job is not pending, returns 409 with the current status\nunchanged.\n"
+        },
+        {
+          "info": {
+            "name": "Get queue metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/queue/metrics",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the current queue statistics for a model, including pending and running job counts."
+        },
+        {
+          "info": {
+            "name": "Get job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/queue/status",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Poll the current status of a previously submitted job. Provide the request_id and model as query parameters."
+        },
+        {
+          "info": {
+            "name": "Submit a queued job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/queue/submit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new job to the queue for asynchronous processing. Jobs are\nprocessed in strict priority order (higher priority first, FIFO within\nthe same priority). Returns a request ID that can be used to poll status\nor cancel the job.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

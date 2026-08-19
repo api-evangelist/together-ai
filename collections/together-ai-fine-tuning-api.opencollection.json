@@ -1,0 +1,239 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Fine-tuning API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fine-tuning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes"
+          },
+          "docs": "List the metadata for all fine-tuning jobs. Returns a list of FinetuneResponseTruncated objects."
+        },
+        {
+          "info": {
+            "name": "Create job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/fine-tunes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a fine-tuning job with the provided model and training data."
+        },
+        {
+          "info": {
+            "name": "Estimate price",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/fine-tunes/estimate-price",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Estimate the price of a fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the metadata for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "Delete a fine-tune job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List job events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id/events",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the events for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "List checkpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id/checkpoints",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the checkpoints for a single fine-tuning job."
+        },
+        {
+          "info": {
+            "name": "Download model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/finetune/download",
+            "params": [
+              {
+                "name": "ft_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "checkpoint_step",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "checkpoint",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Receive a compressed fine-tuned model or checkpoint."
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a currently running fine-tuning job. Returns a FinetuneResponseTruncated object."
+        },
+        {
+          "info": {
+            "name": "Get metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves recorded training metrics for a fine-tuning job in chronological order. All filter fields are optional — omit the body or send `{}` to retrieve all metrics.\n"
+        },
+        {
+          "info": {
+            "name": "List supported models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/models/supported"
+          },
+          "docs": "List models supported for fine-tuning."
+        },
+        {
+          "info": {
+            "name": "Get model limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/fine-tunes/models/limits",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get model limits for a specific fine-tuning model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

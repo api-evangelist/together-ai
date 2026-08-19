@@ -1,0 +1,2609 @@
+{
+  "item": [
+    {
+      "id": "12e7c436-7b85-4ea4-8290-bb6a3116cbe2",
+      "name": "RL",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cceb59ef-36ae-4086-b58d-69b025ca479e",
+          "name": "List training sessions",
+          "request": {
+            "name": "List training sessions",
+            "description": {
+              "content": "Lists all training sessions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "TRAINING_SESSION_STATUS_UNSPECIFIED"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc1ec39a-f090-4694-aa01-dc5e110a4b87",
+              "name": "List of training sessions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "TRAINING_SESSION_STATUS_UNSPECIFIED"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"status\": \"TRAINING_SESSION_STATUS_RUNNING\",\n      \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n      \"inference_checkpoints\": [\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\",\n          \"registration\": {\n            \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n            \"registered_at\": \"2026-01-02T00:00:00Z\"\n          }\n        },\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\",\n          \"registration\": {\n            \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n            \"registered_at\": \"2026-01-02T00:00:00Z\"\n          }\n        }\n      ],\n      \"training_checkpoints\": [\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\"\n        },\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\"\n        }\n      ],\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"updated_at\": \"2026-01-02T00:00:05Z\",\n      \"lora_config\": {\n        \"rank\": 8,\n        \"alpha\": 16,\n        \"dropout\": 0.05\n      },\n      \"type\": \"SESSION_TYPE_TRAINER_AND_GENERATOR\",\n      \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"status\": \"TRAINING_SESSION_STATUS_RUNNING\",\n      \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n      \"inference_checkpoints\": [\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\",\n          \"registration\": {\n            \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n            \"registered_at\": \"2026-01-02T00:00:00Z\"\n          }\n        },\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\",\n          \"registration\": {\n            \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n            \"registered_at\": \"2026-01-02T00:00:00Z\"\n          }\n        }\n      ],\n      \"training_checkpoints\": [\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\"\n        },\n        {\n          \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n          \"step\": \"string\",\n          \"created_at\": \"2026-01-02T00:00:00Z\"\n        }\n      ],\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"updated_at\": \"2026-01-02T00:00:05Z\",\n      \"lora_config\": {\n        \"rank\": 8,\n        \"alpha\": 16,\n        \"dropout\": 0.05\n      },\n      \"type\": \"SESSION_TYPE_TRAINER_AND_GENERATOR\",\n      \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n    }\n  ],\n  \"meta\": {\n    \"limit\": 20,\n    \"has_more\": true,\n    \"next_cursor\": \"123e4567-e89b-12d3-a456-426614174000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f0e21f3-5747-4e62-aa2d-e110f0cf1f4c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "TRAINING_SESSION_STATUS_RUNNING"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1a9afaf-9203-4986-b205-b0f3ad8b6c4c",
+          "name": "Create training session",
+          "request": {
+            "name": "Create training session",
+            "description": {
+              "content": "Creates a training session and returns its details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_model\": \"<string>\",\n  \"resume_from_checkpoint_id\": \"<string>\",\n  \"type\": \"SESSION_TYPE_UNSPECIFIED\",\n  \"lora_config\": {\n    \"rank\": \"8\",\n    \"alpha\": \"16\",\n    \"dropout\": \"0.05\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7543b01-4fc9-4473-ad59-35cb25f88c12",
+              "name": "Training session details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n  \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"type\": \"SESSION_TYPE_TRAINER_ONLY\",\n  \"lora_config\": {\n    \"rank\": 8,\n    \"alpha\": 16,\n    \"dropout\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"status\": \"TRAINING_SESSION_STATUS_RUNNING\",\n  \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n  \"inference_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    }\n  ],\n  \"training_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    }\n  ],\n  \"step\": \"string\",\n  \"created_at\": \"2026-01-02T00:00:00Z\",\n  \"updated_at\": \"2026-01-02T00:00:05Z\",\n  \"lora_config\": {\n    \"rank\": 8,\n    \"alpha\": 16,\n    \"dropout\": 0.05\n  },\n  \"type\": \"SESSION_TYPE_TRAINER_AND_GENERATOR\",\n  \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f59f45ba-8c92-4ef3-93d9-002521cfffc7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n  \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"type\": \"SESSION_TYPE_TRAINER_ONLY\",\n  \"lora_config\": {\n    \"rank\": 8,\n    \"alpha\": 16,\n    \"dropout\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b4c09c4-51a9-4d5d-ac45-48ec126bb78e",
+          "name": "Get training session",
+          "request": {
+            "name": "Get training session",
+            "description": {
+              "content": "Gets a training session by its ID and returns its details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55634681-44ce-4e53-8fc0-fbc0867a0fff",
+              "name": "Training session details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"status\": \"TRAINING_SESSION_STATUS_RUNNING\",\n  \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n  \"inference_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    }\n  ],\n  \"training_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    }\n  ],\n  \"step\": \"string\",\n  \"created_at\": \"2026-01-02T00:00:00Z\",\n  \"updated_at\": \"2026-01-02T00:00:05Z\",\n  \"lora_config\": {\n    \"rank\": 8,\n    \"alpha\": 16,\n    \"dropout\": 0.05\n  },\n  \"type\": \"SESSION_TYPE_TRAINER_AND_GENERATOR\",\n  \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "790443d7-6604-4946-a2bd-b77593cad233",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18c2944f-c16b-480e-ae50-fe2dacb6bc34",
+          "name": "Stop training session",
+          "request": {
+            "name": "Stop training session",
+            "description": {
+              "content": "Stops a training session.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "stop"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1bf96c65-205b-4394-8c45-5b580b148667",
+              "name": "Training session details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"status\": \"TRAINING_SESSION_STATUS_RUNNING\",\n  \"base_model\": \"meta-llama/Meta-Llama-3-8B-Instruct\",\n  \"inference_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\",\n      \"registration\": {\n        \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\",\n        \"registered_at\": \"2026-01-02T00:00:00Z\"\n      }\n    }\n  ],\n  \"training_checkpoints\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"step\": \"string\",\n      \"created_at\": \"2026-01-02T00:00:00Z\"\n    }\n  ],\n  \"step\": \"string\",\n  \"created_at\": \"2026-01-02T00:00:00Z\",\n  \"updated_at\": \"2026-01-02T00:00:05Z\",\n  \"lora_config\": {\n    \"rank\": 8,\n    \"alpha\": 16,\n    \"dropout\": 0.05\n  },\n  \"type\": \"SESSION_TYPE_TRAINER_AND_GENERATOR\",\n  \"resume_from_checkpoint_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "590e2435-4a8d-4ce2-9f30-e508001b8e56",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b0d70a2-7f63-438f-b514-a098e11d7b50",
+          "name": "Get forward-backward operation",
+          "request": {
+            "name": "Get forward-backward operation",
+            "description": {
+              "content": "Retrieves the current status and result of a forward-backward operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "forward-backward",
+                ":operation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc5854a6-bb46-4b1d-a2a2-446c1fa7a74e",
+              "name": "Forward-backward operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "forward-backward",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"loss\": 2.345,\n    \"metrics\": {\n      \"loss/clip/high_fraction\": 0.1,\n      \"loss/kl_ref/mean\": 0.05\n    }\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc1452f8-6ad2-498e-86ee-71c82a39119b",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "forward-backward",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c32c3fd-b594-401e-85a1-640cf34f7b92",
+          "name": "Get optim-step operation",
+          "request": {
+            "name": "Get optim-step operation",
+            "description": {
+              "content": "Retrieves the current status and result of an optim-step operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "optim-step",
+                ":operation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5982eca7-9aa7-4bba-9de9-e85253738a50",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "optim-step",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"step\": \"string\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba4a7f69-1ad7-4f04-850d-12595f4ae90d",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "optim-step",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cfe0487-b969-45d5-820b-0e2c6a73f4c4",
+          "name": "Get sample operation",
+          "request": {
+            "name": "Get sample operation",
+            "description": {
+              "content": "Retrieves the current status and result of a sample operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "sample",
+                ":operation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e00c38d5-cf13-4119-b322-527e81cbdc4b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "sample",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"rollouts\": [\n      {\n        \"sequences\": [\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          },\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          }\n        ]\n      },\n      {\n        \"sequences\": [\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          },\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          }\n        ]\n      }\n    ]\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbc9810b-6102-4f7f-bc6e-2be875dcfe5c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "sample",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b367240e-031d-414b-89f0-850b956e1a18",
+          "name": "Forward-backward pass",
+          "request": {
+            "name": "Forward-backward pass",
+            "description": {
+              "content": "Submits a forward-backward pass operation that will asynchronously compute gradients via backpropagation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "forward-backward"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"samples\": [\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"dtype\": \"D_TYPE_UNSPECIFIED\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"dtype\": \"D_TYPE_UNSPECIFIED\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"dtype\": \"D_TYPE_UNSPECIFIED\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"dtype\": \"D_TYPE_UNSPECIFIED\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"loss\": {\n    \"type\": \"LOSS_TYPE_UNSPECIFIED\",\n    \"cross_entropy_params\": {},\n    \"grpo_params\": {\n      \"clip_low\": \"0.2\",\n      \"clip_high\": \"0.28\",\n      \"beta\": \"0.0\",\n      \"agg_type\": \"GRPO_LOSS_AGGREGATION_TYPE_UNSPECIFIED\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b800073c-7ddb-48e1-9d2d-9f4592205750",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "forward-backward"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"samples\": [\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            123,\n            456,\n            789\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            0,\n            0,\n            1\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            123,\n            456,\n            789\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            0,\n            0,\n            1\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"loss\": {\n    \"type\": \"LOSS_TYPE_GRPO\",\n    \"cross_entropy_params\": {},\n    \"grpo_params\": {\n      \"clip_low\": 0.2,\n      \"clip_high\": 0.28,\n      \"beta\": 0.1,\n      \"agg_type\": \"GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"loss\": 2.345,\n    \"metrics\": {\n      \"loss/clip/high_fraction\": 0.1,\n      \"loss/kl_ref/mean\": 0.05\n    }\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfff0420-9c70-4042-8c99-cbdb2f25a34e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "forward-backward"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"samples\": [\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            123,\n            456,\n            789\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            0,\n            0,\n            1\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"model_input\": {\n        \"chunks\": [\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"encoded_text\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"loss_inputs\": {\n        \"target_tokens\": {\n          \"data\": [\n            123,\n            456,\n            789\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"loss_mask\": {\n          \"data\": [\n            0,\n            0,\n            1\n          ],\n          \"dtype\": \"D_TYPE_INT64\"\n        },\n        \"grpo_inputs\": {\n          \"advantages\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"generator_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"reference_logprobs\": {\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dtype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"loss\": {\n    \"type\": \"LOSS_TYPE_GRPO\",\n    \"cross_entropy_params\": {},\n    \"grpo_params\": {\n      \"clip_low\": 0.2,\n      \"clip_high\": 0.28,\n      \"beta\": 0.1,\n      \"agg_type\": \"GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a25e7e10-fdf5-467a-a58c-95c6b3137101",
+          "name": "Optimizer step",
+          "request": {
+            "name": "Optimizer step",
+            "description": {
+              "content": "Submits an optimizer step operation that will asynchronously apply accumulated gradients to update model parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "optim-step"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"learning_rate\": \"0.0001\",\n  \"adamw_params\": {\n    \"beta1\": \"0.9\",\n    \"beta2\": \"0.95\",\n    \"eps\": 1e-8,\n    \"weight_decay\": \"0.1\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e37d4aee-dc2e-4715-a887-c0bda07f4958",
+              "name": "Optimizer step operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "optim-step"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"learning_rate\": 0.0001,\n  \"adamw_params\": {\n    \"beta1\": 0.9,\n    \"beta2\": 0.95,\n    \"eps\": 1e-8,\n    \"weight_decay\": 0.1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"step\": \"string\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13aa3cad-622a-439e-867a-a4054e040b84",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "optim-step"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"learning_rate\": 0.0001,\n  \"adamw_params\": {\n    \"beta1\": 0.9,\n    \"beta2\": 0.95,\n    \"eps\": 1e-8,\n    \"weight_decay\": 0.1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cd08a43-c66d-4f63-98a9-6562e67c17f5",
+          "name": "Sample",
+          "request": {
+            "name": "Sample",
+            "description": {
+              "content": "Submits a sample operation that will asynchronously generate text completions with logprobs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "sample"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompts\": [\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"sampling_params\": {\n    \"max_tokens\": \"100\",\n    \"temperature\": \"1.0\",\n    \"top_p\": \"1.0\",\n    \"top_k\": \"-1\",\n    \"stop\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"seed\": \"<string>\"\n  },\n  \"num_samples\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d82703ac-3dd9-49b2-be5f-37ca30080854",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompts\": [\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"sampling_params\": {\n    \"max_tokens\": 100,\n    \"temperature\": 1,\n    \"top_p\": 1,\n    \"top_k\": -1,\n    \"stop\": [\n      \"\\n\",\n      \"END\"\n    ],\n    \"seed\": \"<string>\"\n  },\n  \"num_samples\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"rollouts\": [\n      {\n        \"sequences\": [\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          },\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          }\n        ]\n      },\n      {\n        \"sequences\": [\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          },\n          {\n            \"tokens\": [\n              \"123\",\n              \"456\",\n              \"789\"\n            ],\n            \"logprobs\": [\n              -0.5,\n              -1.2,\n              -0.3\n            ],\n            \"stop_reason\": \"length\"\n          }\n        ]\n      }\n    ]\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "601bd623-5df6-4c23-b9e0-1703dff45b8e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "sample"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompts\": [\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"chunks\": [\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        },\n        {\n          \"encoded_text\": {\n            \"tokens\": [\n              123,\n              456,\n              789\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"sampling_params\": {\n    \"max_tokens\": 100,\n    \"temperature\": 1,\n    \"top_p\": 1,\n    \"top_k\": -1,\n    \"stop\": [\n      \"\\n\",\n      \"END\"\n    ],\n    \"seed\": \"<string>\"\n  },\n  \"num_samples\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2aeff35-ecab-42fc-a3a5-3189431a6a13",
+          "name": "Create inference checkpoint",
+          "request": {
+            "name": "Create inference checkpoint",
+            "description": {
+              "content": "Submits an operation that will asynchronously save the current LoRA adapter as an inference checkpoint and upload it to object storage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "inference-checkpoint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fbe3255c-0d2b-4bf9-914d-d3b5012397d6",
+              "name": "Inference checkpoint operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "inference-checkpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9731cb68-aa16-4392-8436-4add6accbfd7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "inference-checkpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17d044ed-7838-477c-9580-a4df3aede29a",
+          "name": "Get inference checkpoint operation",
+          "request": {
+            "name": "Get inference checkpoint operation",
+            "description": {
+              "content": "Retrieves the current status and result of an inference checkpoint operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "inference-checkpoint",
+                ":operation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4319f02f-6d3b-473f-9947-6002afbb338d",
+              "name": "Inference checkpoint operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "inference-checkpoint",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"model_name\": \"username/Meta-Llama-3-8B-rl-step-42-20260216\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f08231f-04a2-4e49-a78e-a4ce2e9ea0b9",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "inference-checkpoint",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f66fb34-3376-4039-bdc1-ba6592d58f0a",
+          "name": "Save training checkpoint",
+          "request": {
+            "name": "Save training checkpoint",
+            "description": {
+              "content": "Submits an operation that will asynchronously save the full training state (adapter + optimizer + step).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "training-checkpoint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75143fe7-154f-45e1-a333-de1941b08f4a",
+              "name": "Save training checkpoint operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "training-checkpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"checkpoint_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04f41432-0632-49d9-8278-b0a160d5c29e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "training-checkpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58a82859-fe70-4d56-b06d-e8a932704f5f",
+          "name": "Get save training checkpoint operation",
+          "request": {
+            "name": "Get save training checkpoint operation",
+            "description": {
+              "content": "Retrieves the current status and result of a save training checkpoint operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "training-sessions",
+                ":session_id",
+                "operations",
+                "training-checkpoint",
+                ":operation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "session_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d04e1d2f-5c1a-4ca1-93c1-412aebf89c3f",
+              "name": "Save training checkpoint operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "training-checkpoint",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"TRAINING_OPERATION_STATUS_PENDING\",\n  \"output\": {\n    \"checkpoint_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  },\n  \"error\": {\n    \"code\": \"TRAINING_OPERATION_ERROR_CODE_TIMEOUT\",\n    \"message\": \"Operation timed out\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "952db890-75e1-42f5-a947-dcf1eb80bcc3",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "training-sessions",
+                    ":session_id",
+                    "operations",
+                    "training-checkpoint",
+                    ":operation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "session_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b1506dad-9298-422f-ba3c-154e875114bb",
+          "name": "Download checkpoint",
+          "request": {
+            "name": "Download checkpoint",
+            "description": {
+              "content": "Returns presigned URLs for downloading a checkpoint's model files. Only inference checkpoints support downloading.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rl",
+                "checkpoints",
+                ":id",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "variant",
+                  "value": "CHECKPOINT_VARIANT_UNSPECIFIED",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bed6fb98-e76a-4d61-b4b2-2e1f442a5c39",
+              "name": "Checkpoint download URLs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "checkpoints",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "variant",
+                      "value": "CHECKPOINT_VARIANT_UNSPECIFIED"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"filename\": \"model-00001-of-00002.safetensors\",\n      \"url\": \"https://...\",\n      \"size\": \"string\"\n    },\n    {\n      \"filename\": \"model-00001-of-00002.safetensors\",\n      \"url\": \"https://...\",\n      \"size\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3073339d-615b-4b07-82a4-d33cbbba2fb8",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rl",
+                    "checkpoints",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "variant",
+                      "value": "CHECKPOINT_VARIANT_UNSPECIFIED"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c1c1d13f-78e1-482a-98e3-a3385f26a69e",
+    "name": "remediation.proto Audio RL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

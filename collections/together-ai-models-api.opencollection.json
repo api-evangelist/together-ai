@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio Models API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/models",
+            "params": [
+              {
+                "name": "dedicated",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all of Together's open-source models"
+        },
+        {
+          "info": {
+            "name": "Upload a custom model or adapter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/models",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload a custom model or adapter from Hugging Face or S3"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

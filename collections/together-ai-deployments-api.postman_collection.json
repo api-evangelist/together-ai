@@ -1,0 +1,1285 @@
+{
+  "item": [
+    {
+      "id": "d2e99c32-0c8a-475b-a23b-0c9a1ec8f6b5",
+      "name": "Deployments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8fb09226-7741-42b0-8d7a-c382056b858e",
+          "name": "Get the list of deployments",
+          "request": {
+            "name": "Get the list of deployments",
+            "description": {
+              "content": "Get a list of all deployments in your project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9dc28cd4-99d8-4d6e-8a64-51f42b7168f2",
+              "name": "List of deployments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"args\": [\n        \"string\",\n        \"string\"\n      ],\n      \"autoscaling\": {\n        \"metric\": \"HTTPTotalRequests\",\n        \"target\": 100,\n        \"time_interval_minutes\": 10\n      },\n      \"command\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cpu\": 3695.868992442313,\n      \"created_at\": \"1955-08-24T17:56:24.551Z\",\n      \"description\": \"string\",\n      \"desired_replicas\": 4884,\n      \"environment_variables\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"value_from_secret\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"value_from_secret\": \"string\"\n        }\n      ],\n      \"gpu_count\": 105,\n      \"gpu_type\": \"h100-80gb\",\n      \"health_check_path\": \"string\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"max_replicas\": 6689,\n      \"memory\": 347.8228863461885,\n      \"min_replicas\": 6857,\n      \"name\": \"string\",\n      \"object\": {},\n      \"port\": 5137,\n      \"ready_replicas\": 9099,\n      \"replica_events\": {\n        \"key_0\": {\n          \"image\": \"string\",\n          \"replica_ready_since\": \"string\",\n          \"replica_status\": \"string\",\n          \"replica_status_message\": \"string\",\n          \"replica_status_reason\": \"string\",\n          \"revision_id\": \"string\",\n          \"volume_preload_completed_at\": \"string\",\n          \"volume_preload_started_at\": \"string\",\n          \"volume_preload_status\": \"string\"\n        },\n        \"key_1\": {\n          \"image\": \"string\",\n          \"replica_ready_since\": \"string\",\n          \"replica_status\": \"string\",\n          \"replica_status_message\": \"string\",\n          \"replica_status_reason\": \"string\",\n          \"revision_id\": \"string\",\n          \"volume_preload_completed_at\": \"string\",\n          \"volume_preload_started_at\": \"string\",\n          \"volume_preload_status\": \"string\"\n        }\n      },\n      \"status\": \"Updating\",\n      \"storage\": 9105,\n      \"updated_at\": \"2016-09-13T10:50:59.279Z\",\n      \"volumes\": [\n        {\n          \"mount_path\": \"string\",\n          \"name\": \"string\",\n          \"version\": 7773\n        },\n        {\n          \"mount_path\": \"string\",\n          \"name\": \"string\",\n          \"version\": 2713\n        }\n      ]\n    },\n    {\n      \"args\": [\n        \"string\",\n        \"string\"\n      ],\n      \"autoscaling\": {\n        \"metric\": \"HTTPTotalRequests\",\n        \"target\": 100,\n        \"time_interval_minutes\": 10\n      },\n      \"command\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cpu\": 4163.5801929908375,\n      \"created_at\": \"1997-12-05T14:28:49.232Z\",\n      \"description\": \"string\",\n      \"desired_replicas\": 4320,\n      \"environment_variables\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"value_from_secret\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"value_from_secret\": \"string\"\n        }\n      ],\n      \"gpu_count\": 3584,\n      \"gpu_type\": \"h100-80gb\",\n      \"health_check_path\": \"string\",\n      \"id\": \"string\",\n      \"image\": \"string\",\n      \"max_replicas\": 7445,\n      \"memory\": 4932.838665279557,\n      \"min_replicas\": 44,\n      \"name\": \"string\",\n      \"object\": {},\n      \"port\": 2182,\n      \"ready_replicas\": 7112,\n      \"replica_events\": {\n        \"key_0\": {\n          \"image\": \"string\",\n          \"replica_ready_since\": \"string\",\n          \"replica_status\": \"string\",\n          \"replica_status_message\": \"string\",\n          \"replica_status_reason\": \"string\",\n          \"revision_id\": \"string\",\n          \"volume_preload_completed_at\": \"string\",\n          \"volume_preload_started_at\": \"string\",\n          \"volume_preload_status\": \"string\"\n        },\n        \"key_1\": {\n          \"image\": \"string\",\n          \"replica_ready_since\": \"string\",\n          \"replica_status\": \"string\",\n          \"replica_status_message\": \"string\",\n          \"replica_status_reason\": \"string\",\n          \"revision_id\": \"string\",\n          \"volume_preload_completed_at\": \"string\",\n          \"volume_preload_started_at\": \"string\",\n          \"volume_preload_status\": \"string\"\n        }\n      },\n      \"status\": \"Failed\",\n      \"storage\": 7303,\n      \"updated_at\": \"1991-03-22T13:10:24.249Z\",\n      \"volumes\": [\n        {\n          \"mount_path\": \"string\",\n          \"name\": \"string\",\n          \"version\": 9507\n        },\n        {\n          \"mount_path\": \"string\",\n          \"name\": \"string\",\n          \"version\": 4524\n        }\n      ]\n    }\n  ],\n  \"object\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "908b2072-c4f5-4dd4-a0ec-16b0b7f96c72",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0fb97078-f2be-41f2-a268-ad273d821552",
+          "name": "Create a new deployment",
+          "request": {
+            "name": "Create a new deployment",
+            "description": {
+              "content": "Create a new deployment with specified configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gpu_type\": \"<string>\",\n  \"image\": \"<string>\",\n  \"name\": \"<string>\",\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"<string>\",\n    \"target\": \"<number>\",\n    \"time_interval_minutes\": \"<integer>\"\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"health_check_path\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ad0d8d2-abbe-4b8e-b1e6-0c5b4eee9d5d",
+              "name": "Deployment created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gpu_type\": \"<string>\",\n  \"image\": \"<string>\",\n  \"name\": \"<string>\",\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"health_check_path\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"args\": [\n    \"string\",\n    \"string\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cpu\": 547.667339156006,\n  \"created_at\": \"1974-12-01T23:46:39.065Z\",\n  \"description\": \"string\",\n  \"desired_replicas\": 8044,\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": 4381,\n  \"gpu_type\": \"h100-80gb\",\n  \"health_check_path\": \"string\",\n  \"id\": \"string\",\n  \"image\": \"string\",\n  \"max_replicas\": 5730,\n  \"memory\": 2504.0040672592813,\n  \"min_replicas\": 8100,\n  \"name\": \"string\",\n  \"object\": {},\n  \"port\": 9958,\n  \"ready_replicas\": 7404,\n  \"replica_events\": {\n    \"key_0\": {\n      \"image\": \"string\",\n      \"replica_ready_since\": \"string\",\n      \"replica_status\": \"string\",\n      \"replica_status_message\": \"string\",\n      \"replica_status_reason\": \"string\",\n      \"revision_id\": \"string\",\n      \"volume_preload_completed_at\": \"string\",\n      \"volume_preload_started_at\": \"string\",\n      \"volume_preload_status\": \"string\"\n    }\n  },\n  \"status\": \"Updating\",\n  \"storage\": 2536,\n  \"updated_at\": \"1987-11-29T16:01:57.696Z\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acb6b547-7a92-4cc9-b621-d13b1689dac7",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gpu_type\": \"<string>\",\n  \"image\": \"<string>\",\n  \"name\": \"<string>\",\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"health_check_path\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71279f94-689e-43bb-88f9-3c8167f6ae86",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gpu_type\": \"<string>\",\n  \"image\": \"<string>\",\n  \"name\": \"<string>\",\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"health_check_path\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31be1713-f8fa-415f-96b5-90b988587304",
+          "name": "Delete a deployment",
+          "request": {
+            "name": "Delete a deployment",
+            "description": {
+              "content": "Delete an existing deployment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "967aec47-f361-4c81-9f34-af7a010debfd",
+              "name": "Deployment deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2346c4f6-38a6-4f49-97b3-66440c728675",
+              "name": "Deployment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb92be62-4dce-45db-89f7-cd9750a39464",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29613dea-2709-460d-8baf-dd5c0449b71d",
+          "name": "Get a deployment by ID or name",
+          "request": {
+            "name": "Get a deployment by ID or name",
+            "description": {
+              "content": "Retrieve details of a specific deployment by its ID or name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9cd58cb6-2195-4c25-8965-93f0e9b34208",
+              "name": "Deployment details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"args\": [\n    \"string\",\n    \"string\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cpu\": 547.667339156006,\n  \"created_at\": \"1974-12-01T23:46:39.065Z\",\n  \"description\": \"string\",\n  \"desired_replicas\": 8044,\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": 4381,\n  \"gpu_type\": \"h100-80gb\",\n  \"health_check_path\": \"string\",\n  \"id\": \"string\",\n  \"image\": \"string\",\n  \"max_replicas\": 5730,\n  \"memory\": 2504.0040672592813,\n  \"min_replicas\": 8100,\n  \"name\": \"string\",\n  \"object\": {},\n  \"port\": 9958,\n  \"ready_replicas\": 7404,\n  \"replica_events\": {\n    \"key_0\": {\n      \"image\": \"string\",\n      \"replica_ready_since\": \"string\",\n      \"replica_status\": \"string\",\n      \"replica_status_message\": \"string\",\n      \"replica_status_reason\": \"string\",\n      \"revision_id\": \"string\",\n      \"volume_preload_completed_at\": \"string\",\n      \"volume_preload_started_at\": \"string\",\n      \"volume_preload_status\": \"string\"\n    }\n  },\n  \"status\": \"Updating\",\n  \"storage\": 2536,\n  \"updated_at\": \"1987-11-29T16:01:57.696Z\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "caf27ba1-87e2-4ba1-b090-f1c249d7172b",
+              "name": "Deployment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "699a723a-6524-4b89-ad84-4771fc45d200",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a13e1bf-64fb-4e2a-b644-abb8b50ae007",
+          "name": "Update a deployment",
+          "request": {
+            "name": "Update a deployment",
+            "description": {
+              "content": "Update an existing deployment configuration",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"<string>\",\n    \"target\": \"<number>\",\n    \"time_interval_minutes\": \"<integer>\"\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"gpu_type\": \"<string>\",\n  \"health_check_path\": \"<string>\",\n  \"image\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6350e8c5-dc59-49ab-bd3f-9a36cc586a6d",
+              "name": "Deployment updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"gpu_type\": \"<string>\",\n  \"health_check_path\": \"<string>\",\n  \"image\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"args\": [\n    \"string\",\n    \"string\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cpu\": 547.667339156006,\n  \"created_at\": \"1974-12-01T23:46:39.065Z\",\n  \"description\": \"string\",\n  \"desired_replicas\": 8044,\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": 4381,\n  \"gpu_type\": \"h100-80gb\",\n  \"health_check_path\": \"string\",\n  \"id\": \"string\",\n  \"image\": \"string\",\n  \"max_replicas\": 5730,\n  \"memory\": 2504.0040672592813,\n  \"min_replicas\": 8100,\n  \"name\": \"string\",\n  \"object\": {},\n  \"port\": 9958,\n  \"ready_replicas\": 7404,\n  \"replica_events\": {\n    \"key_0\": {\n      \"image\": \"string\",\n      \"replica_ready_since\": \"string\",\n      \"replica_status\": \"string\",\n      \"replica_status_message\": \"string\",\n      \"replica_status_reason\": \"string\",\n      \"revision_id\": \"string\",\n      \"volume_preload_completed_at\": \"string\",\n      \"volume_preload_started_at\": \"string\",\n      \"volume_preload_status\": \"string\"\n    }\n  },\n  \"status\": \"Updating\",\n  \"storage\": 2536,\n  \"updated_at\": \"1987-11-29T16:01:57.696Z\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b867532-e3cb-4833-83c5-c3a5f2f69d98",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"gpu_type\": \"<string>\",\n  \"health_check_path\": \"<string>\",\n  \"image\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c8fb2b0-440c-4899-9d3a-5dabe02516ad",
+              "name": "Deployment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"gpu_type\": \"<string>\",\n  \"health_check_path\": \"<string>\",\n  \"image\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8498c278-7095-4940-8420-7ee1139abcf1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"args\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoscaling\": {\n    \"metric\": \"HTTPTotalRequests\",\n    \"target\": 100,\n    \"time_interval_minutes\": 10\n  },\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cpu\": \"<number>\",\n  \"description\": \"<string>\",\n  \"environment_variables\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"value_from_secret\": \"<string>\"\n    }\n  ],\n  \"gpu_count\": \"<integer>\",\n  \"gpu_type\": \"<string>\",\n  \"health_check_path\": \"<string>\",\n  \"image\": \"<string>\",\n  \"max_replicas\": \"<integer>\",\n  \"memory\": \"<number>\",\n  \"min_replicas\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"storage\": \"<integer>\",\n  \"termination_grace_period_seconds\": \"<integer>\",\n  \"volumes\": [\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    {\n      \"mount_path\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25a96b14-f2c1-4f59-8ab9-ab734a50fe8e",
+          "name": "Get logs for a deployment",
+          "request": {
+            "name": "Get logs for a deployment",
+            "description": {
+              "content": "Retrieve logs from a deployment, optionally filtered by replica ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deployments",
+                ":id",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "replica_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b2a1c7c-3560-45d7-82e6-a82fda3f8529",
+              "name": "Deployment logs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replica_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lines\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef1cecdd-cb14-487a-a700-4f5630d39dd2",
+              "name": "Deployment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replica_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c62b2ee-429b-4667-a686-9c1e3a59e02e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deployments",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "replica_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f4aef87a-80f2-4bc8-93d4-396e399d78f7",
+    "name": "remediation.proto Audio Deployments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

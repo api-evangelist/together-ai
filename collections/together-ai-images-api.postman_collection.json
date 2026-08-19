@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "12e3158a-efb5-4d50-9448-ff18bb07b663",
+      "name": "Images",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0700304f-291e-4012-b1e0-33a8e2a9e049",
+          "name": "Create image",
+          "request": {
+            "name": "Create image",
+            "description": {
+              "content": "Use an image model to generate an image for a given prompt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                "generations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\",\n  \"steps\": 20,\n  \"image_url\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"negative_prompt\": \"<string>\",\n  \"response_format\": \"<string>\",\n  \"guidance_scale\": 3.5,\n  \"output_format\": \"jpeg\",\n  \"image_loras\": [\n    {\n      \"path\": \"<string>\",\n      \"scale\": \"<number>\"\n    },\n    {\n      \"path\": \"<string>\",\n      \"scale\": \"<number>\"\n    }\n  ],\n  \"reference_images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disable_safety_checker\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b51fb2b1-c3d4-48ca-acfa-24ba81ffe15e",
+              "name": "Image generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    "generations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"cat floating in space, cinematic\",\n  \"model\": \"<string>\",\n  \"steps\": 20,\n  \"image_url\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"negative_prompt\": \"<string>\",\n  \"response_format\": \"<string>\",\n  \"guidance_scale\": 3.5,\n  \"output_format\": \"jpeg\",\n  \"image_loras\": [\n    {\n      \"path\": \"<string>\",\n      \"scale\": \"<number>\"\n    },\n    {\n      \"path\": \"<string>\",\n      \"scale\": \"<number>\"\n    }\n  ],\n  \"reference_images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disable_safety_checker\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"object\": {},\n  \"data\": [\n    {\n      \"index\": 2176,\n      \"b64_json\": \"string\",\n      \"type\": \"b64_json\"\n    },\n    {\n      \"index\": 3881,\n      \"b64_json\": \"string\",\n      \"type\": \"b64_json\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2da0ee79-698f-48d3-b531-73ce31043921",
+    "name": "remediation.proto Audio Images API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

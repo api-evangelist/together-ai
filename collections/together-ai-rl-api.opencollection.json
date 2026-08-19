@@ -1,0 +1,343 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "remediation.proto Audio RL API",
+    "version": "version not set"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List training sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all training sessions."
+        },
+        {
+          "info": {
+            "name": "Create training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a training session and returns its details."
+        },
+        {
+          "info": {
+            "name": "Get training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets a training session by its ID and returns its details."
+        },
+        {
+          "info": {
+            "name": "Stop training session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/stop",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stops a training session."
+        },
+        {
+          "info": {
+            "name": "Get forward-backward operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/forward-backward/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a forward-backward operation."
+        },
+        {
+          "info": {
+            "name": "Get optim-step operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/optim-step/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of an optim-step operation."
+        },
+        {
+          "info": {
+            "name": "Get sample operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/sample/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a sample operation."
+        },
+        {
+          "info": {
+            "name": "Forward-backward pass",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/forward-backward",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a forward-backward pass operation that will asynchronously compute gradients via backpropagation."
+        },
+        {
+          "info": {
+            "name": "Optimizer step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/optim-step",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits an optimizer step operation that will asynchronously apply accumulated gradients to update model parameters."
+        },
+        {
+          "info": {
+            "name": "Sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/sample",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a sample operation that will asynchronously generate text completions with logprobs."
+        },
+        {
+          "info": {
+            "name": "Create inference checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/inference-checkpoint",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Submits an operation that will asynchronously save the current LoRA adapter as an inference checkpoint and upload it to object storage."
+        },
+        {
+          "info": {
+            "name": "Get inference checkpoint operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/inference-checkpoint/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of an inference checkpoint operation."
+        },
+        {
+          "info": {
+            "name": "Save training checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/training-checkpoint",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Submits an operation that will asynchronously save the full training state (adapter + optimizer + step)."
+        },
+        {
+          "info": {
+            "name": "Get save training checkpoint operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/training-sessions/:session_id/operations/training-checkpoint/:operation_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and result of a save training checkpoint operation."
+        },
+        {
+          "info": {
+            "name": "Download checkpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.together.xyz/v1/rl/checkpoints/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns presigned URLs for downloading a checkpoint's model files. Only inference checkpoints support downloading."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

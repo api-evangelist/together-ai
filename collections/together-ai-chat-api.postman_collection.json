@@ -1,0 +1,454 @@
+{
+  "item": [
+    {
+      "id": "4d4c812a-3e11-4dd4-87e5-51a03b042c18",
+      "name": "Chat",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "54449227-e665-40bf-9db6-547f21c4f65c",
+          "name": "Create chat completion",
+          "request": {
+            "name": "Create chat completion",
+            "description": {
+              "content": "Generate a model response for a given chat conversation. Supports single queries and multi-turn conversations with system, user, and assistant messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"key_0\": \"<float>\",\n    \"key_1\": \"<float>\",\n    \"key_2\": \"<float>\"\n  },\n  \"seed\": \"<integer>\",\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": false\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"<string>\",\n  \"reasoning_effort\": \"<string>\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "754c1d38-cb1b-48ae-9785-b76b44675415",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"choices\": [\n    {\n      \"text\": \"string\",\n      \"index\": 9164,\n      \"seed\": 2836,\n      \"finish_reason\": \"function_call\",\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"index\": 9854.81595970802\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"index\": 4290.426179516472\n          }\n        ],\n        \"function_call\": {\n          \"arguments\": \"string\",\n          \"name\": \"string\"\n        },\n        \"reasoning\": \"string\"\n      },\n      \"logprobs\": {\n        \"token_ids\": [\n          5450.68618846404,\n          626.9685396073666\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          5446.680695754685,\n          6634.849719026774\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 4470.508233872603,\n          \"key_1\": 1902.890188559544,\n          \"key_2\": 9758.624836303705\n        }\n      },\n      \"top_logprobs\": {\n        \"key_0\": 9966.415698606257,\n        \"key_1\": 243.02544544325565,\n        \"key_2\": 8786.521541445805\n      }\n    },\n    {\n      \"text\": \"string\",\n      \"index\": 7476,\n      \"seed\": 654,\n      \"finish_reason\": \"length\",\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"index\": 2346.108597795822\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"index\": 8512.338493401754\n          }\n        ],\n        \"function_call\": {\n          \"arguments\": \"string\",\n          \"name\": \"string\"\n        },\n        \"reasoning\": \"string\"\n      },\n      \"logprobs\": {\n        \"token_ids\": [\n          3778.531133376193,\n          4494.53837802106\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          9794.978880960198,\n          9095.982602959404\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 4069.4213261492173\n        }\n      },\n      \"top_logprobs\": {\n        \"key_0\": 5608.676198507544,\n        \"key_1\": 4314.655610268766\n      }\n    }\n  ],\n  \"id\": \"string\",\n  \"created\": 5925,\n  \"model\": \"string\",\n  \"object\": {},\n  \"prompt\": [\n    {\n      \"text\": \"<s>[INST] What is the capital of France? [/INST]\",\n      \"logprobs\": {\n        \"token_ids\": [\n          8543.166003715207,\n          1541.453523488865\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          1657.0354726771707,\n          7836.043080188372\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 1560.6582265817515\n        }\n      }\n    },\n    {\n      \"text\": \"<s>[INST] What is the capital of France? [/INST]\",\n      \"logprobs\": {\n        \"token_ids\": [\n          7399.559043519263,\n          1649.9661371590323\n        ],\n        \"tokens\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_logprobs\": [\n          4118.4570159962705,\n          1975.8039500877578\n        ],\n        \"top_logprobs\": {\n          \"key_0\": 2305.6761933091384,\n          \"key_1\": 2561.3670764933204,\n          \"key_2\": 5028.972407093246\n        }\n      }\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 6734,\n    \"completion_tokens\": 1783,\n    \"total_tokens\": 516\n  },\n  \"warnings\": [\n    {\n      \"message\": \"string\"\n    },\n    {\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45ced9fc-bc64-49f7-806f-62aaf2fc40c8",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "431fe66a-8592-4fb1-86d0-e76572fe31c6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c29fc8-5162-40c3-9ef2-8ad6deeae593",
+              "name": "NotFound",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fea3a82-7c81-4e29-8c1c-e20d46de5dec",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a60870b-680d-4552-a502-e1d1224e7558",
+              "name": "Overloaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24cd68d2-813a-40d2-9827-396b53c86897",
+              "name": "Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"temperature\": \"<float>\",\n  \"top_p\": \"<float>\",\n  \"top_k\": \"<integer>\",\n  \"context_length_exceeded_behavior\": \"error\",\n  \"repetition_penalty\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"logprobs\": \"<integer>\",\n  \"echo\": \"<boolean>\",\n  \"n\": \"<integer>\",\n  \"min_p\": \"<float>\",\n  \"presence_penalty\": \"<float>\",\n  \"frequency_penalty\": \"<float>\",\n  \"logit_bias\": {\n    \"105\": 21.4,\n    \"1024\": -10.5\n  },\n  \"seed\": 42,\n  \"function_call\": \"<string>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": 3578.0732218019184,\n          \"key_3\": \"string\"\n        }\n      }\n    },\n    {\n      \"type\": \"tool_type\",\n      \"function\": {\n        \"description\": \"A description of the function.\",\n        \"name\": \"function_name\",\n        \"parameters\": {\n          \"key_0\": 1534.4007476305787,\n          \"key_1\": 7058\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"tool_name\",\n  \"compliance\": {},\n  \"chat_template_kwargs\": \"<object>\",\n  \"safety_model\": \"safety_model_name\",\n  \"reasoning_effort\": \"medium\",\n  \"reasoning\": {\n    \"enabled\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "71fca2f9-e192-476e-a303-66596a446981",
+    "name": "remediation.proto Audio Chat API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

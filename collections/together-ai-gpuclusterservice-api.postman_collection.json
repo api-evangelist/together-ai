@@ -1,0 +1,1010 @@
+{
+  "item": [
+    {
+      "id": "853c3e6f-d6db-447d-bea9-3b647eb02466",
+      "name": "GPUClusterService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc04063b-27de-4021-a97a-7330294f8eaa",
+          "name": "List all GPU clusters.",
+          "request": {
+            "name": "List all GPU clusters.",
+            "description": {
+              "content": "List all GPU clusters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f20655f-03e5-4ce2-be18-1f30c466e3d7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clusters\": [\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"string\",\n      \"region\": \"string\",\n      \"gpu_type\": \"string\",\n      \"cluster_name\": \"string\",\n      \"cuda_version\": \"string\",\n      \"nvidia_driver_version\": \"string\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 7862,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 8035,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 264,\n          \"memory_gib\": 4396.765882739588,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 5348,\n          \"memory_gib\": 4153.806928432346,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 9612,\n          \"num_gpus\": 3399,\n          \"memory_gib\": 1260.9043471944703,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"instance_id\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 429,\n          \"num_gpus\": 5668,\n          \"memory_gib\": 9904.188260228237,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"instance_id\": \"string\"\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 5057,\n      \"duration_hours\": 2936,\n      \"slurm_shm_size_gib\": 4186,\n      \"capacity_pool_id\": \"string\",\n      \"reservation_start_time\": \"1994-03-11T12:35:15.665Z\",\n      \"reservation_end_time\": \"1975-12-01T02:17:12.757Z\",\n      \"install_traefik\": false,\n      \"created_at\": \"2002-08-31T02:23:27.375Z\"\n    },\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"string\",\n      \"region\": \"string\",\n      \"gpu_type\": \"string\",\n      \"cluster_name\": \"string\",\n      \"cuda_version\": \"string\",\n      \"nvidia_driver_version\": \"string\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 1662,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 5424,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 4615,\n          \"memory_gib\": 1978.5617018959379,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 4762,\n          \"memory_gib\": 1836.5207800926264,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 518,\n          \"num_gpus\": 2578,\n          \"memory_gib\": 7357.021690854921,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"instance_id\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 9629,\n          \"num_gpus\": 4464,\n          \"memory_gib\": 8483.94202795126,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"instance_id\": \"string\"\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 9173,\n      \"duration_hours\": 1824,\n      \"slurm_shm_size_gib\": 8759,\n      \"capacity_pool_id\": \"string\",\n      \"reservation_start_time\": \"1947-07-02T02:42:02.055Z\",\n      \"reservation_end_time\": \"2003-05-17T09:01:43.892Z\",\n      \"install_traefik\": false,\n      \"created_at\": \"1986-03-10T18:28:52.384Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c48ff90-8721-4dd2-8848-0fb18ec6a775",
+          "name": "Create GPU Cluster",
+          "request": {
+            "name": "Create GPU Cluster",
+            "description": {
+              "content": "Create an Instant Cluster on Together's high-performance GPU clusters.\nWith features like on-demand scaling, long-lived resizable high-bandwidth shared DC-local storage,\nKubernetes and Slurm cluster flavors, a REST API, and Terraform support,\nyou can run workloads flexibly without complex infrastructure management.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<string>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"cuda_version\": \"<string>\",\n  \"nvidia_driver_version\": \"<string>\",\n  \"billing_type\": \"<string>\",\n  \"cluster_type\": \"<string>\",\n  \"duration_days\": \"<integer>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<integer>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\",\n  \"gpu_node_failover_enabled\": false,\n  \"auto_scaled\": false,\n  \"auto_scale_max_gpus\": \"<integer>\",\n  \"slurm_shm_size_gib\": \"<integer>\",\n  \"capacity_pool_id\": \"<string>\",\n  \"reservation_start_time\": \"<dateTime>\",\n  \"reservation_end_time\": \"<dateTime>\",\n  \"install_traefik\": false,\n  \"slurm_image\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0f8b3ab-d5b2-406f-aaa0-bb1e89df32a4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<string>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"cuda_version\": \"<string>\",\n  \"nvidia_driver_version\": \"<string>\",\n  \"billing_type\": \"<string>\",\n  \"cluster_type\": \"<string>\",\n  \"duration_days\": \"<integer>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<integer>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\",\n  \"gpu_node_failover_enabled\": false,\n  \"auto_scaled\": false,\n  \"auto_scale_max_gpus\": \"<integer>\",\n  \"slurm_shm_size_gib\": \"<integer>\",\n  \"capacity_pool_id\": \"<string>\",\n  \"reservation_start_time\": \"<dateTime>\",\n  \"reservation_end_time\": \"<dateTime>\",\n  \"install_traefik\": false,\n  \"slurm_image\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"cluster_type\": \"string\",\n  \"region\": \"string\",\n  \"gpu_type\": \"string\",\n  \"cluster_name\": \"string\",\n  \"cuda_version\": \"string\",\n  \"nvidia_driver_version\": \"string\",\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 2174,\n      \"status\": \"string\"\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 1341,\n      \"status\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"control_plane_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 3107,\n      \"memory_gib\": 5880.701700165759,\n      \"network\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 7033,\n      \"memory_gib\": 2896.347651527651,\n      \"network\": \"string\"\n    }\n  ],\n  \"gpu_worker_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 6233,\n      \"num_gpus\": 6952,\n      \"memory_gib\": 3983.5214192194057,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 2353,\n      \"num_gpus\": 4453,\n      \"memory_gib\": 9174.05585200799,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    }\n  ],\n  \"kube_config\": \"string\",\n  \"num_gpus\": 7664,\n  \"duration_hours\": 5098,\n  \"slurm_shm_size_gib\": 1714,\n  \"capacity_pool_id\": \"string\",\n  \"reservation_start_time\": \"1991-03-17T10:06:49.298Z\",\n  \"reservation_end_time\": \"2017-12-17T17:03:17.012Z\",\n  \"install_traefik\": false,\n  \"created_at\": \"1952-04-02T08:26:58.197Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3af2aef5-ab04-4ff7-b851-f228daa6544f",
+          "name": "Get GPU cluster by cluster ID",
+          "request": {
+            "name": "Get GPU cluster by cluster ID",
+            "description": {
+              "content": "Retrieve information about a specific GPU cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f7e6ce9-c6ab-4a36-98fe-bafcdb3798a9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"cluster_type\": \"string\",\n  \"region\": \"string\",\n  \"gpu_type\": \"string\",\n  \"cluster_name\": \"string\",\n  \"cuda_version\": \"string\",\n  \"nvidia_driver_version\": \"string\",\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 2174,\n      \"status\": \"string\"\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 1341,\n      \"status\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"control_plane_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 3107,\n      \"memory_gib\": 5880.701700165759,\n      \"network\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 7033,\n      \"memory_gib\": 2896.347651527651,\n      \"network\": \"string\"\n    }\n  ],\n  \"gpu_worker_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 6233,\n      \"num_gpus\": 6952,\n      \"memory_gib\": 3983.5214192194057,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 2353,\n      \"num_gpus\": 4453,\n      \"memory_gib\": 9174.05585200799,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    }\n  ],\n  \"kube_config\": \"string\",\n  \"num_gpus\": 7664,\n  \"duration_hours\": 5098,\n  \"slurm_shm_size_gib\": 1714,\n  \"capacity_pool_id\": \"string\",\n  \"reservation_start_time\": \"1991-03-17T10:06:49.298Z\",\n  \"reservation_end_time\": \"2017-12-17T17:03:17.012Z\",\n  \"install_traefik\": false,\n  \"created_at\": \"1952-04-02T08:26:58.197Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ffaeb58-d7b5-4e3c-ad8a-9f84884e34df",
+          "name": "Update a GPU Cluster.",
+          "request": {
+            "name": "Update a GPU Cluster.",
+            "description": {
+              "content": "Update the configuration of an existing GPU cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster_type\": \"<string>\",\n  \"num_gpus\": \"<integer>\",\n  \"reservation_end_time\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dd821e6-2167-41b7-b57c-881bee5c645a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_type\": \"<string>\",\n  \"num_gpus\": \"<integer>\",\n  \"reservation_end_time\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"cluster_type\": \"string\",\n  \"region\": \"string\",\n  \"gpu_type\": \"string\",\n  \"cluster_name\": \"string\",\n  \"cuda_version\": \"string\",\n  \"nvidia_driver_version\": \"string\",\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 2174,\n      \"status\": \"string\"\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 1341,\n      \"status\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"control_plane_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 3107,\n      \"memory_gib\": 5880.701700165759,\n      \"network\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 7033,\n      \"memory_gib\": 2896.347651527651,\n      \"network\": \"string\"\n    }\n  ],\n  \"gpu_worker_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 6233,\n      \"num_gpus\": 6952,\n      \"memory_gib\": 3983.5214192194057,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 2353,\n      \"num_gpus\": 4453,\n      \"memory_gib\": 9174.05585200799,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ],\n      \"instance_id\": \"string\"\n    }\n  ],\n  \"kube_config\": \"string\",\n  \"num_gpus\": 7664,\n  \"duration_hours\": 5098,\n  \"slurm_shm_size_gib\": 1714,\n  \"capacity_pool_id\": \"string\",\n  \"reservation_start_time\": \"1991-03-17T10:06:49.298Z\",\n  \"reservation_end_time\": \"2017-12-17T17:03:17.012Z\",\n  \"install_traefik\": false,\n  \"created_at\": \"1952-04-02T08:26:58.197Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bcee79f-9f67-448e-8d14-40e059d00b0b",
+          "name": "Delete GPU cluster by cluster ID",
+          "request": {
+            "name": "Delete GPU cluster by cluster ID",
+            "description": {
+              "content": "Delete a GPU cluster by cluster ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compute",
+                "clusters",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c744cb1-0ebf-4087-8c89-b3550f2fb87c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compute",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f7247e7-4486-45b2-8f39-486a197c1cef",
+          "name": "Update a GPU Cluster.",
+          "request": {
+            "name": "Update a GPU Cluster.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster_id\": \"<string>\",\n  \"cluster_type\": \"<enum>\",\n  \"num_gpus\": \"<uint32>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "570c3cb6-32ef-4378-a286-0205b6177c38",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<string>\",\n  \"cluster_type\": \"<enum>\",\n  \"num_gpus\": \"<uint32>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"status\": \"QUEUED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41a3326c-350b-4483-985d-76412149e6b4",
+          "name": "Create GPU Cluster",
+          "request": {
+            "name": "Create GPU Cluster",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<enum>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"duration_days\": \"<uint32>\",\n  \"driver_version\": \"<enum>\",\n  \"billing_type\": \"<enum>\",\n  \"cluster_type\": \"<enum>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<uint32>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "683161e2-8185-4e44-8269-bae3fbb26b80",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region\": \"<string>\",\n  \"gpu_type\": \"<enum>\",\n  \"num_gpus\": \"<integer>\",\n  \"cluster_name\": \"<string>\",\n  \"duration_days\": \"<uint32>\",\n  \"driver_version\": \"<enum>\",\n  \"billing_type\": \"<enum>\",\n  \"cluster_type\": \"<enum>\",\n  \"shared_volume\": {\n    \"volume_name\": \"<string>\",\n    \"size_tib\": \"<uint32>\",\n    \"region\": \"<string>\"\n  },\n  \"volume_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"status\": \"QUEUED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4251298b-04f9-48e7-b716-a549f781d68c",
+          "name": "Get GPU cluster by cluster ID",
+          "request": {
+            "name": "Get GPU cluster by cluster ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82822e5e-23cc-4df5-bb64-6d71a7181565",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\",\n  \"cluster_type\": \"KUBERNETES\",\n  \"region\": \"string\",\n  \"gpu_type\": \"H100_SXM\",\n  \"cluster_name\": \"string\",\n  \"duration_hours\": 8260,\n  \"driver_version\": \"CUDA_12_6_560\",\n  \"volumes\": [\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 6030,\n      \"status\": \"string\"\n    },\n    {\n      \"volume_id\": \"string\",\n      \"volume_name\": \"string\",\n      \"size_tib\": 170,\n      \"status\": \"string\"\n    }\n  ],\n  \"status\": \"string\",\n  \"control_plane_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 2106,\n      \"memory_gib\": 659.5885627444297,\n      \"network\": \"string\"\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 3079,\n      \"memory_gib\": 1549.784330600056,\n      \"network\": \"string\"\n    }\n  ],\n  \"gpu_worker_nodes\": [\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 171,\n      \"num_gpus\": 5770,\n      \"memory_gib\": 6445.629810529715,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"node_id\": \"string\",\n      \"node_name\": \"string\",\n      \"status\": \"string\",\n      \"host_name\": \"string\",\n      \"num_cpu_cores\": 4179,\n      \"num_gpus\": 5198,\n      \"memory_gib\": 3225.5390202912126,\n      \"networks\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"kube_config\": \"string\",\n  \"num_gpus\": 9737\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d694d81-48a1-4be6-93d3-afe6fa1fafed",
+          "name": "Delete GPU cluster by cluster ID",
+          "request": {
+            "name": "Delete GPU cluster by cluster ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_cluster",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cluster_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0970301-61ab-4886-9b3f-1d39945cd5b7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_cluster",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cluster_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cluster_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e6ac350-3277-49ac-81dd-66c49afb24fb",
+          "name": "List all GPU clusters.",
+          "request": {
+            "name": "List all GPU clusters.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "gpu_clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "41f26426-93d1-49b1-9d72-1bd10f86f3ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "gpu_clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clusters\": [\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"KUBERNETES\",\n      \"region\": \"string\",\n      \"gpu_type\": \"H200_SXM\",\n      \"cluster_name\": \"string\",\n      \"duration_hours\": 3903,\n      \"driver_version\": \"UNKNOWN_DRIVER\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 9594,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 7637,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 9579,\n          \"memory_gib\": 979.3505989908035,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 8785,\n          \"memory_gib\": 8561.36898547782,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 8389,\n          \"num_gpus\": 6614,\n          \"memory_gib\": 350.60284403067743,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 9645,\n          \"num_gpus\": 549,\n          \"memory_gib\": 2471.971933078907,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 9476\n    },\n    {\n      \"cluster_id\": \"string\",\n      \"cluster_type\": \"UNKNOWN_TYPE\",\n      \"region\": \"string\",\n      \"gpu_type\": \"H200_SXM\",\n      \"cluster_name\": \"string\",\n      \"duration_hours\": 4623,\n      \"driver_version\": \"CUDA_12_8_570\",\n      \"volumes\": [\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 6337,\n          \"status\": \"string\"\n        },\n        {\n          \"volume_id\": \"string\",\n          \"volume_name\": \"string\",\n          \"size_tib\": 2627,\n          \"status\": \"string\"\n        }\n      ],\n      \"status\": \"string\",\n      \"control_plane_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 9004,\n          \"memory_gib\": 725.0768794336016,\n          \"network\": \"string\"\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 3845,\n          \"memory_gib\": 3783.3370494531027,\n          \"network\": \"string\"\n        }\n      ],\n      \"gpu_worker_nodes\": [\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 3972,\n          \"num_gpus\": 9077,\n          \"memory_gib\": 5755.155077684486,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"node_id\": \"string\",\n          \"node_name\": \"string\",\n          \"status\": \"string\",\n          \"host_name\": \"string\",\n          \"num_cpu_cores\": 1770,\n          \"num_gpus\": 8117,\n          \"memory_gib\": 8320.159368987603,\n          \"networks\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"kube_config\": \"string\",\n      \"num_gpus\": 2823\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fe714794-77af-4550-9f8e-a30aae7d5e80",
+    "name": "remediation.proto Audio GPUClusterService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

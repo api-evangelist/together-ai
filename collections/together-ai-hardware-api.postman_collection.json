@@ -1,0 +1,226 @@
+{
+  "item": [
+    {
+      "id": "90cfab9c-e40a-4075-bcdf-2d38dcb36ed5",
+      "name": "Hardware",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "555b82d9-aba1-488e-b12c-1cf5b5c7fdb4",
+          "name": "List available hardware configurations",
+          "request": {
+            "name": "List available hardware configurations",
+            "description": {
+              "content": "Returns a list of available hardware configurations for deploying models. When a model parameter is provided, it returns only hardware configurations compatible with that model, including their current availability status.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hardware"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f5a30929-5a35-4bf9-9401-a43ca91f2ca0",
+              "name": "List of available hardware configurations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hardware"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "value": "deepseek-ai/DeepSeek-R1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": {},\n  \"data\": [\n    {\n      \"object\": {},\n      \"id\": \"string\",\n      \"pricing\": {\n        \"cents_per_minute\": 7267.1397326873985\n      },\n      \"specs\": {\n        \"gpu_type\": \"string\",\n        \"gpu_link\": \"string\",\n        \"gpu_memory\": 5354.2727840602765,\n        \"gpu_count\": 6632\n      },\n      \"updated_at\": \"2006-09-16T13:20:31.122Z\",\n      \"availability\": {\n        \"status\": \"available\"\n      }\n    },\n    {\n      \"object\": {},\n      \"id\": \"string\",\n      \"pricing\": {\n        \"cents_per_minute\": 2406.5327161339287\n      },\n      \"specs\": {\n        \"gpu_type\": \"string\",\n        \"gpu_link\": \"string\",\n        \"gpu_memory\": 3064.223548903596,\n        \"gpu_count\": 6916\n      },\n      \"updated_at\": \"1976-07-05T04:44:08.213Z\",\n      \"availability\": {\n        \"status\": \"insufficient\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b0e32d6-fe40-4a7c-a51a-3a99d5190570",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hardware"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "value": "deepseek-ai/DeepSeek-R1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "523dc56c-50d5-4ea7-a8dc-47fef21c3d9a",
+              "name": "Internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hardware"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "value": "deepseek-ai/DeepSeek-R1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ca6e5f80-ee9a-47b9-bbd2-8513fead5efc",
+    "name": "remediation.proto Audio Hardware API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

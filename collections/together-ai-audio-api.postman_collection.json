@@ -1,0 +1,1634 @@
+{
+  "item": [
+    {
+      "id": "05462a12-c49f-446f-b235-5ea62ee91e17",
+      "name": "Audio",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a62e2a41-ee03-43e5-82c2-60ad69d291a9",
+          "name": "Create audio generation request",
+          "request": {
+            "name": "Create audio generation request",
+            "description": {
+              "content": "Generate audio from input text",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audio",
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"voice\": \"<string>\",\n  \"response_format\": \"wav\",\n  \"language\": \"en\",\n  \"response_encoding\": \"pcm_f32le\",\n  \"sample_rate\": 44100,\n  \"bit_rate\": 128000,\n  \"stream\": false,\n  \"extra_params\": {\n    \"pronunciation_dict\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f5ecfcc7-5afd-40a1-8f88-4c4c99d37f61",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"voice\": \"<string>\",\n  \"response_format\": \"wav\",\n  \"language\": \"en\",\n  \"response_encoding\": \"pcm_f32le\",\n  \"sample_rate\": 44100,\n  \"bit_rate\": 128000,\n  \"stream\": false,\n  \"extra_params\": {\n    \"pronunciation_dict\": [\n      \"omg/oh my god\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76e5c696-eaee-4c50-a09c-093db6b8b716",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"voice\": \"<string>\",\n  \"response_format\": \"wav\",\n  \"language\": \"en\",\n  \"response_encoding\": \"pcm_f32le\",\n  \"sample_rate\": 44100,\n  \"bit_rate\": 128000,\n  \"stream\": false,\n  \"extra_params\": {\n    \"pronunciation_dict\": [\n      \"omg/oh my god\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ebe90b5-6e18-4b22-b10a-54cf48c52a3f",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"voice\": \"<string>\",\n  \"response_format\": \"wav\",\n  \"language\": \"en\",\n  \"response_encoding\": \"pcm_f32le\",\n  \"sample_rate\": 44100,\n  \"bit_rate\": 128000,\n  \"stream\": false,\n  \"extra_params\": {\n    \"pronunciation_dict\": [\n      \"omg/oh my god\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3727848b-8372-4847-a6ab-9be32d5a4e42",
+          "name": "Real-time text-to-speech via WebSocket",
+          "request": {
+            "name": "Real-time text-to-speech via WebSocket",
+            "description": {
+              "content": "Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, voice, max_partial_length, language)\n\n**Client Events:**\n- `tts_session.updated`: Update session parameters like voice. The `session` object also accepts an `extra_params` field for additional model-specific parameters that fine-tune speech generation behavior, such as `pronunciation_dict` (a list of pronunciation rules for specific characters or symbols, where each entry uses the format `\"<source>/<replacement>\"` (e.g., `[\"omg/oh my god\"]`) to override how the model pronounces matching tokens).\n  ```json\n  {\n    \"type\": \"tts_session.updated\",\n    \"session\": {\n      \"voice\": \"tara\",\n      \"extra_params\": {\n        \"pronunciation_dict\": [\"omg/oh my god\"]\n      }\n    }\n  }\n  ```\n- `input_text_buffer.append`: Send text chunks for TTS generation\n  ```json\n  {\n    \"type\": \"input_text_buffer.append\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `input_text_buffer.clear`: Clear the buffered text\n  ```json\n  {\n    \"type\": \"input_text_buffer.clear\"\n  }\n  ```\n- `input_text_buffer.commit`: Signal end of text input and process remaining text\n  ```json\n  {\n    \"type\": \"input_text_buffer.commit\"\n  }\n  ```\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"event_id\": \"evt_123456\",\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.tts.session\",\n      \"modalities\": [\"text\", \"audio\"],\n      \"model\": \"hexgrad/Kokoro-82M\",\n      \"voice\": \"tara\"\n    }\n  }\n  ```\n- `conversation.item.input_text.received`: Acknowledgment that text was received\n  ```json\n  {\n    \"type\": \"conversation.item.input_text.received\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `conversation.item.audio_output.delta`: Audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.delta\",\n    \"item_id\": \"tts_1\",\n    \"delta\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `conversation.item.audio_output.done`: Audio generation complete for an item\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.done\",\n    \"item_id\": \"tts_1\"\n  }\n  ```\n- `conversation.item.tts.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.tts.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Text Processing:**\n- Partial text (no sentence ending) is held in buffer until:\n  - We believe that the text is complete enough to be processed for TTS generation\n  - The partial text exceeds `max_partial_length` characters (default: 250)\n  - The `input_text_buffer.commit` event is received\n\n**Audio Format:**\n- Format: Raw PCM (s16le, mono)\n- Sample Rate: 24000 Hz\n- Encoding: Base64 (per delta event)\n- Delivered via `conversation.item.audio_output.delta` events\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Invalid text format errors (400)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audio",
+                "speech",
+                "websocket"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "hexgrad/Kokoro-82M"
+                },
+                {
+                  "disabled": false,
+                  "key": "voice",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_partial_length",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "en"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52ee5a47-0d54-4088-b22b-e8c5e147bcd8",
+              "name": "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.tts.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "speech",
+                    "websocket"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "value": "hexgrad/Kokoro-82M"
+                    },
+                    {
+                      "key": "voice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "max_partial_length",
+                      "value": "250"
+                    },
+                    {
+                      "key": "language",
+                      "value": "en"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce6d1794-19c5-4ea0-8ab9-0243fb9e1242",
+          "name": "Create audio transcription request",
+          "request": {
+            "name": "Create audio transcription request",
+            "description": {
+              "content": "Transcribes audio into text",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audio",
+                "transcriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "<binary>",
+                  "type": "text",
+                  "description": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac."
+                },
+                {
+                  "key": "model",
+                  "value": "openai/whisper-large-v3",
+                  "type": "text",
+                  "description": "Model to use for transcription (This can only be one of openai/whisper-large-v3)"
+                },
+                {
+                  "key": "language",
+                  "value": "en",
+                  "type": "text",
+                  "description": "Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected."
+                },
+                {
+                  "key": "prompt",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it."
+                },
+                {
+                  "key": "response_format",
+                  "value": "json",
+                  "type": "text",
+                  "description": "The format of the response (This can only be one of json,verbose_json)"
+                },
+                {
+                  "key": "temperature",
+                  "value": "0",
+                  "type": "text",
+                  "description": "Sampling temperature between 0.0 and 1.0"
+                },
+                {
+                  "key": "timestamp_granularities",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels."
+                },
+                {
+                  "key": "diarize",
+                  "value": "false",
+                  "type": "text",
+                  "description": "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n"
+                },
+                {
+                  "key": "min_speakers",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known."
+                },
+                {
+                  "key": "max_speakers",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2ffdf211-0cd2-4dae-a310-4504d137f0a4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for transcription (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n",
+                        "type": "text/plain"
+                      },
+                      "key": "diarize",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "min_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "max_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"text\": \"Hello, world!\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8486b51b-ddac-4870-bff5-7fe95eb2825b",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for transcription (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n",
+                        "type": "text/plain"
+                      },
+                      "key": "diarize",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "min_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "max_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7644a867-24ea-4ddf-9e81-83b3ab53ca89",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for transcription (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n",
+                        "type": "text/plain"
+                      },
+                      "key": "diarize",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "min_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "max_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fec9552f-d1cf-4f84-b56e-11ba55a589b9",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for transcription (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n",
+                        "type": "text/plain"
+                      },
+                      "key": "diarize",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "min_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+                        "type": "text/plain"
+                      },
+                      "key": "max_speakers",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4323e666-3579-4bc1-965b-3067f73f3445",
+          "name": "Create audio translation request",
+          "request": {
+            "name": "Create audio translation request",
+            "description": {
+              "content": "Translates audio into English",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audio",
+                "translations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "<binary>",
+                  "type": "text",
+                  "description": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac."
+                },
+                {
+                  "key": "model",
+                  "value": "openai/whisper-large-v3",
+                  "type": "text",
+                  "description": "Model to use for translation (This can only be one of openai/whisper-large-v3)"
+                },
+                {
+                  "key": "language",
+                  "value": "en",
+                  "type": "text",
+                  "description": "Target output language. Optional ISO 639-1 language code. If omitted, language is set to English."
+                },
+                {
+                  "key": "prompt",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it."
+                },
+                {
+                  "key": "response_format",
+                  "value": "json",
+                  "type": "text",
+                  "description": "The format of the response (This can only be one of json,verbose_json)"
+                },
+                {
+                  "key": "temperature",
+                  "value": "0",
+                  "type": "text",
+                  "description": "Sampling temperature between 0.0 and 1.0"
+                },
+                {
+                  "key": "timestamp_granularities",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bb9f7ac9-cd75-4e0e-ba51-e7b5875bb725",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for translation (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"text\": \"Hello, world!\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a03c178-20d1-456b-9d01-d5d7c4e6bb50",
+              "name": "BadRequest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for translation (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbff2484-c366-4328-b73d-6c920f2c8ae7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for translation (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35b5129b-7f1a-4335-befb-81fd4f564b24",
+              "name": "RateLimit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audio",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Model to use for translation (This can only be one of openai/whisper-large-v3)",
+                        "type": "text/plain"
+                      },
+                      "key": "model",
+                      "value": "openai/whisper-large-v3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "en",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The format of the response (This can only be one of json,verbose_json)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "json",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Sampling temperature between 0.0 and 1.0",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.",
+                        "type": "text/plain"
+                      },
+                      "key": "timestamp_granularities",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdd507b4-8055-49c9-857d-7879e52ef41f",
+          "name": "Real-time audio transcription via WebSocket",
+          "request": {
+            "name": "Real-time audio transcription via WebSocket",
+            "description": {
+              "content": "Establishes a WebSocket connection for real-time audio transcription. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/realtime) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, input_audio_format)\n\n**Client Events:**\n- `input_audio_buffer.append`: Send audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"input_audio_buffer.append\",\n    \"audio\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `input_audio_buffer.commit`: Signal end of audio stream. When VAD is enabled, the server automatically detects speech boundaries and emits `completed` events. When VAD is disabled, you must send `commit` to trigger transcription of the buffered audio.\n  ```json\n  {\n    \"type\": \"input_audio_buffer.commit\"\n  }\n  ```\n- `transcription_session.updated`: Update session configuration, including Voice Activity Detection (VAD) parameters. Send this after receiving `session.created`. Can also be sent at any time during the session to change VAD settings.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n  To disable VAD entirely (manual commit mode), set `turn_detection` to `null`:\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": null\n    }\n  }\n  ```\n\n**Voice Activity Detection (VAD)**\n\nVAD controls how the server automatically detects speech segments in the audio stream. When enabled (the default), the server uses Silero VAD to identify speech regions and emits transcription events as each segment completes. When disabled, you must manually call `input_audio_buffer.commit` to trigger transcription.\n\nVAD can be configured in two ways:\n1. **Query parameters** at connection time: `turn_detection=server_vad&threshold=0.3&min_silence_duration_ms=500`\n2. **Session message** after connection: Send `transcription_session.updated` with a `turn_detection` object (see above)\n\nTo disable VAD at connection time, use `turn_detection=none` as a query parameter.\n\n**VAD Parameters:**\n\nAll parameters are optional — omitted fields use their defaults.\n\n| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `type` | string | `server_vad` | VAD mode. Use `server_vad` to enable, or set `turn_detection` to `null` to disable. |\n| `threshold` | float | `0.3` | Speech probability threshold (0.0–1.0). Audio frames with probability above this value are classified as speech. Lower values detect more speech but may increase false positives. For low-SNR audio (e.g., 8kHz phone calls), values of 0.01–0.2 may work better. |\n| `min_silence_duration_ms` | int | `500` | Minimum silence duration in milliseconds before ending a speech segment. Higher values merge nearby speech bursts into single segments. For phone calls with mid-sentence pauses, 2000–5000ms prevents over-segmentation. |\n| `min_speech_duration_ms` | int | `250` | Minimum speech segment duration in milliseconds. Segments shorter than this are discarded. Filters out brief noise bursts or clicks. |\n| `max_speech_duration_s` | float | `5.0` | Maximum speech segment duration in seconds. Segments longer than this are force-split at the longest internal silence gap. Useful for continuous speech without natural pauses. |\n| `speech_pad_ms` | int | `250` | Padding in milliseconds added to the start and end of each detected segment. Prevents clipping speech edges. When padding would cause adjacent segments to overlap, the gap is split at the midpoint instead. |\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.session\",\n      \"modalities\": [\"audio\"],\n      \"model\": \"openai/whisper-large-v3\"\n    }\n  }\n  ```\n- `transcription_session.updated`: Confirms session configuration was applied. Sent in response to a client `transcription_session.updated` message.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n- `conversation.item.input_audio_transcription.delta`: Partial transcription results\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.delta\",\n    \"delta\": \"The quick brown\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.completed`: Final transcription\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.completed\",\n    \"transcript\": \"The quick brown fox jumps over the lazy dog\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Unsupported audio format errors (400)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "realtime"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "input_audio_format",
+                  "value": "pcm_s16le_16000",
+                  "description": "(Required) Audio format specification. Currently supports 16-bit PCM at 16kHz sample rate."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cff72d9-3a71-40b5-b2a1-6ffc649cf0cc",
+              "name": "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.input_audio_transcription.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "realtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "input_audio_format",
+                      "value": "pcm_s16le_16000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Switching Protocols",
+              "code": 101,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.together.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6721ec6a-30d9-47fd-916a-8677ff1bc61e",
+    "name": "remediation.proto Audio API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
