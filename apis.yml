@@ -21,6 +21,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/together-ai.png
 tags:
+- Artificial Intelligence
+- LLM
+- Inference
+- Foundation Models
+- GPU
+- Open Source AI
+tags_raw:
 - AI
 - LLM
 - Inference
@@ -349,6 +356,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -556,7 +565,8 @@ apis:
   description: The Endpoints API from Together AI — 3 operation(s) for endpoints.
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
-  tags:
+  tags: []
+  tags_raw:
   - Endpoints
   properties:
   - type: OpenAPI
@@ -609,6 +619,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Evaluation
+  tags_raw:
   - evaluation
   properties:
   - type: OpenAPI
@@ -661,6 +673,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -713,6 +727,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Fine-Tuning
+  tags_raw:
   - Fine-tuning
   properties:
   - type: OpenAPI
@@ -869,6 +885,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -921,6 +939,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
