@@ -6,6 +6,18 @@ description: Together AI is an AI acceleration cloud delivering fast, scalable, 
   reliable generative-AI infrastructure. The Together API serves open-source and proprietary
   foundation models for chat, embeddings, vision, audio, image and video generation,
   fine-tuning, code execution, and dedicated GPU compute.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
