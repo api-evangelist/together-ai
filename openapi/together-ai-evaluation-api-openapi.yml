@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio evaluation API
-  version: version not set
+  title: Together Evaluation API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -254,87 +262,6 @@ paths:
                 $ref: '#/components/schemas/ErrorData'
 components:
   schemas:
-    EvaluationJobStatusUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          description: The status at this update
-          example: pending
-        message:
-          type: string
-          description: Additional message for this update
-          example: Job is pending evaluation
-        timestamp:
-          type: string
-          format: date-time
-          description: When this update occurred
-          example: '2025-07-23T17:10:04.837888Z'
-    EvaluationClassifyResults:
-      type: object
-      properties:
-        generation_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed generations.
-          example: 0
-        judge_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed judge generations
-          example: 0
-        invalid_label_count:
-          type: number
-          format: float
-          nullable: true
-          description: Number of invalid labels
-          example: 0
-        result_file_id:
-          type: string
-          description: Data File ID
-          example: file-1234-aefd
-        pass_percentage:
-          type: number
-          format: integer
-          nullable: true
-          description: Pecentage of pass labels.
-          example: 10
-        label_counts:
-          type: string
-          description: JSON string representing label counts
-          example: '{"yes": 10, "no": 0}'
-    EvaluationCompareResults:
-      type: object
-      properties:
-        num_samples:
-          type: integer
-          description: Total number of samples compared
-        A_wins:
-          type: integer
-          description: Number of times model A won
-        B_wins:
-          type: integer
-          description: Number of times model B won
-        Ties:
-          type: integer
-          description: Number of ties
-        generation_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed generations.
-          example: 0
-        judge_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed judge generations
-          example: 0
-        result_file_id:
-          type: string
-          description: Data File ID
     EvaluationScoreResults:
       type: object
       properties:
@@ -374,6 +301,71 @@ components:
           type: string
           description: Data File ID
           example: file-1234-aefd
+    EvaluationResponse:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+          description: The ID of the created evaluation job
+          example: eval-1234-1244513
+        status:
+          type: string
+          enum:
+          - pending
+          description: Initial status of the job
+    EvaluationClassifyParameters:
+      type: object
+      required:
+      - judge
+      - labels
+      - pass_labels
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        labels:
+          type: array
+          items:
+            type: string
+          minItems: 2
+          description: List of possible classification labels
+          example:
+          - 'yes'
+          - 'no'
+        pass_labels:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of labels that are considered passing
+          example:
+          - 'yes'
+        model_to_evaluate:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          description: Data file ID
+          example: file-1234-aefd
+    EvaluationTypedRequest:
+      type: object
+      required:
+      - type
+      - parameters
+      properties:
+        type:
+          type: string
+          enum:
+          - classify
+          - score
+          - compare
+          description: The type of evaluation to perform
+          example: classify
+        parameters:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluationClassifyParameters'
+          - $ref: '#/components/schemas/EvaluationScoreParameters'
+          - $ref: '#/components/schemas/EvaluationCompareParameters'
+          description: Type-specific parameters for the evaluation
     EvaluationCompareParameters:
       type: object
       required:
@@ -389,6 +381,83 @@ components:
         input_data_file_path:
           type: string
           description: Data file name
+    EvaluationJudgeModelConfig:
+      type: object
+      required:
+      - model
+      - system_template
+      - model_source
+      properties:
+        model:
+          type: string
+          description: Name of the judge model
+          example: Qwen/Qwen3.5-9B
+        system_template:
+          type: string
+          description: System prompt template for the judge
+          example: Imagine you are a helpful assistant
+        model_source:
+          type: string
+          description: Source of the judge model.
+          enum:
+          - serverless
+          - dedicated
+          - external
+        external_api_token:
+          type: string
+          description: Bearer/API token for external judge models.
+        external_base_url:
+          type: string
+          description: Base URL for external judge models. Must be OpenAI-compatible base URL.
+        num_workers:
+          type: integer
+          minimum: 1
+          description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
+          example: 5
+        max_tokens:
+          type: integer
+          minimum: 1
+          description: Maximum number of tokens the judge model can generate. Defaults to 32768. Increase for reasoning models (e.g. Gemini, o-series) that consume output token budget for chain-of-thought.
+          example: 8192
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+          description: Sampling temperature for the judge model. Defaults to 0.05.
+          example: 0
+    EvaluationScoreParameters:
+      type: object
+      required:
+      - judge
+      - min_score
+      - max_score
+      - pass_threshold
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        min_score:
+          type: number
+          format: float
+          example: 0
+          description: Minimum possible score
+        max_score:
+          type: number
+          format: float
+          example: 10
+          description: Maximum possible score
+        pass_threshold:
+          type: number
+          format: float
+          example: 7
+          description: Score threshold for passing
+        model_to_evaluate:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          example: file-01234567890123456789
+          description: Data file ID
     ErrorData:
       type: object
       required:
@@ -414,6 +483,76 @@ components:
           required:
           - type
           - message
+    EvaluationModelOrString:
+      oneOf:
+      - type: string
+        description: Field name in the input data
+      - $ref: '#/components/schemas/EvaluationModelRequest'
+    EvaluationCompareResults:
+      type: object
+      properties:
+        num_samples:
+          type: integer
+          description: Total number of samples compared
+        A_wins:
+          type: integer
+          description: Number of times model A won
+        B_wins:
+          type: integer
+          description: Number of times model B won
+        Ties:
+          type: integer
+          description: Number of ties
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        result_file_id:
+          type: string
+          description: Data File ID
+    EvaluationClassifyResults:
+      type: object
+      properties:
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        invalid_label_count:
+          type: number
+          format: float
+          nullable: true
+          description: Number of invalid labels
+          example: 0
+        result_file_id:
+          type: string
+          description: Data File ID
+          example: file-1234-aefd
+        pass_percentage:
+          type: number
+          format: integer
+          nullable: true
+          description: Pecentage of pass labels.
+          example: 10
+        label_counts:
+          type: string
+          description: JSON string representing label counts
+          example: '{"yes": 10, "no": 0}'
     EvaluationModelRequest:
       type: object
       required:
@@ -466,148 +605,6 @@ components:
           minimum: 1
           description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
           example: 5
-    EvaluationScoreParameters:
-      type: object
-      required:
-      - judge
-      - min_score
-      - max_score
-      - pass_threshold
-      - input_data_file_path
-      properties:
-        judge:
-          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
-        min_score:
-          type: number
-          format: float
-          example: 0
-          description: Minimum possible score
-        max_score:
-          type: number
-          format: float
-          example: 10
-          description: Maximum possible score
-        pass_threshold:
-          type: number
-          format: float
-          example: 7
-          description: Score threshold for passing
-        model_to_evaluate:
-          $ref: '#/components/schemas/EvaluationModelOrString'
-        input_data_file_path:
-          type: string
-          example: file-01234567890123456789
-          description: Data file ID
-    EvaluationJudgeModelConfig:
-      type: object
-      required:
-      - model
-      - system_template
-      - model_source
-      properties:
-        model:
-          type: string
-          description: Name of the judge model
-          example: Qwen/Qwen3.5-9B
-        system_template:
-          type: string
-          description: System prompt template for the judge
-          example: Imagine you are a helpful assistant
-        model_source:
-          type: string
-          description: Source of the judge model.
-          enum:
-          - serverless
-          - dedicated
-          - external
-        external_api_token:
-          type: string
-          description: Bearer/API token for external judge models.
-        external_base_url:
-          type: string
-          description: Base URL for external judge models. Must be OpenAI-compatible base URL.
-        num_workers:
-          type: integer
-          minimum: 1
-          description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
-          example: 5
-        max_tokens:
-          type: integer
-          minimum: 1
-          description: Maximum number of tokens the judge model can generate. Defaults to 32768. Increase for reasoning models (e.g. Gemini, o-series) that consume output token budget for chain-of-thought.
-          example: 8192
-        temperature:
-          type: number
-          format: float
-          minimum: 0
-          maximum: 2
-          description: Sampling temperature for the judge model. Defaults to 0.05.
-          example: 0
-    EvaluationTypedRequest:
-      type: object
-      required:
-      - type
-      - parameters
-      properties:
-        type:
-          type: string
-          enum:
-          - classify
-          - score
-          - compare
-          description: The type of evaluation to perform
-          example: classify
-        parameters:
-          oneOf:
-          - $ref: '#/components/schemas/EvaluationClassifyParameters'
-          - $ref: '#/components/schemas/EvaluationScoreParameters'
-          - $ref: '#/components/schemas/EvaluationCompareParameters'
-          description: Type-specific parameters for the evaluation
-    EvaluationResponse:
-      type: object
-      properties:
-        workflow_id:
-          type: string
-          description: The ID of the created evaluation job
-          example: eval-1234-1244513
-        status:
-          type: string
-          enum:
-          - pending
-          description: Initial status of the job
-    EvaluationClassifyParameters:
-      type: object
-      required:
-      - judge
-      - labels
-      - pass_labels
-      - input_data_file_path
-      properties:
-        judge:
-          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
-        labels:
-          type: array
-          items:
-            type: string
-          minItems: 2
-          description: List of possible classification labels
-          example:
-          - 'yes'
-          - 'no'
-        pass_labels:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          description: List of labels that are considered passing
-          example:
-          - 'yes'
-        model_to_evaluate:
-          $ref: '#/components/schemas/EvaluationModelOrString'
-        input_data_file_path:
-          type: string
-          description: Data file ID
-          example: file-1234-aefd
     EvaluationJob:
       type: object
       properties:
@@ -667,11 +664,22 @@ components:
                 type: string
           nullable: true
           description: Results of the evaluation (when completed)
-    EvaluationModelOrString:
-      oneOf:
-      - type: string
-        description: Field name in the input data
-      - $ref: '#/components/schemas/EvaluationModelRequest'
+    EvaluationJobStatusUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status at this update
+          example: pending
+        message:
+          type: string
+          description: Additional message for this update
+          example: Job is pending evaluation
+        timestamp:
+          type: string
+          format: date-time
+          description: When this update occurred
+          example: '2025-07-23T17:10:04.837888Z'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Rerank API
-  version: version not set
+  title: Together Rerank API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -160,6 +168,20 @@ components:
             prompt_tokens: 1837
             completion_tokens: 0
             total_tokens: 1837
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
     RerankRequest:
       type: object
       properties:
@@ -219,20 +241,6 @@ components:
       - query
       - documents
       additionalProperties: false
-    UsageData:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,9 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio SharedVolumeService API
-  version: version not set
+  title: Together Ai Shared Volume Service API
+  version: '1.0'
+  description: 'Operations tagged SharedVolumeService across 2 of this provider''s published API definitions: together-ai-openapi.yml, together-ai-tcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -135,6 +136,8 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X POST \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      --data '{ \"volume_name\": \"my-shared-volume\", \"size_tib\": 2, \"region\": \"us-west-2\" }' \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes\n"
+    servers:
+    - url: https://api.together.ai/v1
   /compute/clusters/storage/volumes/{volume_id}:
     get:
       tags:
@@ -258,6 +261,8 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X DELETE \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/clusters/storage/volumes/${VOLUME_ID}\n"
+    servers:
+    - url: https://api.together.ai/v1
   /api/v1/shared_volume:
     put:
       tags:
@@ -367,6 +372,22 @@ paths:
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volumes\n"
 components:
   schemas:
+    GPUClustersSharedVolumeDeleteResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+    GPUClustersSharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          description: ID of the volume to update.
+          type: string
+        size_tib:
+          description: Size of the volume in whole tebibytes (TiB).
+          type: integer
     GPUClustersSharedVolumeCreateRequest:
       type: object
       required:
@@ -383,48 +404,6 @@ components:
         region:
           type: string
           description: Region name. Usable regions can be found from `client.clusters.list_regions()`
-    SharedVolumeCreateRequest:
-      type: object
-      properties:
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          description: Volume size in whole tebibytes (TiB).
-          format: uint32
-        region:
-          type: string
-    SharedVolumes:
-      type: object
-      properties:
-        volumes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SharedVolumeInfo'
-    SharedVolumeDeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    SharedVolumeInfo:
-      type: object
-      properties:
-        volume_id:
-          type: string
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          format: uint32
-    GPUClustersSharedVolumeUpdateRequest:
-      type: object
-      properties:
-        volume_id:
-          description: ID of the volume to update.
-          type: string
-        size_tib:
-          description: Size of the volume in whole tebibytes (TiB).
-          type: integer
     GPUClustersSharedVolume:
       type: object
       required:
@@ -449,18 +428,6 @@ components:
           - available
           - bound
           - provisioning
-    GPUClustersSharedVolumeDeleteResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-    SharedVolumeCreateResponse:
-      type: object
-      properties:
-        volume_id:
-          type: string
     GPUClustersSharedVolumes:
       type: object
       required:
@@ -470,6 +437,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GPUClustersSharedVolume'
+    SharedVolumeCreateRequest:
+      type: object
+      properties:
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
+        region:
+          type: string
     SharedVolumeUpdateRequest:
       type: object
       properties:
@@ -478,9 +456,39 @@ components:
         size_tib:
           type: integer
           format: uint32
+    SharedVolumes:
+      type: object
+      properties:
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedVolumeInfo'
+    SharedVolumeInfo:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+    SharedVolumeDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    SharedVolumeCreateResponse:
+      type: object
+      properties:
+        volume_id:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       x-bearer-format: bearer
       x-default: default
+x-refined-from:
+- together-ai-openapi.yml
+- together-ai-tcloud-openapi.yml

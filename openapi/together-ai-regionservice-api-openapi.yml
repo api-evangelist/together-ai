@@ -1,9 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio RegionService API
-  version: version not set
+  title: Together Ai Region Service API
+  version: '1.0'
+  description: 'Operations tagged RegionService across 2 of this provider''s published API definitions: together-ai-openapi.yml, together-ai-tcloud-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -62,6 +63,8 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X GET \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/compute/regions\n"
+    servers:
+    - url: https://api.together.ai/v1
   /api/v1/regions:
     get:
       tags:
@@ -81,6 +84,19 @@ paths:
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/regions\n"
 components:
   schemas:
+    ClusterDriverVersionInfo:
+      type: object
+      description: CUDA/NVIDIA driver versions pair available in the region to use in the create cluster request.
+      required:
+      - cuda_version
+      - nvidia_driver_version
+      properties:
+        cuda_version:
+          description: CUDA driver version.
+          type: string
+        nvidia_driver_version:
+          description: NVIDIA driver version.
+          type: string
     RegionListResponse:
       type: object
       required:
@@ -108,19 +124,6 @@ components:
                 type: array
                 items:
                   type: string
-    ClusterDriverVersionInfo:
-      type: object
-      description: CUDA/NVIDIA driver versions pair available in the region to use in the create cluster request.
-      required:
-      - cuda_version
-      - nvidia_driver_version
-      properties:
-        cuda_version:
-          description: CUDA driver version.
-          type: string
-        nvidia_driver_version:
-          description: NVIDIA driver version.
-          type: string
     Region:
       type: object
       properties:
@@ -149,3 +152,6 @@ components:
       scheme: bearer
       x-bearer-format: bearer
       x-default: default
+x-refined-from:
+- together-ai-openapi.yml
+- together-ai-tcloud-openapi.yml

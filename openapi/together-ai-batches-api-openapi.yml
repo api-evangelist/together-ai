@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Batches API
-  version: version not set
+  title: Together Batches API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -254,37 +262,6 @@ paths:
                 $ref: '#/components/schemas/BatchErrorResponse'
 components:
   schemas:
-    BatchErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    CreateBatchRequest:
-      type: object
-      required:
-      - endpoint
-      - input_file_id
-      properties:
-        endpoint:
-          type: string
-          description: The endpoint to use for batch processing
-          example: /v1/chat/completions
-        input_file_id:
-          type: string
-          description: ID of the uploaded input file containing batch requests
-          example: file-abc123def456ghi789
-        completion_window:
-          type: string
-          description: Time window for batch completion (optional)
-          example: 24h
-        priority:
-          type: integer
-          description: Priority for batch processing (optional)
-          example: 1
-        model_id:
-          type: string
-          description: Model to use for processing batch requests
-          example: Qwen/Qwen3.5-9B
     BatchJobWithWarning:
       type: object
       properties:
@@ -344,6 +321,37 @@ components:
           type: string
           format: date-time
           example: '2024-01-15T15:45:30Z'
+    CreateBatchRequest:
+      type: object
+      required:
+      - endpoint
+      - input_file_id
+      properties:
+        endpoint:
+          type: string
+          description: The endpoint to use for batch processing
+          example: /v1/chat/completions
+        input_file_id:
+          type: string
+          description: ID of the uploaded input file containing batch requests
+          example: file-abc123def456ghi789
+        completion_window:
+          type: string
+          description: Time window for batch completion (optional)
+          example: 24h
+        priority:
+          type: integer
+          description: Priority for batch processing (optional)
+          example: 1
+        model_id:
+          type: string
+          description: Model to use for processing batch requests
+          example: Qwen/Qwen3.5-9B
+    BatchErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
     BatchJobStatus:
       type: string
       enum:

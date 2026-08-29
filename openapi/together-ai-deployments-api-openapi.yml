@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Deployments API
-  version: version not set
+  title: Together Deployments API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -443,58 +451,34 @@ components:
           description: VolumePreloadStatus is the status of the volume preload (e.g., "InProgress", "Completed", "Failed")
           type: string
       type: object
-    VolumeMount:
+    QueueAutoscalingConfig:
+      description: Autoscaling config for QueueBacklogPerWorker metric
       properties:
-        mount_path:
-          description: MountPath is the path in the container where the volume will be mounted (e.g., "/data")
-          type: string
-        name:
-          description: Name is the name of the volume to mount. Must reference an existing volume by name or ID
-          type: string
-        version:
-          description: Version is the volume version to mount. On create, defaults to the latest version. On update, defaults to the currently mounted version.
-          type: integer
-      required:
-      - mount_path
-      - name
-      type: object
-    DeploymentLogs:
-      properties:
-        lines:
-          items:
-            type: string
-          type: array
-      type: object
-    CustomMetricAutoscalingConfig:
-      description: Autoscaling config for CustomMetric metric
-      properties:
-        custom_metric_name:
-          description: CustomMetricName is the Prometheus metric name. Required. Must match [a-zA-Z_:][a-zA-Z0-9_:]*
-          example: my_custom_metric
-          type: string
         metric:
-          description: Metric must be CustomMetric
+          description: Metric must be QueueBacklogPerWorker
           enum:
-          - CustomMetric
-          example: CustomMetric
+          - QueueBacklogPerWorker
+          example: QueueBacklogPerWorker
+          type: string
+        model:
+          description: Model overrides the model name for queue status lookup. Defaults to the deployment app name
           type: string
         target:
-          description: 'Target is the threshold value. Default: 500'
-          example: 500
+          description: 'Target is the threshold value. Default: 1.01'
+          example: 1.01
           type: number
       type: object
-    DeploymentStatus:
-      enum:
-      - Updating
-      - Scaling
-      - Ready
-      - Failed
-      type: string
-      x-enum-varnames:
-      - DeploymentStatusUpdating
-      - DeploymentStatusScaling
-      - DeploymentStatusReady
-      - DeploymentStatusFailed
+    DeploymentListResponse:
+      properties:
+        data:
+          description: Data is the array of deployment items
+          items:
+            $ref: '#/components/schemas/DeploymentResponseItem'
+          type: array
+        object:
+          description: The object type, which is always `list`.
+          const: list
+      type: object
     UpdateDeploymentRequest:
       properties:
         args:
@@ -573,6 +557,46 @@ components:
           items:
             $ref: '#/components/schemas/VolumeMount'
           type: array
+      type: object
+    EnvironmentVariable:
+      properties:
+        name:
+          description: Name is the environment variable name (e.g., "DATABASE_URL"). Must start with a letter or underscore, followed by letters, numbers, or underscores
+          type: string
+        value:
+          description: Value is the plain text value for the environment variable. Use this for non-sensitive values. Either Value or ValueFromSecret must be set, but not both
+          type: string
+        value_from_secret:
+          description: ValueFromSecret references a secret by name or ID to use as the value. Use this for sensitive values like API keys or passwords. Either Value or ValueFromSecret must be set, but not both
+          type: string
+      required:
+      - name
+      type: object
+    DeploymentLogs:
+      properties:
+        lines:
+          items:
+            type: string
+          type: array
+      type: object
+    HTTPAutoscalingConfig:
+      description: Autoscaling config for HTTPTotalRequests and HTTPAvgRequestDuration metrics
+      properties:
+        metric:
+          description: Metric must be HTTPTotalRequests or HTTPAvgRequestDuration
+          enum:
+          - HTTPTotalRequests
+          - HTTPAvgRequestDuration
+          example: HTTPTotalRequests
+          type: string
+        target:
+          description: 'Target is the threshold value. Default: 100 for HTTPTotalRequests, 500 (ms) for HTTPAvgRequestDuration'
+          example: 100
+          type: number
+        time_interval_minutes:
+          description: 'TimeIntervalMinutes is the rate window in minutes. Default: 10'
+          example: 10
+          type: integer
       type: object
     DeploymentResponseItem:
       properties:
@@ -677,34 +701,51 @@ components:
             $ref: '#/components/schemas/VolumeMount'
           type: array
       type: object
-    DeploymentListResponse:
+    VolumeMount:
       properties:
-        data:
-          description: Data is the array of deployment items
-          items:
-            $ref: '#/components/schemas/DeploymentResponseItem'
-          type: array
-        object:
-          description: The object type, which is always `list`.
-          const: list
-      type: object
-    QueueAutoscalingConfig:
-      description: Autoscaling config for QueueBacklogPerWorker metric
-      properties:
-        metric:
-          description: Metric must be QueueBacklogPerWorker
-          enum:
-          - QueueBacklogPerWorker
-          example: QueueBacklogPerWorker
+        mount_path:
+          description: MountPath is the path in the container where the volume will be mounted (e.g., "/data")
           type: string
-        model:
-          description: Model overrides the model name for queue status lookup. Defaults to the deployment app name
+        name:
+          description: Name is the name of the volume to mount. Must reference an existing volume by name or ID
+          type: string
+        version:
+          description: Version is the volume version to mount. On create, defaults to the latest version. On update, defaults to the currently mounted version.
+          type: integer
+      required:
+      - mount_path
+      - name
+      type: object
+    CustomMetricAutoscalingConfig:
+      description: Autoscaling config for CustomMetric metric
+      properties:
+        custom_metric_name:
+          description: CustomMetricName is the Prometheus metric name. Required. Must match [a-zA-Z_:][a-zA-Z0-9_:]*
+          example: my_custom_metric
+          type: string
+        metric:
+          description: Metric must be CustomMetric
+          enum:
+          - CustomMetric
+          example: CustomMetric
           type: string
         target:
-          description: 'Target is the threshold value. Default: 1.01'
-          example: 1.01
+          description: 'Target is the threshold value. Default: 500'
+          example: 500
           type: number
       type: object
+    DeploymentStatus:
+      enum:
+      - Updating
+      - Scaling
+      - Ready
+      - Failed
+      type: string
+      x-enum-varnames:
+      - DeploymentStatusUpdating
+      - DeploymentStatusScaling
+      - DeploymentStatusReady
+      - DeploymentStatusFailed
     CreateDeploymentRequest:
       properties:
         args:
@@ -786,39 +827,6 @@ components:
       required:
       - gpu_type
       - image
-      - name
-      type: object
-    HTTPAutoscalingConfig:
-      description: Autoscaling config for HTTPTotalRequests and HTTPAvgRequestDuration metrics
-      properties:
-        metric:
-          description: Metric must be HTTPTotalRequests or HTTPAvgRequestDuration
-          enum:
-          - HTTPTotalRequests
-          - HTTPAvgRequestDuration
-          example: HTTPTotalRequests
-          type: string
-        target:
-          description: 'Target is the threshold value. Default: 100 for HTTPTotalRequests, 500 (ms) for HTTPAvgRequestDuration'
-          example: 100
-          type: number
-        time_interval_minutes:
-          description: 'TimeIntervalMinutes is the rate window in minutes. Default: 10'
-          example: 10
-          type: integer
-      type: object
-    EnvironmentVariable:
-      properties:
-        name:
-          description: Name is the environment variable name (e.g., "DATABASE_URL"). Must start with a letter or underscore, followed by letters, numbers, or underscores
-          type: string
-        value:
-          description: Value is the plain text value for the environment variable. Use this for non-sensitive values. Either Value or ValueFromSecret must be set, but not both
-          type: string
-        value_from_secret:
-          description: ValueFromSecret references a secret by name or ID to use as the value. Use this for sensitive values like API keys or passwords. Either Value or ValueFromSecret must be set, but not both
-          type: string
-      required:
       - name
       type: object
   securitySchemes:

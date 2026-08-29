@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Compute API
+  title: remediation.proto Compute API
   version: version not set
 servers:
 - url: https://api.together.xyz/v1
@@ -302,104 +302,6 @@ paths:
       - Compute
 components:
   schemas:
-    protobufAny:
-      type: object
-      description: '`Any` contains an arbitrary serialized protocol buffer message along with a
-
-        URL that describes the type of the serialized message.
-
-
-        Protobuf library provides support to pack/unpack Any values in the form
-
-        of utility functions or additional generated methods of the Any type.
-
-        '
-      properties:
-        '@type':
-          type: string
-          description: 'A URL/resource name that uniquely identifies the type of the serialized
-
-            protocol buffer message. This string must contain at least
-
-            one "/" character. The last segment of the URL''s path must represent
-
-            the fully qualified name of the type (as in
-
-            `path/google.protobuf.Duration`). The name should be in a canonical form
-
-            (e.g., leading "." is not accepted).
-
-            '
-      additionalProperties: true
-    v1RemediationStateFilter:
-      description: 'Filter by state(s). Returns remediations matching any of the specified states.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
-      type: array
-      items:
-        type: string
-        enum:
-        - PENDING_APPROVAL
-        - PENDING
-        - RUNNING
-        - SUCCEEDED
-        - FAILED
-        - CANCELLED
-        - AUTO_RESOLVED
-    v1RemediationState:
-      type: string
-      enum:
-      - PENDING_APPROVAL
-      - PENDING
-      - RUNNING
-      - SUCCEEDED
-      - FAILED
-      - CANCELLED
-      - AUTO_RESOLVED
-      description: 'RemediationState represents the lifecycle state of a remediation.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
-
-        '
-    v1RemediationTrigger:
-      type: string
-      enum:
-      - REMEDIATION_TRIGGER_MANUAL
-      - REMEDIATION_TRIGGER_AUTOMATED
-      description: 'RemediationTrigger specifies how the remediation was triggered.
-
-
-        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
-
-        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
-
-        '
     rpcStatus:
       type: object
       required:
@@ -449,6 +351,82 @@ components:
             message types for APIs to use.
 
             '
+    v1RemediationTrigger:
+      type: string
+      enum:
+      - REMEDIATION_TRIGGER_MANUAL
+      - REMEDIATION_TRIGGER_AUTOMATED
+      description: 'RemediationTrigger specifies how the remediation was triggered.
+
+
+        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
+
+        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
+
+        '
+    v1RemediationState:
+      type: string
+      enum:
+      - PENDING_APPROVAL
+      - PENDING
+      - RUNNING
+      - SUCCEEDED
+      - FAILED
+      - CANCELLED
+      - AUTO_RESOLVED
+      description: 'RemediationState represents the lifecycle state of a remediation.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
+
+        '
+    CommentBody:
+      type: object
+      properties:
+        comment:
+          type: string
+          description: Comment explaining the action.
+    protobufAny:
+      type: object
+      description: '`Any` contains an arbitrary serialized protocol buffer message along with a
+
+        URL that describes the type of the serialized message.
+
+
+        Protobuf library provides support to pack/unpack Any values in the form
+
+        of utility functions or additional generated methods of the Any type.
+
+        '
+      properties:
+        '@type':
+          type: string
+          description: 'A URL/resource name that uniquely identifies the type of the serialized
+
+            protocol buffer message. This string must contain at least
+
+            one "/" character. The last segment of the URL''s path must represent
+
+            the fully qualified name of the type (as in
+
+            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+            (e.g., leading "." is not accepted).
+
+            '
+      additionalProperties: true
     v1Remediation:
       type: object
       required:
@@ -528,19 +506,34 @@ components:
           format: date-time
           description: When the remediation was last updated.
           readOnly: true
-    v1RemediationMode:
-      type: string
-      enum:
-      - REMEDIATION_MODE_VM_ONLY
-      - REMEDIATION_MODE_HOST_AWARE
-      description: 'Remediation mode specifies how the remediation should be performed.
+    v1RemediationStateFilter:
+      description: 'Filter by state(s). Returns remediations matching any of the specified states.
 
 
-        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
 
-        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+        - `PENDING`: Approved and queued for processing.
 
-        '
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
+      type: array
+      items:
+        type: string
+        enum:
+        - PENDING_APPROVAL
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - CANCELLED
+        - AUTO_RESOLVED
     v1ListRemediationsResponse:
       type: object
       description: ListRemediationsResponse is the response for ListRemediations.
@@ -559,12 +552,19 @@ components:
         has_next:
           type: boolean
           description: Indicates if there are more results available.
-    CommentBody:
-      type: object
-      properties:
-        comment:
-          type: string
-          description: Comment explaining the action.
+    v1RemediationMode:
+      type: string
+      enum:
+      - REMEDIATION_MODE_VM_ONLY
+      - REMEDIATION_MODE_HOST_AWARE
+      description: 'Remediation mode specifies how the remediation should be performed.
+
+
+        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
+
+        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+
+        '
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Voices API
-  version: version not set
+  title: Together Voices API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -38,16 +46,6 @@ paths:
         source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.voices.list()\n\nconsole.log(response.data);\n"
 components:
   schemas:
-    ListVoicesResponse:
-      description: Response containing a list of models and their available voices.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelVoices'
     ModelVoices:
       description: Represents a model with its available voices.
       type: object
@@ -72,6 +70,16 @@ components:
               name:
                 description: Voice name to be used for audio inference.
                 type: string
+    ListVoicesResponse:
+      description: Response containing a list of models and their available voices.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelVoices'
   securitySchemes:
     bearerAuth:
       type: http

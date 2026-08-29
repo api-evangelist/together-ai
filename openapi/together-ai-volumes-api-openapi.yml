@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Volumes API
-  version: version not set
+  title: Together Volumes API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -118,31 +126,41 @@ paths:
       - Volumes
 components:
   schemas:
-    VersionHistoryItem:
+    VolumeResponseItem:
       properties:
         content:
-          $ref: '#/components/schemas/VolumeContentRequest'
+          $ref: '#/components/schemas/VolumeContent'
+        created_at:
+          description: CreatedAt is the ISO8601 timestamp when this volume was created
+          type: string
+        current_version:
+          description: CurrentVersion is the current version number of this volume
+          type: integer
+        id:
+          description: ID is the unique identifier for this volume
+          type: string
         mounted_by:
+          description: MountedBy is the list of deployment IDs currently mounting current volume version
           items:
             type: string
           type: array
           uniqueItems: false
-        version:
-          type: integer
-      type: object
-    VolumeContentRequest:
-      description: Content specifies the new content that will be preloaded to this volume
-      properties:
-        source_prefix:
-          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
-          example: models/
+        name:
+          description: Name is the name of the volume
+          type: string
+        object:
+          description: Object is the type identifier for this response (always "volume")
           type: string
         type:
-          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
-          enum:
-          - files
-          example: files
+          $ref: '#/components/schemas/VolumeType'
+        updated_at:
+          description: UpdatedAt is the ISO8601 timestamp when this volume was last updated
           type: string
+        version_history:
+          additionalProperties:
+            $ref: '#/components/schemas/VersionHistoryItem'
+          description: VersionHistory contains previous versions of this volume, keyed by version number
+          type: object
       type: object
     VolumeType:
       enum:
@@ -181,6 +199,32 @@ components:
           example: files
           type: string
       type: object
+    VolumeContentRequest:
+      description: Content specifies the new content that will be preloaded to this volume
+      properties:
+        source_prefix:
+          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
+          example: models/
+          type: string
+        type:
+          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
+          enum:
+          - files
+          example: files
+          type: string
+      type: object
+    VersionHistoryItem:
+      properties:
+        content:
+          $ref: '#/components/schemas/VolumeContentRequest'
+        mounted_by:
+          items:
+            type: string
+          type: array
+          uniqueItems: false
+        version:
+          type: integer
+      type: object
     UpdateVolumeRequest:
       properties:
         content:
@@ -194,42 +238,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/VolumeType'
           description: Type is the new volume type (currently only "readOnly" is supported)
-      type: object
-    VolumeResponseItem:
-      properties:
-        content:
-          $ref: '#/components/schemas/VolumeContent'
-        created_at:
-          description: CreatedAt is the ISO8601 timestamp when this volume was created
-          type: string
-        current_version:
-          description: CurrentVersion is the current version number of this volume
-          type: integer
-        id:
-          description: ID is the unique identifier for this volume
-          type: string
-        mounted_by:
-          description: MountedBy is the list of deployment IDs currently mounting current volume version
-          items:
-            type: string
-          type: array
-          uniqueItems: false
-        name:
-          description: Name is the name of the volume
-          type: string
-        object:
-          description: Object is the type identifier for this response (always "volume")
-          type: string
-        type:
-          $ref: '#/components/schemas/VolumeType'
-        updated_at:
-          description: UpdatedAt is the ISO8601 timestamp when this volume was last updated
-          type: string
-        version_history:
-          additionalProperties:
-            $ref: '#/components/schemas/VersionHistoryItem'
-          description: VersionHistory contains previous versions of this volume, keyed by version number
-          type: object
       type: object
   securitySchemes:
     bearerAuth:

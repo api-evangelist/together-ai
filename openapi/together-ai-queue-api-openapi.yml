@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Queue API
-  version: version not set
+  title: Together Queue API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -217,6 +225,29 @@ components:
         total_jobs:
           description: Total number of active jobs (waiting + running)
           type: integer
+    QueueJobResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/QueueError'
+        requestId:
+          description: Unique identifier for the submitted job. Use this to poll status or cancel.
+          type: string
+      type: object
+    QueueError:
+      properties:
+        code:
+          description: Machine-readable error code
+          type: string
+        message:
+          description: Human-readable error message
+          type: string
+        param:
+          description: The parameter that caused the error, if applicable
+          type: string
+        type:
+          description: Error category (e.g. "invalid_request_error", "not_found_error")
+          type: string
+      type: object
     QueueJobStatusResponse:
       required:
       - request_id
@@ -292,48 +323,6 @@ components:
             type: string
           type: array
       type: object
-    QueueJobResponse:
-      properties:
-        error:
-          $ref: '#/components/schemas/QueueError'
-        requestId:
-          description: Unique identifier for the submitted job. Use this to poll status or cancel.
-          type: string
-      type: object
-    QueueError:
-      properties:
-        code:
-          description: Machine-readable error code
-          type: string
-        message:
-          description: Human-readable error message
-          type: string
-        param:
-          description: The parameter that caused the error, if applicable
-          type: string
-        type:
-          description: Error category (e.g. "invalid_request_error", "not_found_error")
-          type: string
-      type: object
-    QueueCancelResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          description: 'Job status after the cancel attempt. Only pending jobs can be
-
-            canceled. If the job is already running, done, or failed, the status
-
-            is returned unchanged.
-
-            '
-          type: string
-          enum:
-          - canceled
-          - running
-          - done
-          - failed
     QueueJobRequest:
       properties:
         info:
@@ -367,6 +356,25 @@ components:
       - model
       - payload
       type: object
+    QueueCancelResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: 'Job status after the cancel attempt. Only pending jobs can be
+
+            canceled. If the job is already running, done, or failed, the status
+
+            is returned unchanged.
+
+            '
+          type: string
+          enum:
+          - canceled
+          - running
+          - done
+          - failed
     QueueCancelRequest:
       properties:
         model:

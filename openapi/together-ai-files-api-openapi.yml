@@ -1,9 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: remediation.proto Audio Files API
-  version: version not set
+  title: Together Files API
+  description: The Together REST API. Please see https://docs.together.ai for more details.
+  version: 2.0.0
+  termsOfService: https://www.together.ai/terms-of-service
+  contact:
+    name: Together Support
+    url: https://www.together.ai/contact
+  license:
+    name: MIT
+    url: https://github.com/togethercomputer/openapi/blob/main/LICENSE
 servers:
-- url: https://api.together.xyz/v1
+- url: https://api.together.ai/v1
 security:
 - bearerAuth: []
 tags:
@@ -260,15 +268,14 @@ paths:
                 $ref: '#/components/schemas/ErrorData'
 components:
   schemas:
-    FileType:
+    FilePurpose:
       type: string
-      description: The type of the file
-      default: jsonl
-      example: jsonl
+      description: The purpose of the file
+      example: fine-tune
       enum:
-      - csv
-      - jsonl
-      - parquet
+      - fine-tune
+      - eval
+      - batch-api
     ErrorData:
       type: object
       required:
@@ -294,21 +301,6 @@ components:
           required:
           - type
           - message
-    FileDeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
-    FilePurpose:
-      type: string
-      description: The purpose of the file
-      example: fine-tune
-      enum:
-      - fine-tune
-      - eval
-      - batch-api
     FileResponse:
       description: Structured information describing a file uploaded to Together.
       type: object
@@ -347,6 +339,15 @@ components:
         FileType:
           description: The type of the file such as `jsonl`, `csv`, or `parquet`.
           $ref: '#/components/schemas/FileType'
+    FileType:
+      type: string
+      description: The type of the file
+      default: jsonl
+      example: jsonl
+      enum:
+      - csv
+      - jsonl
+      - parquet
     FileList:
       required:
       - data
@@ -356,6 +357,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FileResponse'
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
   securitySchemes:
     bearerAuth:
       type: http
