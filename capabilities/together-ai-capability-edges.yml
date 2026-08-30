@@ -1,0 +1,75 @@
+slug: together-ai
+provider: Together AI
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Electrical Components & Equipment
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Fine-tuning
+  spec_file: together-ai-fine-tuning-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /fine-tunes Create job; GET /fine-tunes/{id}/checkpoints List checkpoints; GET /fine-tunes/{id}/metrics
+    Get metrics
+  reason: Training job creation, checkpoints, training metrics and model download constitute ML model
+    lifecycle / MLOps, squarely Artificial Intelligence Management.
+- tag: RL
+  spec_file: together-ai-rl-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /rl/training-sessions startTrainingSession  Create training session; POST .../operations/optim-step  Optimizer
+    step; RL.GRPOLossParams, RL.TrainingCheckpointResult
+  reason: Reinforcement-learning training sessions with forward-backward passes, optimizer steps and inference
+    checkpoints are squarely ML model training / MLOps, i.e. Artificial Intelligence Management.
+- tag: GPUClusterService
+  spec_file: together-ai-gpuclusterservice-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /compute/clusters GPUClusterService_Create Create GPU Cluster; schemas GPUClusterControlPlaneNode,
+    GPUClusterGPUWorkerNode
+  reason: Operations provision, update and delete GPU compute clusters with control-plane and worker nodes
+    — this is compute infrastructure provisioning and management, i.e. IT Infrastructure Management, not
+    an industry-specific capability.
+- tag: SharedVolumeService
+  spec_file: together-ai-sharedvolumeservice-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /compute/clusters/storage/volumes  SharedVolumeService_Create  Create a shared volume.
+  reason: Provisioning and lifecycle of shared storage volumes attached to compute clusters is storage/cloud
+    infrastructure management under IT Infrastructure Management.
+- tag: Models
+  spec_file: together-ai-models-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.75
+  evidence: POST /models uploadModel  Upload a custom model or adapter; schemas ModelInfo, ModelUploadRequest
+  reason: Registry and upload of ML models and adapters is model lifecycle / MLOps management, mapping
+    to Artificial Intelligence Management.
+- tag: evaluation
+  spec_file: together-ai-evaluation-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /evaluation createEvaluationJob Create an evaluation job; schemas EvaluationJudgeModelConfig,
+    EvaluationScoreResults
+  reason: Jobs that score, classify and compare model outputs with judge-model configuration are model
+    evaluation within the AI/ML lifecycle, mapping to Artificial Intelligence Management. Not experimentation
+    of a SaaS product feature, so BC-4280 does not fit.

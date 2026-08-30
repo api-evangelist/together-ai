@@ -1520,6 +1520,9 @@ apis:
   - type: Documentation
     url: https://docs.together.ai/docs/dedicated-endpoints-overview
 common:
+- type: CapabilityMap
+  url: capabilities/together-ai-capability-edges.yml
+  name: Together AI Business Capability Map
 - type: AgenticAccess
   url: agentic-access/together-ai-agentic-access.yml
 - type: VulnerabilityDisclosure
