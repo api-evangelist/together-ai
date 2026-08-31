@@ -631,7 +631,7 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
-  - Evaluation
+  - evaluation
   tags_raw:
   - evaluation
   properties:
@@ -739,7 +739,7 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
-  - Fine-Tuning
+  - Fine-tuning
   tags_raw:
   - Fine-tuning
   properties:
