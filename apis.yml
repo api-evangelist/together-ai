@@ -1058,6 +1058,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Queues
+  tags_raw:
   - Queue
   properties:
   - type: OpenAPI
@@ -1422,6 +1424,8 @@ apis:
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
   tags:
+  - Voice
+  tags_raw:
   - Voices
   properties:
   - type: OpenAPI
