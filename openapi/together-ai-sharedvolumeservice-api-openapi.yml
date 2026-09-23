@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - SharedVolumeService
-      summary: List all shared volumes.
+      summary: List all shared volumes
       description: List all shared volumes.
       operationId: SharedVolumeService_List
       responses:
@@ -67,10 +67,8 @@ paths:
     put:
       tags:
       - SharedVolumeService
-      summary: Update a shared volume.
-      description: 'Update the configuration of an existing shared volume.
-
-        '
+      summary: Update a shared volume
+      description: Update the configuration of an existing shared volume.
       operationId: SharedVolumeService_Update
       requestBody:
         content:
@@ -101,14 +99,12 @@ paths:
     post:
       tags:
       - SharedVolumeService
-      summary: Create a shared volume.
+      summary: Create a shared volume
       description: 'Instant Clusters supports long-lived, resizable in-DC shared storage with user data persistence.
 
         You can dynamically create and attach volumes to your cluster at cluster creation time, and resize as your data grows.
 
-        All shared storage is backed by multi-NIC bare metal paths, ensuring high-throughput and low-latency performance for shared storage.
-
-        '
+        All shared storage is backed by multi-NIC bare metal paths, ensuring high-throughput and low-latency performance for shared storage.'
       operationId: SharedVolumeService_Create
       requestBody:
         content:
@@ -142,7 +138,7 @@ paths:
     get:
       tags:
       - SharedVolumeService
-      summary: Get shared volume by volume Id.
+      summary: Get shared volume by volume Id
       description: Retrieve information about a specific shared volume.
       operationId: SharedVolumeService_Get
       parameters:
@@ -202,10 +198,8 @@ paths:
     delete:
       tags:
       - SharedVolumeService
-      summary: Delete shared volume by volume id.
-      description: 'Delete a shared volume. Note that if this volume is attached to a cluster, deleting will fail.
-
-        '
+      summary: Delete shared volume by volume id
+      description: Delete a shared volume. Note that if this volume is attached to a cluster, deleting will fail.
       operationId: SharedVolumeService_Delete
       parameters:
       - name: volume_id
@@ -267,7 +261,7 @@ paths:
     put:
       tags:
       - SharedVolumeService
-      summary: Update a shared volume.
+      summary: Update a shared volume
       operationId: SharedVolumeService_Update
       requestBody:
         content:
@@ -289,7 +283,7 @@ paths:
     post:
       tags:
       - SharedVolumeService
-      summary: Create a shared volume.
+      summary: Create a shared volume
       operationId: SharedVolumeService_Create
       requestBody:
         content:
@@ -312,7 +306,7 @@ paths:
     get:
       tags:
       - SharedVolumeService
-      summary: Get shared volume by volume Id.
+      summary: Get shared volume by volume Id
       operationId: SharedVolumeService_Get
       parameters:
       - name: volume_id
@@ -334,7 +328,7 @@ paths:
     delete:
       tags:
       - SharedVolumeService
-      summary: Delete shared volume by volume id.
+      summary: Delete shared volume by volume id
       operationId: SharedVolumeService_Delete
       parameters:
       - name: volume_id
@@ -357,7 +351,7 @@ paths:
     get:
       tags:
       - SharedVolumeService
-      summary: List all shared volumes.
+      summary: List all shared volumes
       operationId: SharedVolumeService_List
       responses:
         '200':
@@ -372,38 +366,6 @@ paths:
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volumes\n"
 components:
   schemas:
-    GPUClustersSharedVolumeDeleteResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-    GPUClustersSharedVolumeUpdateRequest:
-      type: object
-      properties:
-        volume_id:
-          description: ID of the volume to update.
-          type: string
-        size_tib:
-          description: Size of the volume in whole tebibytes (TiB).
-          type: integer
-    GPUClustersSharedVolumeCreateRequest:
-      type: object
-      required:
-      - volume_name
-      - size_tib
-      - region
-      properties:
-        volume_name:
-          description: Customizable name of the volume to create.
-          type: string
-        size_tib:
-          description: Volume size in whole tebibytes (TiB).
-          type: integer
-        region:
-          type: string
-          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
     GPUClustersSharedVolume:
       type: object
       required:
@@ -428,6 +390,22 @@ components:
           - available
           - bound
           - provisioning
+    GPUClustersSharedVolumeCreateRequest:
+      type: object
+      required:
+      - volume_name
+      - size_tib
+      - region
+      properties:
+        volume_name:
+          description: Customizable name of the volume to create.
+          type: string
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
+          type: integer
+        region:
+          type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
     GPUClustersSharedVolumes:
       type: object
       required:
@@ -437,6 +415,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GPUClustersSharedVolume'
+    GPUClustersSharedVolumeDeleteResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+    GPUClustersSharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          description: ID of the volume to update.
+          type: string
+        size_tib:
+          description: Size of the volume in whole tebibytes (TiB).
+          type: integer
+    SharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+    SharedVolumeCreateResponse:
+      type: object
+      properties:
+        volume_id:
+          type: string
     SharedVolumeCreateRequest:
       type: object
       properties:
@@ -448,10 +455,12 @@ components:
           format: uint32
         region:
           type: string
-    SharedVolumeUpdateRequest:
+    SharedVolumeInfo:
       type: object
       properties:
         volume_id:
+          type: string
+        volume_name:
           type: string
         size_tib:
           type: integer
@@ -463,26 +472,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SharedVolumeInfo'
-    SharedVolumeInfo:
-      type: object
-      properties:
-        volume_id:
-          type: string
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          format: uint32
     SharedVolumeDeleteResponse:
       type: object
       properties:
         success:
           type: boolean
-    SharedVolumeCreateResponse:
-      type: object
-      properties:
-        volume_id:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

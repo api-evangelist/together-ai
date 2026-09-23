@@ -76,6 +76,8 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X GET \\\n      -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n      https://api.together.ai/v1/deployments\n"
+      operationId: getDeployments
+      x-operation-id-source: derived
     post:
       description: Create a new deployment with specified configuration
       summary: Create a new deployment
@@ -117,6 +119,8 @@ paths:
             application/json:
               schema:
                 type: object
+      operationId: postDeployments
+      x-operation-id-source: derived
   /deployments/{id}:
     delete:
       description: Delete an existing deployment
@@ -189,6 +193,8 @@ paths:
             application/json:
               schema:
                 type: object
+      operationId: deleteDeploymentsById
+      x-operation-id-source: derived
     get:
       description: Retrieve details of a specific deployment by its ID or name
       summary: Get a deployment by ID or name
@@ -257,6 +263,8 @@ paths:
             application/json:
               schema:
                 type: object
+      operationId: getDeploymentsById
+      x-operation-id-source: derived
     patch:
       description: Update an existing deployment configuration
       summary: Update a deployment
@@ -341,6 +349,8 @@ paths:
             application/json:
               schema:
                 type: object
+      operationId: patchDeploymentsById
+      x-operation-id-source: derived
   /deployments/{id}/logs:
     get:
       description: Retrieve logs from a deployment, optionally filtered by replica ID.
@@ -419,38 +429,10 @@ paths:
             application/json:
               schema:
                 type: object
+      operationId: getDeploymentsByIdLogs
+      x-operation-id-source: derived
 components:
   schemas:
-    ReplicaEvent:
-      properties:
-        image:
-          description: Image is the container image used for this replica
-          type: string
-        replica_ready_since:
-          description: ReplicaReadySince is the timestamp when the replica became ready to serve traffic
-          type: string
-        replica_status:
-          description: ReplicaStatus is the current status of the replica (e.g., "Running", "Waiting", "Terminated")
-          type: string
-        replica_status_message:
-          description: ReplicaStatusMessage provides a human-readable message explaining the replica's status
-          type: string
-        replica_status_reason:
-          description: ReplicaStatusReason provides a brief machine-readable reason for the replica's status
-          type: string
-        revision_id:
-          description: RevisionID is the deployment revision ID associated with this replica
-          type: string
-        volume_preload_completed_at:
-          description: VolumePreloadCompletedAt is the timestamp when the volume preload completed
-          type: string
-        volume_preload_started_at:
-          description: VolumePreloadStartedAt is the timestamp when the volume preload started
-          type: string
-        volume_preload_status:
-          description: VolumePreloadStatus is the status of the volume preload (e.g., "InProgress", "Completed", "Failed")
-          type: string
-      type: object
     QueueAutoscalingConfig:
       description: Autoscaling config for QueueBacklogPerWorker metric
       properties:
@@ -467,17 +449,6 @@ components:
           description: 'Target is the threshold value. Default: 1.01'
           example: 1.01
           type: number
-      type: object
-    DeploymentListResponse:
-      properties:
-        data:
-          description: Data is the array of deployment items
-          items:
-            $ref: '#/components/schemas/DeploymentResponseItem'
-          type: array
-        object:
-          description: The object type, which is always `list`.
-          const: list
       type: object
     UpdateDeploymentRequest:
       properties:
@@ -558,6 +529,76 @@ components:
             $ref: '#/components/schemas/VolumeMount'
           type: array
       type: object
+    VolumeMount:
+      properties:
+        mount_path:
+          description: MountPath is the path in the container where the volume will be mounted (e.g., "/data")
+          type: string
+        name:
+          description: Name is the name of the volume to mount. Must reference an existing volume by name or ID
+          type: string
+        version:
+          description: Version is the volume version to mount. On create, defaults to the latest version. On update, defaults to the currently mounted version.
+          type: integer
+      required:
+      - mount_path
+      - name
+      type: object
+    ReplicaEvent:
+      properties:
+        image:
+          description: Image is the container image used for this replica
+          type: string
+        replica_ready_since:
+          description: ReplicaReadySince is the timestamp when the replica became ready to serve traffic
+          type: string
+        replica_status:
+          description: ReplicaStatus is the current status of the replica (e.g., "Running", "Waiting", "Terminated")
+          type: string
+        replica_status_message:
+          description: ReplicaStatusMessage provides a human-readable message explaining the replica's status
+          type: string
+        replica_status_reason:
+          description: ReplicaStatusReason provides a brief machine-readable reason for the replica's status
+          type: string
+        revision_id:
+          description: RevisionID is the deployment revision ID associated with this replica
+          type: string
+        volume_preload_completed_at:
+          description: VolumePreloadCompletedAt is the timestamp when the volume preload completed
+          type: string
+        volume_preload_started_at:
+          description: VolumePreloadStartedAt is the timestamp when the volume preload started
+          type: string
+        volume_preload_status:
+          description: VolumePreloadStatus is the status of the volume preload (e.g., "InProgress", "Completed", "Failed")
+          type: string
+      type: object
+    DeploymentLogs:
+      properties:
+        lines:
+          items:
+            type: string
+          type: array
+      type: object
+    CustomMetricAutoscalingConfig:
+      description: Autoscaling config for CustomMetric metric
+      properties:
+        custom_metric_name:
+          description: CustomMetricName is the Prometheus metric name. Required. Must match [a-zA-Z_:][a-zA-Z0-9_:]*
+          example: my_custom_metric
+          type: string
+        metric:
+          description: Metric must be CustomMetric
+          enum:
+          - CustomMetric
+          example: CustomMetric
+          type: string
+        target:
+          description: 'Target is the threshold value. Default: 500'
+          example: 500
+          type: number
+      type: object
     EnvironmentVariable:
       properties:
         name:
@@ -572,31 +613,111 @@ components:
       required:
       - name
       type: object
-    DeploymentLogs:
+    DeploymentStatus:
+      enum:
+      - Updating
+      - Scaling
+      - Ready
+      - Failed
+      type: string
+      x-enum-varnames:
+      - DeploymentStatusUpdating
+      - DeploymentStatusScaling
+      - DeploymentStatusReady
+      - DeploymentStatusFailed
+    DeploymentListResponse:
       properties:
-        lines:
+        data:
+          description: Data is the array of deployment items
+          items:
+            $ref: '#/components/schemas/DeploymentResponseItem'
+          type: array
+        object:
+          description: The object type, which is always `list`.
+          const: list
+      type: object
+    CreateDeploymentRequest:
+      properties:
+        args:
+          description: Args overrides the container's CMD. Provide as an array of arguments (e.g., ["python", "app.py"])
           items:
             type: string
           type: array
-      type: object
-    HTTPAutoscalingConfig:
-      description: Autoscaling config for HTTPTotalRequests and HTTPAvgRequestDuration metrics
-      properties:
-        metric:
-          description: Metric must be HTTPTotalRequests or HTTPAvgRequestDuration
-          enum:
-          - HTTPTotalRequests
-          - HTTPAvgRequestDuration
-          example: HTTPTotalRequests
-          type: string
-        target:
-          description: 'Target is the threshold value. Default: 100 for HTTPTotalRequests, 500 (ms) for HTTPAvgRequestDuration'
-          example: 100
+        autoscaling:
+          description: 'Autoscaling configuration. Example: {"metric": "QueueBacklogPerWorker", "target": 1.01} to scale based on queue backlog. Omit or set to null to disable autoscaling'
+          oneOf:
+          - $ref: '#/components/schemas/HTTPAutoscalingConfig'
+          - $ref: '#/components/schemas/QueueAutoscalingConfig'
+          - $ref: '#/components/schemas/CustomMetricAutoscalingConfig'
+        command:
+          description: Command overrides the container's ENTRYPOINT. Provide as an array (e.g., ["/bin/sh", "-c"])
+          items:
+            type: string
+          type: array
+        cpu:
+          description: CPU is the number of CPU cores to allocate per container instance (e.g., 0.1 = 100 milli cores)
+          minimum: 0.1
           type: number
-        time_interval_minutes:
-          description: 'TimeIntervalMinutes is the rate window in minutes. Default: 10'
-          example: 10
+        description:
+          description: Description is an optional human-readable description of your deployment
+          type: string
+        environment_variables:
+          description: EnvironmentVariables is a list of environment variables to set in the container. Each must have a name and either a value or value_from_secret
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+          type: array
+        gpu_count:
+          description: GPUCount is the number of GPUs to allocate per container instance. Defaults to 0 if not specified
           type: integer
+        gpu_type:
+          description: GPUType specifies the GPU hardware to use (e.g., "h100-80gb").
+          enum:
+          - h100-80gb
+          - h100-40gb-mig
+          - b200-192gb
+          type: string
+        health_check_path:
+          description: HealthCheckPath is the HTTP path for health checks (e.g., "/health"). If set, the platform will check this endpoint to determine container health
+          type: string
+        image:
+          description: Image is the container image to deploy from registry.together.ai.
+          type: string
+        max_replicas:
+          description: MaxReplicas is the maximum number of container instances that can be scaled up to. If not set, will be set to MinReplicas
+          type: integer
+        memory:
+          description: Memory is the amount of RAM to allocate per container instance in GiB (e.g., 0.5 = 512MiB)
+          maximum: 1000
+          type: number
+        min_replicas:
+          description: MinReplicas is the minimum number of container instances to run. Defaults to 1 if not specified
+          type: integer
+        name:
+          description: Name is the unique identifier for your deployment. Must contain only alphanumeric characters, underscores, or hyphens (1-100 characters)
+          maxLength: 100
+          minLength: 1
+          type: string
+        port:
+          description: Port is the container port your application listens on (e.g., 8080 for web servers). Required if your application serves traffic
+          maximum: 65535
+          minimum: 1
+          type: integer
+        storage:
+          description: Storage is the amount of ephemeral disk storage to allocate per container instance (e.g., 10 = 10GiB)
+          maximum: 400
+          type: integer
+        termination_grace_period_seconds:
+          description: TerminationGracePeriodSeconds is the time in seconds to wait for graceful shutdown before forcefully terminating the replica
+          type: integer
+        volumes:
+          description: Volumes is a list of volume mounts to attach to the container. Each mount must reference an existing volume by name
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+          type: array
+      required:
+      - gpu_type
+      - image
+      - name
       type: object
     DeploymentResponseItem:
       properties:
@@ -701,133 +822,24 @@ components:
             $ref: '#/components/schemas/VolumeMount'
           type: array
       type: object
-    VolumeMount:
+    HTTPAutoscalingConfig:
+      description: Autoscaling config for HTTPTotalRequests and HTTPAvgRequestDuration metrics
       properties:
-        mount_path:
-          description: MountPath is the path in the container where the volume will be mounted (e.g., "/data")
-          type: string
-        name:
-          description: Name is the name of the volume to mount. Must reference an existing volume by name or ID
-          type: string
-        version:
-          description: Version is the volume version to mount. On create, defaults to the latest version. On update, defaults to the currently mounted version.
-          type: integer
-      required:
-      - mount_path
-      - name
-      type: object
-    CustomMetricAutoscalingConfig:
-      description: Autoscaling config for CustomMetric metric
-      properties:
-        custom_metric_name:
-          description: CustomMetricName is the Prometheus metric name. Required. Must match [a-zA-Z_:][a-zA-Z0-9_:]*
-          example: my_custom_metric
-          type: string
         metric:
-          description: Metric must be CustomMetric
+          description: Metric must be HTTPTotalRequests or HTTPAvgRequestDuration
           enum:
-          - CustomMetric
-          example: CustomMetric
+          - HTTPTotalRequests
+          - HTTPAvgRequestDuration
+          example: HTTPTotalRequests
           type: string
         target:
-          description: 'Target is the threshold value. Default: 500'
-          example: 500
+          description: 'Target is the threshold value. Default: 100 for HTTPTotalRequests, 500 (ms) for HTTPAvgRequestDuration'
+          example: 100
           type: number
-      type: object
-    DeploymentStatus:
-      enum:
-      - Updating
-      - Scaling
-      - Ready
-      - Failed
-      type: string
-      x-enum-varnames:
-      - DeploymentStatusUpdating
-      - DeploymentStatusScaling
-      - DeploymentStatusReady
-      - DeploymentStatusFailed
-    CreateDeploymentRequest:
-      properties:
-        args:
-          description: Args overrides the container's CMD. Provide as an array of arguments (e.g., ["python", "app.py"])
-          items:
-            type: string
-          type: array
-        autoscaling:
-          description: 'Autoscaling configuration. Example: {"metric": "QueueBacklogPerWorker", "target": 1.01} to scale based on queue backlog. Omit or set to null to disable autoscaling'
-          oneOf:
-          - $ref: '#/components/schemas/HTTPAutoscalingConfig'
-          - $ref: '#/components/schemas/QueueAutoscalingConfig'
-          - $ref: '#/components/schemas/CustomMetricAutoscalingConfig'
-        command:
-          description: Command overrides the container's ENTRYPOINT. Provide as an array (e.g., ["/bin/sh", "-c"])
-          items:
-            type: string
-          type: array
-        cpu:
-          description: CPU is the number of CPU cores to allocate per container instance (e.g., 0.1 = 100 milli cores)
-          minimum: 0.1
-          type: number
-        description:
-          description: Description is an optional human-readable description of your deployment
-          type: string
-        environment_variables:
-          description: EnvironmentVariables is a list of environment variables to set in the container. Each must have a name and either a value or value_from_secret
-          items:
-            $ref: '#/components/schemas/EnvironmentVariable'
-          type: array
-        gpu_count:
-          description: GPUCount is the number of GPUs to allocate per container instance. Defaults to 0 if not specified
+        time_interval_minutes:
+          description: 'TimeIntervalMinutes is the rate window in minutes. Default: 10'
+          example: 10
           type: integer
-        gpu_type:
-          description: GPUType specifies the GPU hardware to use (e.g., "h100-80gb").
-          enum:
-          - h100-80gb
-          - h100-40gb-mig
-          - b200-192gb
-          type: string
-        health_check_path:
-          description: HealthCheckPath is the HTTP path for health checks (e.g., "/health"). If set, the platform will check this endpoint to determine container health
-          type: string
-        image:
-          description: Image is the container image to deploy from registry.together.ai.
-          type: string
-        max_replicas:
-          description: MaxReplicas is the maximum number of container instances that can be scaled up to. If not set, will be set to MinReplicas
-          type: integer
-        memory:
-          description: Memory is the amount of RAM to allocate per container instance in GiB (e.g., 0.5 = 512MiB)
-          maximum: 1000
-          type: number
-        min_replicas:
-          description: MinReplicas is the minimum number of container instances to run. Defaults to 1 if not specified
-          type: integer
-        name:
-          description: Name is the unique identifier for your deployment. Must contain only alphanumeric characters, underscores, or hyphens (1-100 characters)
-          maxLength: 100
-          minLength: 1
-          type: string
-        port:
-          description: Port is the container port your application listens on (e.g., 8080 for web servers). Required if your application serves traffic
-          maximum: 65535
-          minimum: 1
-          type: integer
-        storage:
-          description: Storage is the amount of ephemeral disk storage to allocate per container instance (e.g., 10 = 10GiB)
-          maximum: 400
-          type: integer
-        termination_grace_period_seconds:
-          description: TerminationGracePeriodSeconds is the time in seconds to wait for graceful shutdown before forcefully terminating the replica
-          type: integer
-        volumes:
-          description: Volumes is a list of volume mounts to attach to the container. Each mount must reference an existing volume by name
-          items:
-            $ref: '#/components/schemas/VolumeMount'
-          type: array
-      required:
-      - gpu_type
-      - image
-      - name
       type: object
   securitySchemes:
     bearerAuth:

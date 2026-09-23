@@ -121,6 +121,31 @@ paths:
                 $ref: '#/components/schemas/ModelUploadSuccessResponse'
 components:
   schemas:
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     Pricing:
       type: object
       required:
@@ -148,35 +173,48 @@ components:
         cached_input:
           type: number
           example: 0.2
-    ModelUploadSuccessResponse:
+    ModelUploadRequest:
       type: object
       required:
-      - data
-      - message
+      - model_name
+      - model_source
       properties:
-        data:
-          type: object
-          required:
-          - job_id
-          - model_name
-          - model_id
-          - model_source
-          properties:
-            job_id:
-              type: string
-              example: job-a15dad11-8d8e-4007-97c5-a211304de284
-            model_name:
-              type: string
-              example: necolinehubner/Qwen2.5-72B-Instruct
-            model_id:
-              type: string
-              example: model-c0e32dfc-637e-47b2-bf4e-e9b2e58c9da7
-            model_source:
-              type: string
-              example: huggingface
-        message:
+        model_name:
           type: string
-          example: Processing model weights. Job created.
+          description: The name to give to your uploaded model
+          example: Qwen2.5-72B-Instruct
+        model_source:
+          type: string
+          description: The source location of the model (Hugging Face repo or S3 path)
+          example: unsloth/Qwen2.5-72B-Instruct
+        model_type:
+          type: string
+          description: Whether the model is a full model or an adapter
+          default: model
+          enum:
+          - model
+          - adapter
+          example: model
+        hf_token:
+          type: string
+          description: Hugging Face token (if uploading from Hugging Face)
+          example: hf_examplehuggingfacetoken
+        description:
+          type: string
+          description: A description of your model
+          example: Finetuned Qwen2.5-72B-Instruct by Unsloth
+        base_model:
+          type: string
+          description: The base model to use for an adapter if setting it to run against a serverless pool.  Only used for model_type `adapter`.
+          example: Qwen/Qwen2.5-72B-Instruct
+        lora_model:
+          type: string
+          description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
+          example: my_username/Qwen2.5-72B-Instruct-lora
+    ModelInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ModelInfo'
     ModelInfo:
       type: object
       required:
@@ -220,73 +258,35 @@ components:
           example: 2048
         pricing:
           $ref: '#/components/schemas/Pricing'
-    ErrorData:
+    ModelUploadSuccessResponse:
       type: object
       required:
-      - error
+      - data
+      - message
       properties:
-        error:
+        data:
           type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
           required:
-          - type
-          - message
-    ModelInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ModelInfo'
-    ModelUploadRequest:
-      type: object
-      required:
-      - model_name
-      - model_source
-      properties:
-        model_name:
+          - job_id
+          - model_name
+          - model_id
+          - model_source
+          properties:
+            job_id:
+              type: string
+              example: job-a15dad11-8d8e-4007-97c5-a211304de284
+            model_name:
+              type: string
+              example: necolinehubner/Qwen2.5-72B-Instruct
+            model_id:
+              type: string
+              example: model-c0e32dfc-637e-47b2-bf4e-e9b2e58c9da7
+            model_source:
+              type: string
+              example: huggingface
+        message:
           type: string
-          description: The name to give to your uploaded model
-          example: Qwen2.5-72B-Instruct
-        model_source:
-          type: string
-          description: The source location of the model (Hugging Face repo or S3 path)
-          example: unsloth/Qwen2.5-72B-Instruct
-        model_type:
-          type: string
-          description: Whether the model is a full model or an adapter
-          default: model
-          enum:
-          - model
-          - adapter
-          example: model
-        hf_token:
-          type: string
-          description: Hugging Face token (if uploading from Hugging Face)
-          example: hf_examplehuggingfacetoken
-        description:
-          type: string
-          description: A description of your model
-          example: Finetuned Qwen2.5-72B-Instruct by Unsloth
-        base_model:
-          type: string
-          description: The base model to use for an adapter if setting it to run against a serverless pool.  Only used for model_type `adapter`.
-          example: Qwen/Qwen2.5-72B-Instruct
-        lora_model:
-          type: string
-          description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
-          example: my_username/Qwen2.5-72B-Instruct-lora
+          example: Processing model weights. Job created.
   securitySchemes:
     bearerAuth:
       type: http

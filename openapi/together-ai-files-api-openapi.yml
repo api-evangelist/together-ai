@@ -46,6 +46,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileList'
+      operationId: getFiles
+      x-operation-id-source: derived
   /files/{id}:
     get:
       tags:
@@ -82,6 +84,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileResponse'
+      operationId: getFilesById
+      x-operation-id-source: derived
     delete:
       tags:
       - Files
@@ -117,6 +121,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileDeleteResponse'
+      operationId: deleteFilesById
+      x-operation-id-source: derived
   /files/{id}/content:
     get:
       tags:
@@ -160,6 +166,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorData'
+      operationId: getFilesByIdContent
+      x-operation-id-source: derived
   /files/upload:
     post:
       tags:
@@ -266,6 +274,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorData'
+      operationId: postFilesUpload
+      x-operation-id-source: derived
 components:
   schemas:
     FilePurpose:
@@ -301,6 +311,31 @@ components:
           required:
           - type
           - message
+    FileList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+    FileType:
+      type: string
+      description: The type of the file
+      default: jsonl
+      example: jsonl
+      enum:
+      - csv
+      - jsonl
+      - parquet
     FileResponse:
       description: Structured information describing a file uploaded to Together.
       type: object
@@ -339,31 +374,6 @@ components:
         FileType:
           description: The type of the file such as `jsonl`, `csv`, or `parquet`.
           $ref: '#/components/schemas/FileType'
-    FileType:
-      type: string
-      description: The type of the file
-      default: jsonl
-      example: jsonl
-      enum:
-      - csv
-      - jsonl
-      - parquet
-    FileList:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileResponse'
-    FileDeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
   securitySchemes:
     bearerAuth:
       type: http

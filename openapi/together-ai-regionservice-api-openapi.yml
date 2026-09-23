@@ -84,19 +84,6 @@ paths:
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/regions\n"
 components:
   schemas:
-    ClusterDriverVersionInfo:
-      type: object
-      description: CUDA/NVIDIA driver versions pair available in the region to use in the create cluster request.
-      required:
-      - cuda_version
-      - nvidia_driver_version
-      properties:
-        cuda_version:
-          description: CUDA driver version.
-          type: string
-        nvidia_driver_version:
-          description: NVIDIA driver version.
-          type: string
     RegionListResponse:
       type: object
       required:
@@ -124,6 +111,26 @@ components:
                 type: array
                 items:
                   type: string
+    ClusterDriverVersionInfo:
+      type: object
+      description: CUDA/NVIDIA driver versions pair available in the region to use in the create cluster request.
+      required:
+      - cuda_version
+      - nvidia_driver_version
+      properties:
+        cuda_version:
+          description: CUDA driver version.
+          type: string
+        nvidia_driver_version:
+          description: NVIDIA driver version.
+          type: string
+    RegionListResponse_2:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
     Region:
       type: object
       properties:
@@ -139,13 +146,6 @@ components:
           type: array
           items:
             type: string
-    RegionListResponse_2:
-      type: object
-      properties:
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
   securitySchemes:
     bearerAuth:
       type: http

@@ -49,6 +49,8 @@ paths:
       summary: Delete a volume
       tags:
       - Volumes
+      operationId: deleteDeploymentsStorageVolumesById
+      x-operation-id-source: derived
     get:
       description: Retrieve details of a specific volume by its ID or name
       parameters:
@@ -80,6 +82,8 @@ paths:
       summary: Get a volume by ID or name
       tags:
       - Volumes
+      operationId: getDeploymentsStorageVolumesById
+      x-operation-id-source: derived
     patch:
       description: Update an existing volume's configuration or contents
       parameters:
@@ -124,8 +128,29 @@ paths:
       summary: Update a volume
       tags:
       - Volumes
+      operationId: patchDeploymentsStorageVolumesById
+      x-operation-id-source: derived
 components:
   schemas:
+    VolumeContent:
+      properties:
+        files:
+          description: Files is the list of files that will be preloaded into the volume, if the volume content type is "files"
+          items:
+            $ref: '#/components/schemas/FileInfo'
+          type: array
+          uniqueItems: false
+        source_prefix:
+          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
+          example: models/
+          type: string
+        type:
+          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
+          enum:
+          - files
+          example: files
+          type: string
+      type: object
     VolumeResponseItem:
       properties:
         content:
@@ -162,57 +187,6 @@ components:
           description: VersionHistory contains previous versions of this volume, keyed by version number
           type: object
       type: object
-    VolumeType:
-      enum:
-      - readOnly
-      type: string
-      x-enum-varnames:
-      - VolumeTypeReadOnly
-    FileInfo:
-      properties:
-        last_modified:
-          description: LastModified is the timestamp when the file was last modified
-          type: string
-        name:
-          description: Name is the filename including extension (e.g., "model_weights.bin")
-          type: string
-        size:
-          description: Size is the file size in bytes
-          type: integer
-      type: object
-    VolumeContent:
-      properties:
-        files:
-          description: Files is the list of files that will be preloaded into the volume, if the volume content type is "files"
-          items:
-            $ref: '#/components/schemas/FileInfo'
-          type: array
-          uniqueItems: false
-        source_prefix:
-          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
-          example: models/
-          type: string
-        type:
-          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
-          enum:
-          - files
-          example: files
-          type: string
-      type: object
-    VolumeContentRequest:
-      description: Content specifies the new content that will be preloaded to this volume
-      properties:
-        source_prefix:
-          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
-          example: models/
-          type: string
-        type:
-          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
-          enum:
-          - files
-          example: files
-          type: string
-      type: object
     VersionHistoryItem:
       properties:
         content:
@@ -223,6 +197,18 @@ components:
           type: array
           uniqueItems: false
         version:
+          type: integer
+      type: object
+    FileInfo:
+      properties:
+        last_modified:
+          description: LastModified is the timestamp when the file was last modified
+          type: string
+        name:
+          description: Name is the filename including extension (e.g., "model_weights.bin")
+          type: string
+        size:
+          description: Size is the file size in bytes
           type: integer
       type: object
     UpdateVolumeRequest:
@@ -238,6 +224,26 @@ components:
           allOf:
           - $ref: '#/components/schemas/VolumeType'
           description: Type is the new volume type (currently only "readOnly" is supported)
+      type: object
+    VolumeType:
+      enum:
+      - readOnly
+      type: string
+      x-enum-varnames:
+      - VolumeTypeReadOnly
+    VolumeContentRequest:
+      description: Content specifies the new content that will be preloaded to this volume
+      properties:
+        source_prefix:
+          description: SourcePrefix is the file path prefix for the content to be preloaded into the volume
+          example: models/
+          type: string
+        type:
+          description: Type is the content type (currently only "files" is supported which allows preloading files uploaded via Files API into the volume)
+          enum:
+          - files
+          example: files
+          type: string
       type: object
   securitySchemes:
     bearerAuth:

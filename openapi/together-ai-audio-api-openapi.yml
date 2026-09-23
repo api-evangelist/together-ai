@@ -81,7 +81,213 @@ paths:
       tags:
       - Audio
       summary: Real-time text-to-speech via WebSocket
-      description: "Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, voice, max_partial_length, language)\n\n**Client Events:**\n- `tts_session.updated`: Update session parameters like voice. The `session` object also accepts an `extra_params` field for additional model-specific parameters that fine-tune speech generation behavior, such as `pronunciation_dict` (a list of pronunciation rules for specific characters or symbols, where each entry uses the format `\"<source>/<replacement>\"` (e.g., `[\"omg/oh my god\"]`) to override how the model pronounces matching tokens).\n  ```json\n  {\n    \"type\": \"tts_session.updated\",\n    \"session\": {\n      \"voice\": \"tara\",\n      \"extra_params\": {\n        \"pronunciation_dict\": [\"omg/oh my god\"]\n      }\n    }\n  }\n  ```\n- `input_text_buffer.append`: Send text chunks for TTS generation\n  ```json\n  {\n    \"type\": \"input_text_buffer.append\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `input_text_buffer.clear`: Clear the buffered text\n  ```json\n  {\n    \"type\": \"input_text_buffer.clear\"\n  }\n  ```\n- `input_text_buffer.commit`: Signal end of text input and process remaining text\n  ```json\n  {\n    \"type\": \"input_text_buffer.commit\"\n  }\n  ```\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"event_id\": \"evt_123456\",\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.tts.session\",\n      \"modalities\": [\"text\", \"audio\"],\n      \"model\": \"hexgrad/Kokoro-82M\",\n      \"voice\": \"tara\"\n    }\n  }\n  ```\n- `conversation.item.input_text.received`: Acknowledgment that text was received\n  ```json\n  {\n    \"type\": \"conversation.item.input_text.received\",\n    \"text\": \"Hello, this is a test.\"\n  }\n  ```\n- `conversation.item.audio_output.delta`: Audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.delta\",\n    \"item_id\": \"tts_1\",\n    \"delta\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `conversation.item.audio_output.done`: Audio generation complete for an item\n  ```json\n  {\n    \"type\": \"conversation.item.audio_output.done\",\n    \"item_id\": \"tts_1\"\n  }\n  ```\n- `conversation.item.tts.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.tts.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Text Processing:**\n- Partial text (no sentence ending) is held in buffer until:\n  - We believe that the text is complete enough to be processed for TTS generation\n  - The partial text exceeds `max_partial_length` characters (default: 250)\n  - The `input_text_buffer.commit` event is received\n\n**Audio Format:**\n- Format: Raw PCM (s16le, mono)\n- Sample Rate: 24000 Hz\n- Encoding: Base64 (per delta event)\n- Delivered via `conversation.item.audio_output.delta` events\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Invalid text format errors (400)\n"
+      description: 'Establishes a WebSocket connection for real-time text-to-speech generation. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/audio/speech/websocket) for bidirectional streaming communication.
+
+
+        **Connection Setup:**
+
+        - Protocol: WebSocket (wss://)
+
+        - Authentication: Pass API key as Bearer token in Authorization header
+
+        - Parameters: Sent as query parameters (model, voice, max_partial_length, language)
+
+
+        **Client Events:**
+
+        - `tts_session.updated`: Update session parameters like voice. The `session` object also accepts an `extra_params` field for additional model-specific parameters that fine-tune speech generation behavior, such as `pronunciation_dict` (a list of pronunciation rules for specific characters or symbols, where each entry uses the format `"/"` (e.g., `["omg/oh my god"]`) to override how the model pronounces matching tokens).
+
+        ```json
+
+        {
+
+        "type": "tts_session.updated",
+
+        "session": {
+
+        "voice": "tara",
+
+        "extra_params": {
+
+        "pronunciation_dict": ["omg/oh my god"]
+
+        }
+
+        }
+
+        }
+
+        ```
+
+        - `input_text_buffer.append`: Send text chunks for TTS generation
+
+        ```json
+
+        {
+
+        "type": "input_text_buffer.append",
+
+        "text": "Hello, this is a test."
+
+        }
+
+        ```
+
+        - `input_text_buffer.clear`: Clear the buffered text
+
+        ```json
+
+        {
+
+        "type": "input_text_buffer.clear"
+
+        }
+
+        ```
+
+        - `input_text_buffer.commit`: Signal end of text input and process remaining text
+
+        ```json
+
+        {
+
+        "type": "input_text_buffer.commit"
+
+        }
+
+        ```
+
+
+        **Server Events:**
+
+        - `session.created`: Initial session confirmation (sent first)
+
+        ```json
+
+        {
+
+        "event_id": "evt_123456",
+
+        "type": "session.created",
+
+        "session": {
+
+        "id": "session-id",
+
+        "object": "realtime.tts.session",
+
+        "modalities": ["text", "audio"],
+
+        "model": "hexgrad/Kokoro-82M",
+
+        "voice": "tara"
+
+        }
+
+        }
+
+        ```
+
+        - `conversation.item.input_text.received`: Acknowledgment that text was received
+
+        ```json
+
+        {
+
+        "type": "conversation.item.input_text.received",
+
+        "text": "Hello, this is a test."
+
+        }
+
+        ```
+
+        - `conversation.item.audio_output.delta`: Audio chunks as base64-encoded data
+
+        ```json
+
+        {
+
+        "type": "conversation.item.audio_output.delta",
+
+        "item_id": "tts_1",
+
+        "delta": ""
+
+        }
+
+        ```
+
+        - `conversation.item.audio_output.done`: Audio generation complete for an item
+
+        ```json
+
+        {
+
+        "type": "conversation.item.audio_output.done",
+
+        "item_id": "tts_1"
+
+        }
+
+        ```
+
+        - `conversation.item.tts.failed`: Error occurred
+
+        ```json
+
+        {
+
+        "type": "conversation.item.tts.failed",
+
+        "error": {
+
+        "message": "Error description",
+
+        "type": "invalid_request_error",
+
+        "param": null,
+
+        "code": "invalid_api_key"
+
+        }
+
+        }
+
+        ```
+
+
+        **Text Processing:**
+
+        - Partial text (no sentence ending) is held in buffer until:
+
+        - We believe that the text is complete enough to be processed for TTS generation
+
+        - The partial text exceeds `max_partial_length` characters (default: 250)
+
+        - The `input_text_buffer.commit` event is received
+
+
+        **Audio Format:**
+
+        - Format: Raw PCM (s16le, mono)
+
+        - Sample Rate: 24000 Hz
+
+        - Encoding: Base64 (per delta event)
+
+        - Delivered via `conversation.item.audio_output.delta` events
+
+
+        **Error Codes:**
+
+        - `invalid_api_key`: Invalid API key provided (401)
+
+        - `missing_api_key`: Authorization header missing (401)
+
+        - `model_not_available`: Invalid or unavailable model (400)
+
+        - Invalid text format errors (400)'
       operationId: realtime-tts
       x-codeSamples:
       - lang: Python
@@ -248,7 +454,7 @@ paths:
       tags:
       - Audio
       summary: Real-time audio transcription via WebSocket
-      description: "Establishes a WebSocket connection for real-time audio transcription. This endpoint uses WebSocket protocol (wss://api.together.ai/v1/realtime) for bidirectional streaming communication.\n\n**Connection Setup:**\n- Protocol: WebSocket (wss://)\n- Authentication: Pass API key as Bearer token in Authorization header\n- Parameters: Sent as query parameters (model, input_audio_format)\n\n**Client Events:**\n- `input_audio_buffer.append`: Send audio chunks as base64-encoded data\n  ```json\n  {\n    \"type\": \"input_audio_buffer.append\",\n    \"audio\": \"<base64_encoded_audio_chunk>\"\n  }\n  ```\n- `input_audio_buffer.commit`: Signal end of audio stream. When VAD is enabled, the server automatically detects speech boundaries and emits `completed` events. When VAD is disabled, you must send `commit` to trigger transcription of the buffered audio.\n  ```json\n  {\n    \"type\": \"input_audio_buffer.commit\"\n  }\n  ```\n- `transcription_session.updated`: Update session configuration, including Voice Activity Detection (VAD) parameters. Send this after receiving `session.created`. Can also be sent at any time during the session to change VAD settings.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n  To disable VAD entirely (manual commit mode), set `turn_detection` to `null`:\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": null\n    }\n  }\n  ```\n\n**Voice Activity Detection (VAD)**\n\nVAD controls how the server automatically detects speech segments in the audio stream. When enabled (the default), the server uses Silero VAD to identify speech regions and emits transcription events as each segment completes. When disabled, you must manually call `input_audio_buffer.commit` to trigger transcription.\n\nVAD can be configured in two ways:\n1. **Query parameters** at connection time: `turn_detection=server_vad&threshold=0.3&min_silence_duration_ms=500`\n2. **Session message** after connection: Send `transcription_session.updated` with a `turn_detection` object (see above)\n\nTo disable VAD at connection time, use `turn_detection=none` as a query parameter.\n\n**VAD Parameters:**\n\nAll parameters are optional — omitted fields use their defaults.\n\n| Parameter | Type | Default | Description |\n|-----------|------|---------|-------------|\n| `type` | string | `server_vad` | VAD mode. Use `server_vad` to enable, or set `turn_detection` to `null` to disable. |\n| `threshold` | float | `0.3` | Speech probability threshold (0.0–1.0). Audio frames with probability above this value are classified as speech. Lower values detect more speech but may increase false positives. For low-SNR audio (e.g., 8kHz phone calls), values of 0.01–0.2 may work better. |\n| `min_silence_duration_ms` | int | `500` | Minimum silence duration in milliseconds before ending a speech segment. Higher values merge nearby speech bursts into single segments. For phone calls with mid-sentence pauses, 2000–5000ms prevents over-segmentation. |\n| `min_speech_duration_ms` | int | `250` | Minimum speech segment duration in milliseconds. Segments shorter than this are discarded. Filters out brief noise bursts or clicks. |\n| `max_speech_duration_s` | float | `5.0` | Maximum speech segment duration in seconds. Segments longer than this are force-split at the longest internal silence gap. Useful for continuous speech without natural pauses. |\n| `speech_pad_ms` | int | `250` | Padding in milliseconds added to the start and end of each detected segment. Prevents clipping speech edges. When padding would cause adjacent segments to overlap, the gap is split at the midpoint instead. |\n\n**Server Events:**\n- `session.created`: Initial session confirmation (sent first)\n  ```json\n  {\n    \"type\": \"session.created\",\n    \"session\": {\n      \"id\": \"session-id\",\n      \"object\": \"realtime.session\",\n      \"modalities\": [\"audio\"],\n      \"model\": \"openai/whisper-large-v3\"\n    }\n  }\n  ```\n- `transcription_session.updated`: Confirms session configuration was applied. Sent in response to a client `transcription_session.updated` message.\n  ```json\n  {\n    \"type\": \"transcription_session.updated\",\n    \"session\": {\n      \"turn_detection\": {\n        \"type\": \"server_vad\",\n        \"threshold\": 0.3,\n        \"min_silence_duration_ms\": 500,\n        \"min_speech_duration_ms\": 250,\n        \"max_speech_duration_s\": 5.0,\n        \"speech_pad_ms\": 250\n      }\n    }\n  }\n  ```\n- `conversation.item.input_audio_transcription.delta`: Partial transcription results\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.delta\",\n    \"delta\": \"The quick brown\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.completed`: Final transcription\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.completed\",\n    \"transcript\": \"The quick brown fox jumps over the lazy dog\"\n  }\n  ```\n- `conversation.item.input_audio_transcription.failed`: Error occurred\n  ```json\n  {\n    \"type\": \"conversation.item.input_audio_transcription.failed\",\n    \"error\": {\n      \"message\": \"Error description\",\n      \"type\": \"invalid_request_error\",\n      \"param\": null,\n      \"code\": \"invalid_api_key\"\n    }\n  }\n  ```\n\n**Error Codes:**\n- `invalid_api_key`: Invalid API key provided (401)\n- `missing_api_key`: Authorization header missing (401)\n- `model_not_available`: Invalid or unavailable model (400)\n- Unsupported audio format errors (400)\n"
+      description: Establishes a WebSocket connection for real-time audio transcription.
       operationId: realtime-transcription
       x-codeSamples:
       - lang: Python
@@ -278,23 +484,113 @@ paths:
           description: "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.input_audio_transcription.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n"
 components:
   schemas:
-    AudioTranslationResponse:
-      oneOf:
-      - $ref: '#/components/schemas/AudioTranslationJsonResponse'
-      - $ref: '#/components/schemas/AudioTranslationVerboseJsonResponse'
-    AudioTranslationJsonResponse:
+    AudioTranscriptionWord:
       type: object
       required:
-      - text
+      - word
+      - start
+      - end
       properties:
-        text:
+        word:
           type: string
-          description: The translated text
-          example: Hello, world!
+          description: The word
+          example: Hello
+        start:
+          type: number
+          format: float
+          description: Start time of the word in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the word in seconds
+          example: 0.5
+        speaker_id:
+          type: string
+          description: The speaker id for the word (only when diarize is enabled)
+          example: SPEAKER_00
     AudioTranscriptionResponse:
       oneOf:
       - $ref: '#/components/schemas/AudioTranscriptionJsonResponse'
       - $ref: '#/components/schemas/AudioTranscriptionVerboseJsonResponse'
+    AudioFileUrl:
+      type: string
+      format: uri
+      description: Public HTTPS URL to audio file
+    AudioSpeechStreamEvent:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/AudioSpeechStreamChunk'
+    StreamSentinel:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          title: stream_signal
+          type: string
+          enum:
+          - '[DONE]'
+    AudioTranslationVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The target language of the translation
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The translated text
+          example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of translation segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of translation words (only when timestamp_granularities includes 'word')
+    AudioTranscriptionSegment:
+      type: object
+      required:
+      - id
+      - start
+      - end
+      - text
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the segment
+          example: 0
+        start:
+          type: number
+          format: float
+          description: Start time of the segment in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the segment in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The text content of the segment
+          example: Hello, world!
     AudioSpeechRequest:
       type: object
       required:
@@ -384,227 +680,35 @@ components:
           type: string
           description: The transcribed text
           example: Hello, world!
-    AudioSpeechStreamEvent:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/AudioSpeechStreamChunk'
-    AudioTranslationVerboseJsonResponse:
-      type: object
-      required:
-      - language
-      - duration
-      - text
-      - segments
-      properties:
-        language:
-          type: string
-          description: The target language of the translation
-          example: english
-        duration:
-          type: number
-          format: float
-          description: The duration of the audio in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The translated text
-          example: Hello, world!
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSegment'
-          description: Array of translation segments
-        words:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionWord'
-          description: Array of translation words (only when timestamp_granularities includes 'word')
-    AudioFileUrl:
-      type: string
-      format: uri
-      description: Public HTTPS URL to audio file
-    AudioTranscriptionVerboseJsonResponse:
-      type: object
-      required:
-      - language
-      - duration
-      - text
-      - segments
-      properties:
-        language:
-          type: string
-          description: The language of the audio
-          example: english
-        duration:
-          type: number
-          format: float
-          description: The duration of the audio in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The transcribed text
-          example: Hello, world!
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSegment'
-          description: Array of transcription segments
-        words:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionWord'
-          description: Array of transcription words (only when timestamp_granularities includes 'word')
-        speaker_segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSpeakerSegment'
-          description: Array of transcription speaker segments (only when diarize is enabled)
-    AudioSpeechStreamChunk:
-      type: object
-      required:
-      - object
-      - model
-      - b64
-      properties:
-        object:
-          description: The object type, which is always `audio.tts.chunk`.
-          const: audio.tts.chunk
-        model:
-          type: string
-          example: cartesia/sonic
-        b64:
-          type: string
-          description: base64 encoded audio stream
     AudioFileBinary:
       type: string
       format: binary
       description: Audio file to transcribe
-    AudioTranscriptionWord:
+    ErrorData:
       type: object
       required:
-      - word
-      - start
-      - end
+      - error
       properties:
-        word:
-          type: string
-          description: The word
-          example: Hello
-        start:
-          type: number
-          format: float
-          description: Start time of the word in seconds
-          example: 0
-        end:
-          type: number
-          format: float
-          description: End time of the word in seconds
-          example: 0.5
-        speaker_id:
-          type: string
-          description: The speaker id for the word (only when diarize is enabled)
-          example: SPEAKER_00
-    AudioTranscriptionSegment:
-      type: object
-      required:
-      - id
-      - start
-      - end
-      - text
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the segment
-          example: 0
-        start:
-          type: number
-          format: float
-          description: Start time of the segment in seconds
-          example: 0
-        end:
-          type: number
-          format: float
-          description: End time of the segment in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The text content of the segment
-          example: Hello, world!
-    AudioTranslationRequest:
-      type: object
-      required:
-      - file
-      properties:
-        file:
-          oneOf:
-          - type: string
-            format: binary
-            description: Audio file to translate
-          - type: string
-            format: uri
-            description: Public HTTP/HTTPS URL to audio file
-          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
-        model:
-          type: string
-          description: Model to use for translation
-          default: openai/whisper-large-v3
-          enum:
-          - openai/whisper-large-v3
-        language:
-          type: string
-          description: Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.
-          default: en
-          example: en
-        prompt:
-          type: string
-          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
-        response_format:
-          type: string
-          description: The format of the response
-          default: json
-          enum:
-          - json
-          - verbose_json
-        temperature:
-          type: number
-          format: float
-          description: Sampling temperature between 0.0 and 1.0
-          default: 0
-          minimum: 0
-          maximum: 1
-        timestamp_granularities:
-          oneOf:
-          - type: string
-            enum:
-            - segment
-            - word
-          - type: array
-            items:
+        error:
+          type: object
+          properties:
+            message:
               type: string
-              enum:
-              - segment
-              - word
-            uniqueItems: true
-            minItems: 1
-            maxItems: 2
-          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
-          default: segment
-          example:
-          - word
-          - segment
-    StreamSentinel:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          title: stream_signal
-          type: string
-          enum:
-          - '[DONE]'
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     AudioTranscriptionRequest:
       type: object
       required:
@@ -673,35 +777,101 @@ components:
         max_speakers:
           type: integer
           description: Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
-    ErrorData:
+    AudioTranslationJsonResponse:
       type: object
       required:
-      - error
+      - text
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
+        text:
+          type: string
+          description: The translated text
+          example: Hello, world!
     AudioSpeechStreamResponse:
       oneOf:
       - $ref: '#/components/schemas/AudioSpeechStreamEvent'
       - $ref: '#/components/schemas/StreamSentinel'
+    AudioSpeechStreamChunk:
+      type: object
+      required:
+      - object
+      - model
+      - b64
+      properties:
+        object:
+          description: The object type, which is always `audio.tts.chunk`.
+          const: audio.tts.chunk
+        model:
+          type: string
+          example: cartesia/sonic
+        b64:
+          type: string
+          description: base64 encoded audio stream
+    AudioTranslationRequest:
+      type: object
+      required:
+      - file
+      properties:
+        file:
+          oneOf:
+          - type: string
+            format: binary
+            description: Audio file to translate
+          - type: string
+            format: uri
+            description: Public HTTP/HTTPS URL to audio file
+          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
+        model:
+          type: string
+          description: Model to use for translation
+          default: openai/whisper-large-v3
+          enum:
+          - openai/whisper-large-v3
+        language:
+          type: string
+          description: Target output language. Optional ISO 639-1 language code. If omitted, language is set to English.
+          default: en
+          example: en
+        prompt:
+          type: string
+          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
+        response_format:
+          type: string
+          description: The format of the response
+          default: json
+          enum:
+          - json
+          - verbose_json
+        temperature:
+          type: number
+          format: float
+          description: Sampling temperature between 0.0 and 1.0
+          default: 0
+          minimum: 0
+          maximum: 1
+        timestamp_granularities:
+          oneOf:
+          - type: string
+            enum:
+            - segment
+            - word
+          - type: array
+            items:
+              type: string
+              enum:
+              - segment
+              - word
+            uniqueItems: true
+            minItems: 1
+            maxItems: 2
+          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
+          default: segment
+          example:
+          - word
+          - segment
+    AudioTranslationResponse:
+      oneOf:
+      - $ref: '#/components/schemas/AudioTranslationJsonResponse'
+      - $ref: '#/components/schemas/AudioTranslationVerboseJsonResponse'
     AudioTranscriptionSpeakerSegment:
       type: object
       required:
@@ -739,6 +909,42 @@ components:
           type: integer
           description: Unique identifier for the speaker segment
           example: 1
+    AudioTranscriptionVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The language of the audio
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The transcribed text
+          example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of transcription segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of transcription words (only when timestamp_granularities includes 'word')
+        speaker_segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSpeakerSegment'
+          description: Array of transcription speaker segments (only when diarize is enabled)
   securitySchemes:
     bearerAuth:
       type: http

@@ -55,15 +55,6 @@ paths:
                 $ref: '#/components/schemas/JobsInfoSuccessResponse'
 components:
   schemas:
-    JobsInfoSuccessResponse:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobInfoSuccessResponse'
     JobInfoSuccessResponse:
       type: object
       required:
@@ -128,6 +119,15 @@ components:
           type: string
           format: date-time
           example: '2025-03-11T22:36:12Z'
+    JobsInfoSuccessResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobInfoSuccessResponse'
   securitySchemes:
     bearerAuth:
       type: http

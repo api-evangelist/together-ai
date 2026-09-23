@@ -61,6 +61,8 @@ paths:
                 additionalProperties:
                   type: string
                 type: object
+      operationId: getDeploymentsStorageByFilename
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

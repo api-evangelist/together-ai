@@ -82,7 +82,8 @@
     "together-ai-tcloud-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "tag 'GPUClusterService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
     "tag 'RegionService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
-    "tag 'SharedVolumeService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied"
+    "tag 'SharedVolumeService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "together-ai-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",

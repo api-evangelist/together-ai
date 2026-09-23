@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - GPUClusterService
-      summary: List all GPU clusters.
+      summary: List all GPU clusters
       description: List all GPU clusters.
       operationId: GPUClusterService_List
       responses:
@@ -44,9 +44,7 @@ paths:
 
         Kubernetes and Slurm cluster flavors, a REST API, and Terraform support,
 
-        you can run workloads flexibly without complex infrastructure management.
-
-        '
+        you can run workloads flexibly without complex infrastructure management.'
       operationId: GPUClusterService_Create
       requestBody:
         content:
@@ -137,7 +135,7 @@ paths:
     put:
       tags:
       - GPUClusterService
-      summary: Update a GPU Cluster.
+      summary: Update a GPU Cluster
       description: Update the configuration of an existing GPU cluster.
       operationId: GPUClusterService_Update
       parameters:
@@ -253,7 +251,7 @@ paths:
     put:
       tags:
       - GPUClusterService
-      summary: Update a GPU Cluster.
+      summary: Update a GPU Cluster
       operationId: GPUClusterService_Update
       requestBody:
         content:
@@ -343,7 +341,7 @@ paths:
     get:
       tags:
       - GPUClusterService
-      summary: List all GPU clusters.
+      summary: List all GPU clusters
       operationId: GPUClusterService_List
       responses:
         '200':
@@ -358,6 +356,158 @@ paths:
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/gpu_clusters\n"
 components:
   schemas:
+    GPUClusterInfo:
+      type: object
+      required:
+      - cluster_id
+      - cluster_type
+      - region
+      - gpu_type
+      - cluster_name
+      - cuda_version
+      - nvidia_driver_version
+      - volumes
+      - status
+      - control_plane_nodes
+      - gpu_worker_nodes
+      - kube_config
+      - num_gpus
+      properties:
+        cluster_id:
+          type: string
+        cluster_type:
+          description: Type of cluster.
+          enum:
+          - KUBERNETES
+          - SLURM
+        region:
+          type: string
+        gpu_type:
+          enum:
+          - H100_SXM
+          - H200_SXM
+          - RTX_6000_PCI
+          - L40_PCIE
+          - B200_SXM
+          - H100_SXM_INF
+        cluster_name:
+          type: string
+        duration_hours:
+          type: integer
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterVolume'
+        status:
+          description: Current status of the GPU cluster.
+          enum:
+          - WaitingForControlPlaneNodes
+          - WaitingForDataPlaneNodes
+          - WaitingForSubnet
+          - WaitingForSharedVolume
+          - InstallingDrivers
+          - RunningAcceptanceTests
+          - Paused
+          - OnDemandComputePaused
+          - Ready
+          - Degraded
+          - Deleting
+        control_plane_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterControlPlaneNode'
+        gpu_worker_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterGPUWorkerNode'
+        kube_config:
+          type: string
+        num_gpus:
+          type: integer
+        slurm_shm_size_gib:
+          type: integer
+        capacity_pool_id:
+          type: string
+        reservation_start_time:
+          type: string
+          format: date-time
+        reservation_end_time:
+          type: string
+          format: date-time
+        install_traefik:
+          type: boolean
+        cuda_version:
+          type: string
+        nvidia_driver_version:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    GPUClusterUpdateRequest:
+      type: object
+      properties:
+        cluster_type:
+          description: Type of cluster to update.
+          enum:
+          - KUBERNETES
+          - SLURM
+        num_gpus:
+          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+          type: integer
+        reservation_end_time:
+          type: string
+          description: Timestamp at which the cluster should be decommissioned. Only accepted for prepaid clusters.
+          format: date-time
+    GPUClusters:
+      type: object
+      required:
+      - clusters
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterInfo'
+    GPUClustersSharedVolumeCreateRequest:
+      type: object
+      required:
+      - volume_name
+      - size_tib
+      - region
+      properties:
+        volume_name:
+          description: Customizable name of the volume to create.
+          type: string
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
+          type: integer
+        region:
+          type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
+    GPUClusterControlPlaneNode:
+      type: object
+      required:
+      - node_id
+      - node_name
+      - status
+      - host_name
+      - num_cpu_cores
+      - memory_gib
+      - network
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+        memory_gib:
+          type: number
+        network:
+          type: string
     GPUClusterVolume:
       type: object
       required:
@@ -373,6 +523,38 @@ components:
         size_tib:
           type: integer
         status:
+          type: string
+    GPUClusterGPUWorkerNode:
+      type: object
+      required:
+      - node_id
+      - node_name
+      - status
+      - host_name
+      - num_cpu_cores
+      - num_gpus
+      - memory_gib
+      - networks
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+        num_gpus:
+          type: integer
+        memory_gib:
+          type: number
+        networks:
+          type: array
+          items:
+            type: string
+        instance_id:
           type: string
     GPUClusterCreateRequest:
       description: GPU Cluster create request
@@ -474,190 +656,150 @@ components:
         slurm_image:
           type: string
           description: Custom Slurm image for Slurm clusters.
-    GPUClusterInfo:
+    GPUClusterInfo_2:
       type: object
-      required:
-      - cluster_id
-      - cluster_type
-      - region
-      - gpu_type
-      - cluster_name
-      - cuda_version
-      - nvidia_driver_version
-      - volumes
-      - status
-      - control_plane_nodes
-      - gpu_worker_nodes
-      - kube_config
-      - num_gpus
       properties:
         cluster_id:
           type: string
         cluster_type:
-          description: Type of cluster.
           enum:
+          - UNKNOWN_TYPE
           - KUBERNETES
           - SLURM
+          type: string
+          format: enum
         region:
           type: string
         gpu_type:
           enum:
+          - UNKNOWN_GPU_TYPE
           - H100_SXM
           - H200_SXM
           - RTX_6000_PCI
-          - L40_PCIE
-          - B200_SXM
-          - H100_SXM_INF
+          type: string
+          format: enum
         cluster_name:
           type: string
         duration_hours:
           type: integer
+          format: uint32
+        driver_version:
+          enum:
+          - UNKNOWN_DRIVER
+          - CUDA_12_5_555
+          - CUDA_12_6_560
+          - CUDA_12_6_565
+          - CUDA_12_8_570
+          type: string
+          format: enum
         volumes:
           type: array
           items:
-            $ref: '#/components/schemas/GPUClusterVolume'
+            $ref: '#/components/schemas/GPUClusterVolume_2'
         status:
-          description: Current status of the GPU cluster.
-          enum:
-          - WaitingForControlPlaneNodes
-          - WaitingForDataPlaneNodes
-          - WaitingForSubnet
-          - WaitingForSharedVolume
-          - InstallingDrivers
-          - RunningAcceptanceTests
-          - Paused
-          - OnDemandComputePaused
-          - Ready
-          - Degraded
-          - Deleting
+          type: string
         control_plane_nodes:
           type: array
           items:
-            $ref: '#/components/schemas/GPUClusterControlPlaneNode'
+            $ref: '#/components/schemas/GPUClusterControlPlaneNode_2'
         gpu_worker_nodes:
           type: array
           items:
-            $ref: '#/components/schemas/GPUClusterGPUWorkerNode'
+            $ref: '#/components/schemas/GPUClusterGPUWorkerNode_2'
         kube_config:
           type: string
         num_gpus:
           type: integer
-        slurm_shm_size_gib:
-          type: integer
-        capacity_pool_id:
-          type: string
-        reservation_start_time:
-          type: string
-          format: date-time
-        reservation_end_time:
-          type: string
-          format: date-time
-        install_traefik:
-          type: boolean
-        cuda_version:
-          type: string
-        nvidia_driver_version:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-    GPUClustersSharedVolumeCreateRequest:
+          format: int32
+    SharedVolumeCreateRequest:
       type: object
-      required:
-      - volume_name
-      - size_tib
-      - region
       properties:
         volume_name:
-          description: Customizable name of the volume to create.
           type: string
         size_tib:
-          description: Volume size in whole tebibytes (TiB).
           type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
         region:
           type: string
-          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
-    GPUClusterGPUWorkerNode:
-      type: object
-      required:
-      - node_id
-      - node_name
-      - status
-      - host_name
-      - num_cpu_cores
-      - num_gpus
-      - memory_gib
-      - networks
-      properties:
-        node_id:
-          type: string
-        node_name:
-          type: string
-        status:
-          type: string
-        host_name:
-          type: string
-        num_cpu_cores:
-          type: integer
-        num_gpus:
-          type: integer
-        memory_gib:
-          type: number
-        networks:
-          type: array
-          items:
-            type: string
-        instance_id:
-          type: string
-    GPUClusterUpdateRequest:
+    GPUClusterUpdateRequest_2:
       type: object
       properties:
+        cluster_id:
+          type: string
         cluster_type:
-          description: Type of cluster to update.
           enum:
+          - UNKNOWN_TYPE
           - KUBERNETES
           - SLURM
+          type: string
+          format: enum
         num_gpus:
-          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
           type: integer
-        reservation_end_time:
-          type: string
-          description: Timestamp at which the cluster should be decommissioned. Only accepted for prepaid clusters.
-          format: date-time
-    GPUClusterControlPlaneNode:
+          format: uint32
+    GPUClusterUpdateResponse:
       type: object
-      required:
-      - node_id
-      - node_name
-      - status
-      - host_name
-      - num_cpu_cores
-      - memory_gib
-      - network
       properties:
-        node_id:
-          type: string
-        node_name:
+        cluster_id:
           type: string
         status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
           type: string
-        host_name:
-          type: string
-        num_cpu_cores:
-          type: integer
-        memory_gib:
-          type: number
-        network:
-          type: string
-    GPUClusters:
+          format: enum
+    GPUClusters_2:
       type: object
-      required:
-      - clusters
       properties:
         clusters:
           type: array
           items:
-            $ref: '#/components/schemas/GPUClusterInfo'
+            $ref: '#/components/schemas/GPUClusterInfo_2'
+    GPUCLusterDeleteResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+    GPUClusterCreateResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
+          type: string
+          format: enum
+    GPUClusterControlPlaneNode_2:
+      type: object
+      properties:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+          format: uint32
+        memory_gib:
+          type: number
+          format: float
+        network:
+          type: string
     GPUClusterVolume_2:
       type: object
       properties:
@@ -670,17 +812,30 @@ components:
           format: uint32
         status:
           type: string
-    SharedVolumeCreateRequest:
+    GPUClusterGPUWorkerNode_2:
       type: object
       properties:
-        volume_name:
+        node_id:
           type: string
-        size_tib:
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
           type: integer
-          description: Volume size in whole tebibytes (TiB).
           format: uint32
-        region:
-          type: string
+        num_gpus:
+          type: integer
+          format: uint32
+        memory_gib:
+          type: number
+          format: float
+        networks:
+          type: array
+          items:
+            type: string
     GPUClusterCreateRequest_2:
       required:
       - region
@@ -745,163 +900,6 @@ components:
           type: string
           format: enum
       description: GPU Cluster create request
-    GPUClusterInfo_2:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        cluster_type:
-          enum:
-          - UNKNOWN_TYPE
-          - KUBERNETES
-          - SLURM
-          type: string
-          format: enum
-        region:
-          type: string
-        gpu_type:
-          enum:
-          - UNKNOWN_GPU_TYPE
-          - H100_SXM
-          - H200_SXM
-          - RTX_6000_PCI
-          type: string
-          format: enum
-        cluster_name:
-          type: string
-        duration_hours:
-          type: integer
-          format: uint32
-        driver_version:
-          enum:
-          - UNKNOWN_DRIVER
-          - CUDA_12_5_555
-          - CUDA_12_6_560
-          - CUDA_12_6_565
-          - CUDA_12_8_570
-          type: string
-          format: enum
-        volumes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClusterVolume_2'
-        status:
-          type: string
-        control_plane_nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClusterControlPlaneNode_2'
-        gpu_worker_nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClusterGPUWorkerNode_2'
-        kube_config:
-          type: string
-        num_gpus:
-          type: integer
-          format: int32
-    GPUCLusterDeleteResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-    GPUClusterCreateResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        status:
-          enum:
-          - UNKNOWN_STATUS
-          - PENDING
-          - QUEUED
-          - WAITING_CONTROL_PLANE
-          - WAITING_DATA_PLANE
-          - READY
-          - FAILED
-          type: string
-          format: enum
-    GPUClusterGPUWorkerNode_2:
-      type: object
-      properties:
-        node_id:
-          type: string
-        node_name:
-          type: string
-        status:
-          type: string
-        host_name:
-          type: string
-        num_cpu_cores:
-          type: integer
-          format: uint32
-        num_gpus:
-          type: integer
-          format: uint32
-        memory_gib:
-          type: number
-          format: float
-        networks:
-          type: array
-          items:
-            type: string
-    GPUClusterUpdateRequest_2:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        cluster_type:
-          enum:
-          - UNKNOWN_TYPE
-          - KUBERNETES
-          - SLURM
-          type: string
-          format: enum
-        num_gpus:
-          type: integer
-          format: uint32
-    GPUClusterControlPlaneNode_2:
-      type: object
-      properties:
-        node_id:
-          type: string
-        node_name:
-          type: string
-        status:
-          type: string
-        host_name:
-          type: string
-        num_cpu_cores:
-          type: integer
-          format: uint32
-        memory_gib:
-          type: number
-          format: float
-        network:
-          type: string
-    GPUClusterUpdateResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        status:
-          enum:
-          - UNKNOWN_STATUS
-          - PENDING
-          - QUEUED
-          - WAITING_CONTROL_PLANE
-          - WAITING_DATA_PLANE
-          - READY
-          - FAILED
-          type: string
-          format: enum
-    GPUClusters_2:
-      type: object
-      properties:
-        clusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClusterInfo_2'
   securitySchemes:
     bearerAuth:
       type: http

@@ -94,57 +94,139 @@ paths:
       deprecated: false
 components:
   schemas:
-    ResponseFormatJsonObject:
+    ChatCompletionStream:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionEvent'
+      - $ref: '#/components/schemas/StreamSentinel'
+    ChatCompletionUserMessageParam:
       type: object
-      title: JSON object
-      description: 'JSON object response format. An older method of generating JSON responses.
-
-        Using `json_schema` is recommended for models that support it. Note that the
-
-        model will not generate JSON without a system or user message instructing it
-
-        to do so.
+      required:
+      - content
+      - role
+      properties:
+        content:
+          $ref: '#/components/schemas/ChatCompletionUserMessageContent'
+        role:
+          type: string
+          enum:
+          - user
+        name:
+          type: string
+    TopLogprobs:
+      description: Top log probabilities for the tokens.
+      type: object
+      additionalProperties:
+        type: number
+    ChatCompletionEvent:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ChatCompletionChunk'
+    ToolsPart:
+      type: object
+      properties:
+        type:
+          type: string
+          example: tool_type
+        function:
+          type: object
+          properties:
+            description:
+              type: string
+              example: A description of the function.
+            name:
+              type: string
+              example: function_name
+            parameters:
+              type: object
+              additionalProperties: true
+              description: A map of parameter names to their values.
+    PromptPart:
+      type: array
+      items:
+        type: object
+        properties:
+          text:
+            type: string
+            example: <s>[INST] What is the capital of France? [/INST]
+          logprobs:
+            $ref: '#/components/schemas/LogprobsPart'
+    ResponseFormatText:
+      type: object
+      title: Text
+      description: 'Default response format. Used to generate text responses.
 
         '
       properties:
         type:
           type: string
-          description: The type of response format being defined. Always `json_object`.
+          description: The type of response format being defined. Always `text`.
           enum:
-          - json_object
+          - text
           x-stainless-const: true
       required:
       - type
-    ChatCompletionResponse:
+    ChatCompletionMessage:
       type: object
+      required:
+      - role
+      - content
       properties:
-        id:
+        content:
           type: string
-        choices:
-          $ref: '#/components/schemas/ChatCompletionChoicesData'
-        usage:
-          $ref: '#/components/schemas/UsageData'
-        created:
-          type: integer
-        model:
+          nullable: true
+        role:
           type: string
-        prompt:
-          description: When `echo` is true, the prompt is included in the response. Additionally, when `logprobs` is also provided, log probability information is provided on the prompt.
-          $ref: '#/components/schemas/PromptPart'
-        object:
-          description: The object type, which is always `chat.completion`.
-          const: chat.completion
-        warnings:
+          enum:
+          - assistant
+        tool_calls:
           type: array
           items:
-            $ref: '#/components/schemas/InferenceWarning'
+            $ref: '#/components/schemas/ToolChoice'
+        function_call:
+          type: object
+          deprecated: true
+          required:
+          - arguments
+          - name
+          properties:
+            arguments:
+              type: string
+            name:
+              type: string
+        reasoning:
+          type: string
+          nullable: true
+    ChatCompletionUserMessageContentString:
+      type: string
+      description: A plain text message.
+    FinishReason:
+      type: string
+      enum:
+      - stop
+      - eos
+      - length
+      - tool_calls
+      - function_call
+    ChatCompletionToolMessageParam:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+          - tool
+        content:
+          type: string
+        tool_call_id:
+          type: string
       required:
-      - choices
-      - id
-      - created
-      - model
-      - object
-      - prompt
+      - role
+      - content
+      - tool_call_id
     ChatCompletionChunk:
       type: object
       required:
@@ -235,6 +317,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InferenceWarning'
+    StreamSentinel:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          title: stream_signal
+          type: string
+          enum:
+          - '[DONE]'
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
     ChatCompletionAssistantMessageParam:
       type: object
       required:
@@ -264,6 +370,134 @@ components:
           required:
           - arguments
           - name
+    ChatCompletionMessageParam:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionSystemMessageParam'
+      - $ref: '#/components/schemas/ChatCompletionUserMessageParam'
+      - $ref: '#/components/schemas/ChatCompletionAssistantMessageParam'
+      - $ref: '#/components/schemas/ChatCompletionToolMessageParam'
+      - $ref: '#/components/schemas/ChatCompletionFunctionMessageParam'
+    ChatCompletionUserMessageContentMultimodal:
+      type: array
+      description: A structured message with mixed content types.
+      items:
+        type: object
+        oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - text
+            text:
+              type: string
+          required:
+          - type
+          - text
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - image_url
+            image_url:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the image
+              required:
+              - url
+        - type: object
+          title: Video
+          properties:
+            type:
+              type: string
+              enum:
+              - video_url
+            video_url:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the video
+              required:
+              - url
+          required:
+          - type
+          - video_url
+        - type: object
+          title: Audio
+          properties:
+            type:
+              type: string
+              enum:
+              - audio_url
+            audio_url:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the audio
+              required:
+              - url
+          required:
+          - type
+          - audio_url
+        - type: object
+          title: Input Audio
+          properties:
+            type:
+              type: string
+              enum:
+              - input_audio
+            input_audio:
+              type: object
+              properties:
+                data:
+                  type: string
+                  description: The base64 encoded audio data
+                format:
+                  type: string
+                  description: The format of the audio data
+                  enum:
+                  - wav
+              required:
+              - data
+              - format
+          required:
+          - type
+          - input_audio
+    ChatCompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        choices:
+          $ref: '#/components/schemas/ChatCompletionChoicesData'
+        usage:
+          $ref: '#/components/schemas/UsageData'
+        created:
+          type: integer
+        model:
+          type: string
+        prompt:
+          description: When `echo` is true, the prompt is included in the response. Additionally, when `logprobs` is also provided, log probability information is provided on the prompt.
+          $ref: '#/components/schemas/PromptPart'
+        object:
+          description: The object type, which is always `chat.completion`.
+          const: chat.completion
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/InferenceWarning'
+      required:
+      - choices
+      - id
+      - created
+      - model
+      - object
+      - prompt
     ChatCompletionRequest:
       type: object
       required:
@@ -424,147 +658,54 @@ components:
           properties:
             enabled:
               type: boolean
-    ChatCompletionUserMessageContent:
-      description: The content of the message, which can either be a simple string or a structured format.
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionUserMessageContentString'
-      - $ref: '#/components/schemas/ChatCompletionUserMessageContentMultimodal'
-    ChatCompletionMessage:
+    ResponseFormatJsonObject:
+      type: object
+      title: JSON object
+      description: 'JSON object response format. An older method of generating JSON responses.
+
+        Using `json_schema` is recommended for models that support it. Note that the
+
+        model will not generate JSON without a system or user message instructing it
+
+        to do so.
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `json_object`.
+          enum:
+          - json_object
+          x-stainless-const: true
+      required:
+      - type
+    ToolChoice:
       type: object
       required:
-      - role
-      - content
+      - id
+      - type
+      - function
+      - index
       properties:
-        content:
+        index:
+          type: number
+        id:
           type: string
-          nullable: true
-        role:
+        type:
           type: string
           enum:
-          - assistant
-        tool_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolChoice'
-        function_call:
+          - function
+        function:
           type: object
-          deprecated: true
           required:
-          - arguments
           - name
+          - arguments
           properties:
-            arguments:
-              type: string
             name:
               type: string
-        reasoning:
-          type: string
-          nullable: true
-    ChatCompletionUserMessageContentMultimodal:
-      type: array
-      description: A structured message with mixed content types.
-      items:
-        type: object
-        oneOf:
-        - type: object
-          properties:
-            type:
+              example: function_name
+            arguments:
               type: string
-              enum:
-              - text
-            text:
-              type: string
-          required:
-          - type
-          - text
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - image_url
-            image_url:
-              type: object
-              properties:
-                url:
-                  type: string
-                  description: The URL of the image
-              required:
-              - url
-        - type: object
-          title: Video
-          properties:
-            type:
-              type: string
-              enum:
-              - video_url
-            video_url:
-              type: object
-              properties:
-                url:
-                  type: string
-                  description: The URL of the video
-              required:
-              - url
-          required:
-          - type
-          - video_url
-        - type: object
-          title: Audio
-          properties:
-            type:
-              type: string
-              enum:
-              - audio_url
-            audio_url:
-              type: object
-              properties:
-                url:
-                  type: string
-                  description: The URL of the audio
-              required:
-              - url
-          required:
-          - type
-          - audio_url
-        - type: object
-          title: Input Audio
-          properties:
-            type:
-              type: string
-              enum:
-              - input_audio
-            input_audio:
-              type: object
-              properties:
-                data:
-                  type: string
-                  description: The base64 encoded audio data
-                format:
-                  type: string
-                  description: The format of the audio data
-                  enum:
-                  - wav
-              required:
-              - data
-              - format
-          required:
-          - type
-          - input_audio
-    InferenceWarning:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    ChatCompletionEvent:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/ChatCompletionChunk'
     ChatCompletionChoicesData:
       type: array
       items:
@@ -586,25 +727,20 @@ components:
             - $ref: '#/components/schemas/LogprobsPart'
           top_logprobs:
             $ref: '#/components/schemas/TopLogprobs'
-    ToolsPart:
+    ChatCompletionUserMessageContent:
+      description: The content of the message, which can either be a simple string or a structured format.
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionUserMessageContentString'
+      - $ref: '#/components/schemas/ChatCompletionUserMessageContentMultimodal'
+    ResponseFormatJsonSchemaSchema:
       type: object
-      properties:
-        type:
-          type: string
-          example: tool_type
-        function:
-          type: object
-          properties:
-            description:
-              type: string
-              example: A description of the function.
-            name:
-              type: string
-              example: function_name
-            parameters:
-              type: object
-              additionalProperties: true
-              description: A map of parameter names to their values.
+      title: JSON schema
+      description: 'The schema for the response format, described as a JSON Schema object.
+
+        Learn how to build JSON schemas [here](https://json-schema.org/).
+
+        '
+      additionalProperties: true
     ResponseFormatJsonSchema:
       type: object
       title: JSON schema
@@ -664,120 +800,13 @@ components:
       required:
       - type
       - json_schema
-    FinishReason:
-      type: string
-      enum:
-      - stop
-      - eos
-      - length
-      - tool_calls
-      - function_call
-    LogprobsPart:
-      type: object
-      properties:
-        token_ids:
-          type: array
-          items:
-            type: number
-          description: List of token IDs corresponding to the logprobs
-        tokens:
-          type: array
-          items:
-            type: string
-          description: List of token strings
-        token_logprobs:
-          type: array
-          items:
-            type: number
-          description: List of token log probabilities
-        top_logprobs:
-          $ref: '#/components/schemas/TopLogprobs'
-    ChatCompletionUserMessageContentString:
-      type: string
-      description: A plain text message.
-    ToolChoice:
+    InferenceWarning:
       type: object
       required:
-      - id
-      - type
-      - function
-      - index
+      - message
       properties:
-        index:
-          type: number
-        id:
+        message:
           type: string
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          required:
-          - name
-          - arguments
-          properties:
-            name:
-              type: string
-              example: function_name
-            arguments:
-              type: string
-    TopLogprobs:
-      description: Top log probabilities for the tokens.
-      type: object
-      additionalProperties:
-        type: number
-    ResponseFormatText:
-      type: object
-      title: Text
-      description: 'Default response format. Used to generate text responses.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of response format being defined. Always `text`.
-          enum:
-          - text
-          x-stainless-const: true
-      required:
-      - type
-    StreamSentinel:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          title: stream_signal
-          type: string
-          enum:
-          - '[DONE]'
-    ChatCompletionFunctionMessageParam:
-      type: object
-      deprecated: true
-      required:
-      - content
-      - role
-      - name
-      properties:
-        role:
-          type: string
-          enum:
-          - function
-        content:
-          type: string
-        name:
-          type: string
-    PromptPart:
-      type: array
-      items:
-        type: object
-        properties:
-          text:
-            type: string
-            example: <s>[INST] What is the capital of France? [/INST]
-          logprobs:
-            $ref: '#/components/schemas/LogprobsPart'
     ChatCompletionSystemMessageParam:
       type: object
       required:
@@ -792,53 +821,6 @@ components:
           - system
         name:
           type: string
-    ChatCompletionUserMessageParam:
-      type: object
-      required:
-      - content
-      - role
-      properties:
-        content:
-          $ref: '#/components/schemas/ChatCompletionUserMessageContent'
-        role:
-          type: string
-          enum:
-          - user
-        name:
-          type: string
-    ResponseFormatJsonSchemaSchema:
-      type: object
-      title: JSON schema
-      description: 'The schema for the response format, described as a JSON Schema object.
-
-        Learn how to build JSON schemas [here](https://json-schema.org/).
-
-        '
-      additionalProperties: true
-    ChatCompletionToolMessageParam:
-      type: object
-      properties:
-        name:
-          type: string
-        role:
-          type: string
-          enum:
-          - tool
-        content:
-          type: string
-        tool_call_id:
-          type: string
-      required:
-      - role
-      - content
-      - tool_call_id
-    ChatCompletionMessageParam:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionSystemMessageParam'
-      - $ref: '#/components/schemas/ChatCompletionUserMessageParam'
-      - $ref: '#/components/schemas/ChatCompletionAssistantMessageParam'
-      - $ref: '#/components/schemas/ChatCompletionToolMessageParam'
-      - $ref: '#/components/schemas/ChatCompletionFunctionMessageParam'
     ErrorData:
       type: object
       required:
@@ -864,24 +846,42 @@ components:
           required:
           - type
           - message
-    ChatCompletionStream:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionEvent'
-      - $ref: '#/components/schemas/StreamSentinel'
-    UsageData:
+    LogprobsPart:
       type: object
       properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
+        token_ids:
+          type: array
+          items:
+            type: number
+          description: List of token IDs corresponding to the logprobs
+        tokens:
+          type: array
+          items:
+            type: string
+          description: List of token strings
+        token_logprobs:
+          type: array
+          items:
+            type: number
+          description: List of token log probabilities
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogprobs'
+    ChatCompletionFunctionMessageParam:
+      type: object
+      deprecated: true
       required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
+      - content
+      - role
+      - name
+      properties:
+        role:
+          type: string
+          enum:
+          - function
+        content:
+          type: string
+        name:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -22,7 +22,6 @@ paths:
       tags:
       - Video
       summary: Fetch video metadata
-      description: Fetch video metadata
       servers:
       - url: https://api.together.ai/v2
       operationId: retrieveVideo
@@ -169,43 +168,6 @@ components:
           type: array
           items:
             type: string
-    VideoRef:
-      type: object
-      required:
-      - video
-      properties:
-        video:
-          type: string
-          description: URL of the video.
-    VideoFrameImageInput:
-      type: object
-      required:
-      - input_image
-      properties:
-        input_image:
-          type: string
-          description: URL path to hosted image that is used for a frame
-        frame:
-          description: 'Optional param to specify where to insert the frame. If this is omitted, the following heuristics are applied:
-
-            - frame_images size is one, frame is first.
-
-            - If size is two, frames are first and last.
-
-            - If size is larger, frames are first, last and evenly spaced between.
-
-            '
-          anyOf:
-          - type: number
-          - type: string
-            enum:
-            - first
-            - last
-    VideoOutputFormat:
-      type: string
-      enum:
-      - MP4
-      - WEBM
     VideoJob:
       properties:
         id:
@@ -273,6 +235,21 @@ components:
         audio:
           type: string
           description: URL of the audio.
+    VideoStatus:
+      description: Current lifecycle status of the video job.
+      type: string
+      enum:
+      - in_progress
+      - completed
+      - failed
+    VideoRef:
+      type: object
+      required:
+      - video
+      properties:
+        video:
+          type: string
+          description: URL of the video.
     VideoMedia:
       type: object
       description: Contains all media inputs for video generation. Accepted fields depend on the model type.
@@ -309,13 +286,35 @@ components:
             oneOf:
             - type: string
             - $ref: '#/components/schemas/AudioRef'
-    VideoStatus:
-      description: Current lifecycle status of the video job.
+    VideoOutputFormat:
       type: string
       enum:
-      - in_progress
-      - completed
-      - failed
+      - MP4
+      - WEBM
+    VideoFrameImageInput:
+      type: object
+      required:
+      - input_image
+      properties:
+        input_image:
+          type: string
+          description: URL path to hosted image that is used for a frame
+        frame:
+          description: 'Optional param to specify where to insert the frame. If this is omitted, the following heuristics are applied:
+
+            - frame_images size is one, frame is first.
+
+            - If size is two, frames are first and last.
+
+            - If size is larger, frames are first, last and evenly spaced between.
+
+            '
+          anyOf:
+          - type: number
+          - type: string
+            enum:
+            - first
+            - last
   securitySchemes:
     bearerAuth:
       type: http

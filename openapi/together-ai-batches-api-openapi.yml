@@ -62,6 +62,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BatchErrorResponse'
+      operationId: getBatches
+      x-operation-id-source: derived
     post:
       tags:
       - Batches
@@ -122,6 +124,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BatchErrorResponse'
+      operationId: postBatches
+      x-operation-id-source: derived
   /batches/{id}:
     get:
       tags:
@@ -191,6 +195,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BatchErrorResponse'
+      operationId: getBatchesById
+      x-operation-id-source: derived
   /batches/{id}/cancel:
     post:
       tags:
@@ -260,15 +266,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BatchErrorResponse'
+      operationId: postBatchesByIdCancel
+      x-operation-id-source: derived
 components:
   schemas:
-    BatchJobWithWarning:
-      type: object
-      properties:
-        job:
-          $ref: '#/components/schemas/BatchJob'
-        warning:
-          type: string
     BatchJob:
       type: object
       properties:
@@ -321,6 +322,29 @@ components:
           type: string
           format: date-time
           example: '2024-01-15T15:45:30Z'
+    BatchJobStatus:
+      type: string
+      enum:
+      - VALIDATING
+      - IN_PROGRESS
+      - COMPLETED
+      - FAILED
+      - EXPIRED
+      - CANCELLED
+      example: IN_PROGRESS
+      description: Current status of the batch job
+    BatchJobWithWarning:
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/BatchJob'
+        warning:
+          type: string
+    BatchErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
     CreateBatchRequest:
       type: object
       required:
@@ -347,22 +371,6 @@ components:
           type: string
           description: Model to use for processing batch requests
           example: Qwen/Qwen3.5-9B
-    BatchErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    BatchJobStatus:
-      type: string
-      enum:
-      - VALIDATING
-      - IN_PROGRESS
-      - COMPLETED
-      - FAILED
-      - EXPIRED
-      - CANCELLED
-      example: IN_PROGRESS
-      description: Current status of the batch job
   securitySchemes:
     bearerAuth:
       type: http

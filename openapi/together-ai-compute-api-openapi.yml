@@ -46,6 +46,10 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Get compute clusters by cluster id instances by instance id remediations by…
+      x-summary-source: derived
+      operationId: getComputeClustersByClusterIdInstancesByInstanceIdRemediationsByRemediationId
+      x-operation-id-source: derived
   /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/approve:
     post:
       description: 'Approves a pending remediation.
@@ -58,9 +62,7 @@ paths:
 
         The reviewed_by, review_time, and review_comment fields are populated
 
-        on the remediation after approval.
-
-        '
+        on the remediation after approval.'
       parameters:
       - name: cluster_id
         in: path
@@ -98,14 +100,16 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Create compute clusters by cluster id instances by instance id remediations by…
+      x-summary-source: derived
+      operationId: postComputeClustersByClusterIdInstancesByInstanceIdRemediationsByRemediationIdApprove
+      x-operation-id-source: derived
   /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/cancel:
     post:
       description: 'Cancels a pending remediation.
 
 
-        Only remediations in PENDING_APPROVAL or PENDING state can be cancelled.
-
-        '
+        Only remediations in PENDING_APPROVAL or PENDING state can be cancelled.'
       parameters:
       - name: cluster_id
         in: path
@@ -137,6 +141,10 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Create compute clusters by cluster id instances by instance id remediations by…
+      x-summary-source: derived
+      operationId: postComputeClustersByClusterIdInstancesByInstanceIdRemediationsByRemediationIdCancel
+      x-operation-id-source: derived
   /compute/clusters/{cluster_id}/instances/{instance_id}/remediations/{remediation_id}/reject:
     post:
       description: 'Rejects a pending remediation.
@@ -149,9 +157,7 @@ paths:
 
         The reviewed_by, review_time, and review_comment fields are populated
 
-        on the remediation after rejection.
-
-        '
+        on the remediation after rejection.'
       parameters:
       - name: cluster_id
         in: path
@@ -188,11 +194,13 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Create compute clusters by cluster id instances by instance id remediations by…
+      x-summary-source: derived
+      operationId: postComputeClustersByClusterIdInstancesByInstanceIdRemediationsByRemediationIdReject
+      x-operation-id-source: derived
   /compute/clusters/{cluster_id}/instances/{optional_instance_id}/remediations:
     get:
-      description: 'Lists remediations for an instance or cluster.
-
-        '
+      description: Lists remediations for an instance or cluster.
       parameters:
       - name: cluster_id
         in: path
@@ -247,6 +255,10 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Get compute clusters by cluster id instances by optional instance id…
+      x-summary-source: derived
+      operationId: getComputeClustersByClusterIdInstancesByOptionalInstanceIdRemediations
+      x-operation-id-source: derived
   /compute/clusters/{cluster_id}/instances/{instance_id}/remediations:
     post:
       description: 'Creates a new remediation for an instance.
@@ -259,9 +271,7 @@ paths:
 
         The user must call /approve to start the actual remediation process.
 
-        These operations can also be rejected by calling /reject.
-
-        '
+        These operations can also be rejected by calling /reject.'
       parameters:
       - name: cluster_id
         in: path
@@ -300,8 +310,58 @@ paths:
                 $ref: '#/components/schemas/rpcStatus'
       tags:
       - Compute
+      summary: Create compute clusters by cluster id instances by instance id remediations
+      x-summary-source: derived
+      operationId: postComputeClustersByClusterIdInstancesByInstanceIdRemediations
+      x-operation-id-source: derived
 components:
   schemas:
+    v1ListRemediationsResponse:
+      type: object
+      description: ListRemediationsResponse is the response for ListRemediations.
+      required:
+      - remediations
+      - has_next
+      properties:
+        remediations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v1Remediation'
+          description: The list of remediations.
+        next_page_token:
+          type: string
+          description: Token for the next page.
+        has_next:
+          type: boolean
+          description: Indicates if there are more results available.
+    v1RemediationState:
+      type: string
+      enum:
+      - PENDING_APPROVAL
+      - PENDING
+      - RUNNING
+      - SUCCEEDED
+      - FAILED
+      - CANCELLED
+      - AUTO_RESOLVED
+      description: 'RemediationState represents the lifecycle state of a remediation.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
+
+        '
     rpcStatus:
       type: object
       required:
@@ -351,47 +411,6 @@ components:
             message types for APIs to use.
 
             '
-    v1RemediationTrigger:
-      type: string
-      enum:
-      - REMEDIATION_TRIGGER_MANUAL
-      - REMEDIATION_TRIGGER_AUTOMATED
-      description: 'RemediationTrigger specifies how the remediation was triggered.
-
-
-        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
-
-        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
-
-        '
-    v1RemediationState:
-      type: string
-      enum:
-      - PENDING_APPROVAL
-      - PENDING
-      - RUNNING
-      - SUCCEEDED
-      - FAILED
-      - CANCELLED
-      - AUTO_RESOLVED
-      description: 'RemediationState represents the lifecycle state of a remediation.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
-
-        '
     CommentBody:
       type: object
       properties:
@@ -427,6 +446,47 @@ components:
 
             '
       additionalProperties: true
+    v1RemediationStateFilter:
+      description: 'Filter by state(s). Returns remediations matching any of the specified states.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
+      type: array
+      items:
+        type: string
+        enum:
+        - PENDING_APPROVAL
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - CANCELLED
+        - AUTO_RESOLVED
+    v1RemediationMode:
+      type: string
+      enum:
+      - REMEDIATION_MODE_VM_ONLY
+      - REMEDIATION_MODE_HOST_AWARE
+      description: 'Remediation mode specifies how the remediation should be performed.
+
+
+        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
+
+        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+
+        '
     v1Remediation:
       type: object
       required:
@@ -506,63 +566,17 @@ components:
           format: date-time
           description: When the remediation was last updated.
           readOnly: true
-    v1RemediationStateFilter:
-      description: 'Filter by state(s). Returns remediations matching any of the specified states.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
-      type: array
-      items:
-        type: string
-        enum:
-        - PENDING_APPROVAL
-        - PENDING
-        - RUNNING
-        - SUCCEEDED
-        - FAILED
-        - CANCELLED
-        - AUTO_RESOLVED
-    v1ListRemediationsResponse:
-      type: object
-      description: ListRemediationsResponse is the response for ListRemediations.
-      required:
-      - remediations
-      - has_next
-      properties:
-        remediations:
-          type: array
-          items:
-            $ref: '#/components/schemas/v1Remediation'
-          description: The list of remediations.
-        next_page_token:
-          type: string
-          description: Token for the next page.
-        has_next:
-          type: boolean
-          description: Indicates if there are more results available.
-    v1RemediationMode:
+    v1RemediationTrigger:
       type: string
       enum:
-      - REMEDIATION_MODE_VM_ONLY
-      - REMEDIATION_MODE_HOST_AWARE
-      description: 'Remediation mode specifies how the remediation should be performed.
+      - REMEDIATION_TRIGGER_MANUAL
+      - REMEDIATION_TRIGGER_AUTOMATED
+      description: 'RemediationTrigger specifies how the remediation was triggered.
 
 
-        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
+        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
 
-        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
 
         '
   securitySchemes:

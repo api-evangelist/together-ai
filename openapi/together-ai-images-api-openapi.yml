@@ -139,6 +139,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImageResponse'
+      operationId: postImagesGenerations
+      x-operation-id-source: derived
 components:
   schemas:
     ImageResponseDataB64:

@@ -22,7 +22,6 @@ paths:
       tags:
       - Voices
       summary: Fetch available voices for each model
-      description: Fetch available voices for each model
       operationId: fetchVoices
       responses:
         '200':
@@ -46,6 +45,16 @@ paths:
         source: "import Together from \"together-ai\";\n\nconst client = new Together({\n  apiKey: process.env.TOGETHER_API_KEY,\n});\n\nconst response = await client.audio.voices.list()\n\nconsole.log(response.data);\n"
 components:
   schemas:
+    ListVoicesResponse:
+      description: Response containing a list of models and their available voices.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelVoices'
     ModelVoices:
       description: Represents a model with its available voices.
       type: object
@@ -70,16 +79,6 @@ components:
               name:
                 description: Voice name to be used for audio inference.
                 type: string
-    ListVoicesResponse:
-      description: Response containing a list of models and their available voices.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelVoices'
   securitySchemes:
     bearerAuth:
       type: http

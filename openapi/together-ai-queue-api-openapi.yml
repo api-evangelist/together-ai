@@ -25,9 +25,7 @@ paths:
 
         attempt. If the job is not pending, returns 409 with the current status
 
-        unchanged.
-
-        '
+        unchanged.'
       operationId: cancelQueueJob
       requestBody:
         content:
@@ -168,9 +166,7 @@ paths:
 
         the same priority). Returns a request ID that can be used to poll status
 
-        or cancel the job.
-
-        '
+        or cancel the job.'
       operationId: submitQueueJob
       requestBody:
         content:
@@ -209,6 +205,66 @@ paths:
       - Queue
 components:
   schemas:
+    QueueJobRequest:
+      properties:
+        info:
+          description: 'Arbitrary JSON metadata stored with the job and returned in status
+
+            responses. The model and system may add or update keys during
+
+            processing.
+
+            '
+          additionalProperties: true
+          type: object
+        model:
+          description: Required model identifier
+          type: string
+        payload:
+          description: Freeform model input. Passed unchanged to the model. Contents are model-specific.
+          additionalProperties: true
+          type: object
+        priority:
+          default: 0
+          description: 'Job priority. Higher values are processed first (strict priority
+
+            ordering). Jobs with equal priority are processed in submission
+
+            order (FIFO).
+
+            '
+          type: integer
+      required:
+      - model
+      - payload
+      type: object
+    QueueCancelResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: 'Job status after the cancel attempt. Only pending jobs can be
+
+            canceled. If the job is already running, done, or failed, the status
+
+            is returned unchanged.
+
+            '
+          type: string
+          enum:
+          - canceled
+          - running
+          - done
+          - failed
+    QueueJobResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/QueueError'
+        requestId:
+          description: Unique identifier for the submitted job. Use this to poll status or cancel.
+          type: string
+      type: object
     QueueMetricsResponse:
       type: object
       required:
@@ -225,14 +281,6 @@ components:
         total_jobs:
           description: Total number of active jobs (waiting + running)
           type: integer
-    QueueJobResponse:
-      properties:
-        error:
-          $ref: '#/components/schemas/QueueError'
-        requestId:
-          description: Unique identifier for the submitted job. Use this to poll status or cancel.
-          type: string
-      type: object
     QueueError:
       properties:
         code:
@@ -323,58 +371,6 @@ components:
             type: string
           type: array
       type: object
-    QueueJobRequest:
-      properties:
-        info:
-          description: 'Arbitrary JSON metadata stored with the job and returned in status
-
-            responses. The model and system may add or update keys during
-
-            processing.
-
-            '
-          additionalProperties: true
-          type: object
-        model:
-          description: Required model identifier
-          type: string
-        payload:
-          description: Freeform model input. Passed unchanged to the model. Contents are model-specific.
-          additionalProperties: true
-          type: object
-        priority:
-          default: 0
-          description: 'Job priority. Higher values are processed first (strict priority
-
-            ordering). Jobs with equal priority are processed in submission
-
-            order (FIFO).
-
-            '
-          type: integer
-      required:
-      - model
-      - payload
-      type: object
-    QueueCancelResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          description: 'Job status after the cancel attempt. Only pending jobs can be
-
-            canceled. If the job is already running, done, or failed, the status
-
-            is returned unchanged.
-
-            '
-          type: string
-          enum:
-          - canceled
-          - running
-          - done
-          - failed
     QueueCancelRequest:
       properties:
         model:
