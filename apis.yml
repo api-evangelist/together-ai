@@ -67,8 +67,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -119,8 +117,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -171,8 +167,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -223,8 +217,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -275,8 +267,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -327,8 +317,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -381,8 +369,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -433,8 +419,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -485,8 +469,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -537,8 +519,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -590,8 +570,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -627,7 +605,7 @@ apis:
   - type: Documentation
     url: https://docs.together.ai/docs/dedicated-endpoints-overview
 - aid: together-ai:together-ai-evaluation-api
-  name: Together AI evaluation API
+  name: Together AI Evaluation API
   description: The evaluation API from Together AI — 4 operation(s) for evaluation.
   humanURL: https://docs.together.ai/reference/chat-completions
   baseURL: https://api.together.ai/v1
@@ -644,8 +622,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -698,8 +674,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -752,8 +726,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -804,8 +776,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -856,8 +826,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -910,8 +878,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -964,8 +930,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1016,8 +980,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1070,8 +1032,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1122,8 +1082,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1174,8 +1132,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1226,8 +1182,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1278,8 +1232,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1330,8 +1282,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1382,8 +1332,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1436,8 +1384,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
@@ -1488,8 +1434,6 @@ apis:
     url: https://docs.together.ai/reference/chat-completions
   - type: AsyncAPI
     url: asyncapi/together-ai-asyncapi.yml
-  - type: GraphQL
-    url: graphql/together-ai-graphql.md
   - type: APIReference
     url: https://docs.together.ai/reference/completions
   - type: Documentation
