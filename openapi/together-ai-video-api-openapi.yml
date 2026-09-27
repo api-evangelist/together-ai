@@ -168,6 +168,49 @@ components:
           type: array
           items:
             type: string
+    VideoStatus:
+      description: Current lifecycle status of the video job.
+      type: string
+      enum:
+      - in_progress
+      - completed
+      - failed
+    VideoMedia:
+      type: object
+      description: Contains all media inputs for video generation. Accepted fields depend on the model type.
+      properties:
+        frame_images:
+          description: Array of images to guide video generation at specific timeline positions.
+          type: array
+          items:
+            $ref: '#/components/schemas/VideoFrameImageInput'
+        frame_videos:
+          description: Array of video clips to use as starting clips.
+          type: array
+          items:
+            $ref: '#/components/schemas/VideoRef'
+        reference_images:
+          description: Array of image URLs that guide the general appearance across the video.
+          type: array
+          items:
+            type: string
+        reference_videos:
+          description: Array of reference videos.
+          type: array
+          items:
+            $ref: '#/components/schemas/VideoRef'
+        source_video:
+          description: Source video to edit. Accepts a URL string or an object with a "video" key.
+          oneOf:
+          - type: string
+          - $ref: '#/components/schemas/VideoRef'
+        audio_inputs:
+          description: Array of audio inputs. Each element accepts a URL string or an object with an "audio" key.
+          type: array
+          items:
+            oneOf:
+            - type: string
+            - $ref: '#/components/schemas/AudioRef'
     VideoJob:
       properties:
         id:
@@ -227,21 +270,6 @@ components:
       - created_at
       title: Video job
       description: Structured information describing a generated video job.
-    AudioRef:
-      type: object
-      required:
-      - audio
-      properties:
-        audio:
-          type: string
-          description: URL of the audio.
-    VideoStatus:
-      description: Current lifecycle status of the video job.
-      type: string
-      enum:
-      - in_progress
-      - completed
-      - failed
     VideoRef:
       type: object
       required:
@@ -250,47 +278,6 @@ components:
         video:
           type: string
           description: URL of the video.
-    VideoMedia:
-      type: object
-      description: Contains all media inputs for video generation. Accepted fields depend on the model type.
-      properties:
-        frame_images:
-          description: Array of images to guide video generation at specific timeline positions.
-          type: array
-          items:
-            $ref: '#/components/schemas/VideoFrameImageInput'
-        frame_videos:
-          description: Array of video clips to use as starting clips.
-          type: array
-          items:
-            $ref: '#/components/schemas/VideoRef'
-        reference_images:
-          description: Array of image URLs that guide the general appearance across the video.
-          type: array
-          items:
-            type: string
-        reference_videos:
-          description: Array of reference videos.
-          type: array
-          items:
-            $ref: '#/components/schemas/VideoRef'
-        source_video:
-          description: Source video to edit. Accepts a URL string or an object with a "video" key.
-          oneOf:
-          - type: string
-          - $ref: '#/components/schemas/VideoRef'
-        audio_inputs:
-          description: Array of audio inputs. Each element accepts a URL string or an object with an "audio" key.
-          type: array
-          items:
-            oneOf:
-            - type: string
-            - $ref: '#/components/schemas/AudioRef'
-    VideoOutputFormat:
-      type: string
-      enum:
-      - MP4
-      - WEBM
     VideoFrameImageInput:
       type: object
       required:
@@ -315,6 +302,19 @@ components:
             enum:
             - first
             - last
+    VideoOutputFormat:
+      type: string
+      enum:
+      - MP4
+      - WEBM
+    AudioRef:
+      type: object
+      required:
+      - audio
+      properties:
+        audio:
+          type: string
+          description: URL of the audio.
   securitySchemes:
     bearerAuth:
       type: http

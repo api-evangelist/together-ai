@@ -262,91 +262,6 @@ paths:
                 $ref: '#/components/schemas/ErrorData'
 components:
   schemas:
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
-    EvaluationScoreResults:
-      type: object
-      properties:
-        aggregated_scores:
-          type: object
-          properties:
-            mean_score:
-              type: number
-              format: float
-            std_score:
-              type: number
-              format: float
-            pass_percentage:
-              type: number
-              format: float
-        generation_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed generations.
-          example: 0
-        judge_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed judge generations
-          example: 0
-        invalid_score_count:
-          type: number
-          format: integer
-          description: number of invalid scores generated from model
-        failed_samples:
-          type: number
-          format: integer
-          description: number of failed samples generated from model
-        result_file_id:
-          type: string
-          description: Data File ID
-          example: file-1234-aefd
-    EvaluationJobStatusUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          description: The status at this update
-          example: pending
-        message:
-          type: string
-          description: Additional message for this update
-          example: Job is pending evaluation
-        timestamp:
-          type: string
-          format: date-time
-          description: When this update occurred
-          example: '2025-07-23T17:10:04.837888Z'
-    EvaluationModelOrString:
-      oneOf:
-      - type: string
-        description: Field name in the input data
-      - $ref: '#/components/schemas/EvaluationModelRequest'
     EvaluationJob:
       type: object
       properties:
@@ -406,6 +321,156 @@ components:
                 type: string
           nullable: true
           description: Results of the evaluation (when completed)
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    EvaluationCompareResults:
+      type: object
+      properties:
+        num_samples:
+          type: integer
+          description: Total number of samples compared
+        A_wins:
+          type: integer
+          description: Number of times model A won
+        B_wins:
+          type: integer
+          description: Number of times model B won
+        Ties:
+          type: integer
+          description: Number of ties
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        result_file_id:
+          type: string
+          description: Data File ID
+    EvaluationScoreResults:
+      type: object
+      properties:
+        aggregated_scores:
+          type: object
+          properties:
+            mean_score:
+              type: number
+              format: float
+            std_score:
+              type: number
+              format: float
+            pass_percentage:
+              type: number
+              format: float
+        generation_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed generations.
+          example: 0
+        judge_fail_count:
+          type: number
+          format: integer
+          nullable: true
+          description: Number of failed judge generations
+          example: 0
+        invalid_score_count:
+          type: number
+          format: integer
+          description: number of invalid scores generated from model
+        failed_samples:
+          type: number
+          format: integer
+          description: number of failed samples generated from model
+        result_file_id:
+          type: string
+          description: Data File ID
+          example: file-1234-aefd
+    EvaluationJobStatusUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status at this update
+          example: pending
+        message:
+          type: string
+          description: Additional message for this update
+          example: Job is pending evaluation
+        timestamp:
+          type: string
+          format: date-time
+          description: When this update occurred
+          example: '2025-07-23T17:10:04.837888Z'
+    EvaluationTypedRequest:
+      type: object
+      required:
+      - type
+      - parameters
+      properties:
+        type:
+          type: string
+          enum:
+          - classify
+          - score
+          - compare
+          description: The type of evaluation to perform
+          example: classify
+        parameters:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluationClassifyParameters'
+          - $ref: '#/components/schemas/EvaluationScoreParameters'
+          - $ref: '#/components/schemas/EvaluationCompareParameters'
+          description: Type-specific parameters for the evaluation
+    EvaluationModelOrString:
+      oneOf:
+      - type: string
+        description: Field name in the input data
+      - $ref: '#/components/schemas/EvaluationModelRequest'
+    EvaluationCompareParameters:
+      type: object
+      required:
+      - judge
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        model_a:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        model_b:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          description: Data file name
     EvaluationJudgeModelConfig:
       type: object
       required:
@@ -451,66 +516,38 @@ components:
           maximum: 2
           description: Sampling temperature for the judge model. Defaults to 0.05.
           example: 0
-    EvaluationCompareParameters:
+    EvaluationScoreParameters:
       type: object
       required:
       - judge
+      - min_score
+      - max_score
+      - pass_threshold
       - input_data_file_path
       properties:
         judge:
           $ref: '#/components/schemas/EvaluationJudgeModelConfig'
-        model_a:
-          $ref: '#/components/schemas/EvaluationModelOrString'
-        model_b:
-          $ref: '#/components/schemas/EvaluationModelOrString'
-        input_data_file_path:
-          type: string
-          description: Data file name
-    EvaluationClassifyParameters:
-      type: object
-      required:
-      - judge
-      - labels
-      - pass_labels
-      - input_data_file_path
-      properties:
-        judge:
-          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
-        labels:
-          type: array
-          items:
-            type: string
-          minItems: 2
-          description: List of possible classification labels
-          example:
-          - 'yes'
-          - 'no'
-        pass_labels:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          description: List of labels that are considered passing
-          example:
-          - 'yes'
+        min_score:
+          type: number
+          format: float
+          example: 0
+          description: Minimum possible score
+        max_score:
+          type: number
+          format: float
+          example: 10
+          description: Maximum possible score
+        pass_threshold:
+          type: number
+          format: float
+          example: 7
+          description: Score threshold for passing
         model_to_evaluate:
           $ref: '#/components/schemas/EvaluationModelOrString'
         input_data_file_path:
           type: string
+          example: file-01234567890123456789
           description: Data file ID
-          example: file-1234-aefd
-    EvaluationResponse:
-      type: object
-      properties:
-        workflow_id:
-          type: string
-          description: The ID of the created evaluation job
-          example: eval-1234-1244513
-        status:
-          type: string
-          enum:
-          - pending
-          description: Initial status of the job
     EvaluationClassifyResults:
       type: object
       properties:
@@ -546,26 +583,51 @@ components:
           type: string
           description: JSON string representing label counts
           example: '{"yes": 10, "no": 0}'
-    EvaluationTypedRequest:
+    EvaluationResponse:
       type: object
-      required:
-      - type
-      - parameters
       properties:
-        type:
+        workflow_id:
+          type: string
+          description: The ID of the created evaluation job
+          example: eval-1234-1244513
+        status:
           type: string
           enum:
-          - classify
-          - score
-          - compare
-          description: The type of evaluation to perform
-          example: classify
-        parameters:
-          oneOf:
-          - $ref: '#/components/schemas/EvaluationClassifyParameters'
-          - $ref: '#/components/schemas/EvaluationScoreParameters'
-          - $ref: '#/components/schemas/EvaluationCompareParameters'
-          description: Type-specific parameters for the evaluation
+          - pending
+          description: Initial status of the job
+    EvaluationClassifyParameters:
+      type: object
+      required:
+      - judge
+      - labels
+      - pass_labels
+      - input_data_file_path
+      properties:
+        judge:
+          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
+        labels:
+          type: array
+          items:
+            type: string
+          minItems: 2
+          description: List of possible classification labels
+          example:
+          - 'yes'
+          - 'no'
+        pass_labels:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of labels that are considered passing
+          example:
+          - 'yes'
+        model_to_evaluate:
+          $ref: '#/components/schemas/EvaluationModelOrString'
+        input_data_file_path:
+          type: string
+          description: Data file ID
+          example: file-1234-aefd
     EvaluationModelRequest:
       type: object
       required:
@@ -618,68 +680,6 @@ components:
           minimum: 1
           description: Number of concurrent workers for inference requests. Overrides the default concurrency for this model. Useful for tuning throughput when using proxy endpoints (e.g. OpenRouter) or rate-limited external APIs.
           example: 5
-    EvaluationScoreParameters:
-      type: object
-      required:
-      - judge
-      - min_score
-      - max_score
-      - pass_threshold
-      - input_data_file_path
-      properties:
-        judge:
-          $ref: '#/components/schemas/EvaluationJudgeModelConfig'
-        min_score:
-          type: number
-          format: float
-          example: 0
-          description: Minimum possible score
-        max_score:
-          type: number
-          format: float
-          example: 10
-          description: Maximum possible score
-        pass_threshold:
-          type: number
-          format: float
-          example: 7
-          description: Score threshold for passing
-        model_to_evaluate:
-          $ref: '#/components/schemas/EvaluationModelOrString'
-        input_data_file_path:
-          type: string
-          example: file-01234567890123456789
-          description: Data file ID
-    EvaluationCompareResults:
-      type: object
-      properties:
-        num_samples:
-          type: integer
-          description: Total number of samples compared
-        A_wins:
-          type: integer
-          description: Number of times model A won
-        B_wins:
-          type: integer
-          description: Number of times model B won
-        Ties:
-          type: integer
-          description: Number of ties
-        generation_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed generations.
-          example: 0
-        judge_fail_count:
-          type: number
-          format: integer
-          nullable: true
-          description: Number of failed judge generations
-          example: 0
-        result_file_id:
-          type: string
-          description: Data File ID
   securitySchemes:
     bearerAuth:
       type: http

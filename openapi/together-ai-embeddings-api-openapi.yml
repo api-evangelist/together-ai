@@ -91,36 +91,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    EmbeddingsResponse:
-      type: object
-      required:
-      - object
-      - model
-      - data
-      properties:
-        object:
-          description: The object type, which is always `list`.
-          const: list
-        model:
-          type: string
-        data:
-          type: array
-          items:
-            type: object
-            required:
-            - index
-            - object
-            - embedding
-            properties:
-              object:
-                description: The object type, which is always `embedding`.
-                const: embedding
-              embedding:
-                type: array
-                items:
-                  type: number
-              index:
-                type: integer
     ErrorData:
       type: object
       required:
@@ -177,6 +147,36 @@ components:
               description: A string providing the text for the model to embed.
               example: Our solar system orbits the Milky Way galaxy at about 515,000 mph
           example: Our solar system orbits the Milky Way galaxy at about 515,000 mph
+    EmbeddingsResponse:
+      type: object
+      required:
+      - object
+      - model
+      - data
+      properties:
+        object:
+          description: The object type, which is always `list`.
+          const: list
+        model:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            required:
+            - index
+            - object
+            - embedding
+            properties:
+              object:
+                description: The object type, which is always `embedding`.
+                const: embedding
+              embedding:
+                type: array
+                items:
+                  type: number
+              index:
+                type: integer
   securitySchemes:
     bearerAuth:
       type: http

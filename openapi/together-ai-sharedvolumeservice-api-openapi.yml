@@ -262,7 +262,7 @@ paths:
       tags:
       - SharedVolumeService
       summary: Update a shared volume
-      operationId: SharedVolumeService_Update
+      operationId: putApiV1SharedVolume
       requestBody:
         content:
           application/json:
@@ -280,11 +280,13 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X PUT \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"volume_id\": \"12345-67890-12345-67890\", \"size_tib\": 3}' \\\n     https://manager.cloud.together.ai/api/v1/shared_volume\n"
+      x-operation-id-source: normalized
+      x-operation-id-original: SharedVolumeService_Update
     post:
       tags:
       - SharedVolumeService
       summary: Create a shared volume
-      operationId: SharedVolumeService_Create
+      operationId: postApiV1SharedVolume
       requestBody:
         content:
           application/json:
@@ -302,12 +304,14 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X POST \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     --data '{ \"volume_name\": \"my-shared-volume\", \"size_tib\": 2, \"region\": \"us-west-2\" }' \\\n     https://manager.cloud.together.ai/api/v1/shared_volume\n"
+      x-operation-id-source: normalized
+      x-operation-id-original: SharedVolumeService_Create
   /api/v1/shared_volume/{volume_id}:
     get:
       tags:
       - SharedVolumeService
       summary: Get shared volume by volume Id
-      operationId: SharedVolumeService_Get
+      operationId: getApiV1SharedVolumeByVolumeId
       parameters:
       - name: volume_id
         in: path
@@ -325,11 +329,13 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volume/${SHARED_VOLUME_ID}\n"
+      x-operation-id-source: normalized
+      x-operation-id-original: SharedVolumeService_Get
     delete:
       tags:
       - SharedVolumeService
       summary: Delete shared volume by volume id
-      operationId: SharedVolumeService_Delete
+      operationId: deleteApiV1SharedVolumeByVolumeId
       parameters:
       - name: volume_id
         in: path
@@ -347,12 +353,14 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X DELETE \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volume/${SHARED_VOLUME_ID}\n"
+      x-operation-id-source: normalized
+      x-operation-id-original: SharedVolumeService_Delete
   /api/v1/shared_volumes:
     get:
       tags:
       - SharedVolumeService
       summary: List all shared volumes
-      operationId: SharedVolumeService_List
+      operationId: getApiV1SharedVolumes
       responses:
         '200':
           description: OK
@@ -364,8 +372,17 @@ paths:
       - lang: Shell
         label: cURL
         source: "curl -X GET \\\n     -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n     https://manager.cloud.together.ai/api/v1/shared_volumes\n"
+      x-operation-id-source: normalized
+      x-operation-id-original: SharedVolumeService_List
 components:
   schemas:
+    GPUClustersSharedVolumeDeleteResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
     GPUClustersSharedVolume:
       type: object
       required:
@@ -406,22 +423,6 @@ components:
         region:
           type: string
           description: Region name. Usable regions can be found from `client.clusters.list_regions()`
-    GPUClustersSharedVolumes:
-      type: object
-      required:
-      - volumes
-      properties:
-        volumes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClustersSharedVolume'
-    GPUClustersSharedVolumeDeleteResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
     GPUClustersSharedVolumeUpdateRequest:
       type: object
       properties:
@@ -431,10 +432,21 @@ components:
         size_tib:
           description: Size of the volume in whole tebibytes (TiB).
           type: integer
-    SharedVolumeUpdateRequest:
+    GPUClustersSharedVolumes:
+      type: object
+      required:
+      - volumes
+      properties:
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClustersSharedVolume'
+    SharedVolumeInfo:
       type: object
       properties:
         volume_id:
+          type: string
+        volume_name:
           type: string
         size_tib:
           type: integer
@@ -444,23 +456,10 @@ components:
       properties:
         volume_id:
           type: string
-    SharedVolumeCreateRequest:
-      type: object
-      properties:
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          description: Volume size in whole tebibytes (TiB).
-          format: uint32
-        region:
-          type: string
-    SharedVolumeInfo:
+    SharedVolumeUpdateRequest:
       type: object
       properties:
         volume_id:
-          type: string
-        volume_name:
           type: string
         size_tib:
           type: integer
@@ -477,6 +476,17 @@ components:
       properties:
         success:
           type: boolean
+    SharedVolumeCreateRequest:
+      type: object
+      properties:
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
+        region:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -490,102 +490,42 @@ paths:
           $ref: '#/components/schemas/RL.CheckpointVariant'
 components:
   schemas:
-    RL.TrainingSessionStatus:
-      description: Status of the training session
-      default: TRAINING_SESSION_STATUS_UNSPECIFIED
-      type: string
-      enum:
-      - TRAINING_SESSION_STATUS_UNSPECIFIED
-      - TRAINING_SESSION_STATUS_CREATING
-      - TRAINING_SESSION_STATUS_RUNNING
-      - TRAINING_SESSION_STATUS_STOPPED
-      - TRAINING_SESSION_STATUS_STOPPING
-      - TRAINING_SESSION_STATUS_ERROR
-      - TRAINING_SESSION_STATUS_EXPIRED
-    RL.LossType:
-      type: string
-      enum:
-      - LOSS_TYPE_UNSPECIFIED
-      - LOSS_TYPE_CROSS_ENTROPY
-      - LOSS_TYPE_GRPO
-      default: LOSS_TYPE_UNSPECIFIED
-    RL.LossConfig:
+    RL.LossInputs:
+      type: object
+      properties:
+        target_tokens:
+          $ref: '#/components/schemas/RL.LossTargetTokens'
+          description: Target tokens for loss computation
+        loss_mask:
+          $ref: '#/components/schemas/RL.LossMask'
+          description: Per-token loss mask (1=compute loss, 0=ignore)
+        grpo_inputs:
+          $ref: '#/components/schemas/RL.GRPOLossInputs'
+      required:
+      - target_tokens
+    RL.OptimStepBody:
+      type: object
+      properties:
+        learning_rate:
+          description: Learning rate for this step.
+          type: number
+          format: float
+          example: 0.0001
+          default: '0.0001'
+        adamw_params:
+          $ref: '#/components/schemas/RL.AdamWOptimizerParams'
+    RL.TrainingSample:
       type: object
       required:
-      - type
+      - model_input
+      - loss_inputs
       properties:
-        type:
-          $ref: '#/components/schemas/RL.LossType'
-          description: Type of loss function to use
-          example: LOSS_TYPE_GRPO
-        cross_entropy_params:
-          $ref: '#/components/schemas/RL.CrossEntropyLossParams'
-        grpo_params:
-          $ref: '#/components/schemas/RL.GRPOLossParams'
-    RL.TrainingOperationError:
-      type: object
-      description: Error details for a failed training operation
-      properties:
-        code:
-          description: Application error code
-          $ref: '#/components/schemas/RL.TrainingOperationErrorCode'
-          example: TRAINING_OPERATION_ERROR_CODE_TIMEOUT
-        message:
-          description: Human-readable error message
-          type: string
-          example: Operation timed out
-    RL.LossLogprobs:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          description: Float array of per-token log probabilities
-          type: array
-          example:
-          - -1.2
-          - -0.8
-          items:
-            type: number
-            format: float
-        dtype:
-          description: Data type of the float array (D_TYPE_FLOAT32 or D_TYPE_BFLOAT16)
-          $ref: '#/components/schemas/RL.DType'
-          example: D_TYPE_FLOAT32
-    RL.TrainingCheckpointResult:
-      type: object
-      description: Result of a save training checkpoint operation
-      required:
-      - checkpoint_id
-      properties:
-        checkpoint_id:
-          type: string
-          example: 550e8400-e29b-41d4-a716-446655440000
-          description: ID of the saved training checkpoint (use for resume via Start)
-    RL.CrossEntropyLossParams:
-      type: object
-      description: Cross-entropy loss parameters (currently empty).
-      properties: {}
-    RL.SampleResult:
-      type: object
-      description: Result of a sample operation
-      required:
-      - rollouts
-      properties:
-        rollouts:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/RL.SampleRollout'
-          description: Completions grouped by prompt
-    RL.SessionType:
-      description: Type of a training session. TRAINER_AND_GENERATOR provisions both trainer and generator; TRAINER_ONLY provisions only the trainer and rejects generator-dependent operations such as sample.
-      default: SESSION_TYPE_UNSPECIFIED
-      type: string
-      enum:
-      - SESSION_TYPE_UNSPECIFIED
-      - SESSION_TYPE_TRAINER_AND_GENERATOR
-      - SESSION_TYPE_TRAINER_ONLY
+        model_input:
+          description: Model input
+          $ref: '#/components/schemas/RL.ModelInput'
+        loss_inputs:
+          description: Loss function inputs
+          $ref: '#/components/schemas/RL.LossInputs'
     RL.TrainingCheckpointOperation:
       type: object
       description: Async save training checkpoint operation
@@ -607,107 +547,21 @@ components:
         error:
           $ref: '#/components/schemas/RL.TrainingOperationError'
           description: Error details on failure
-    RL.ForwardBackwardBody:
-      type: object
-      required:
-      - samples
-      - loss
-      properties:
-        samples:
-          description: Batch of training samples to process
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/RL.TrainingSample'
-        loss:
-          description: Loss function configuration
-          $ref: '#/components/schemas/RL.LossConfig'
-    RL.InferenceCheckpointRegistration:
-      type: object
-      description: Model registration details for an inference checkpoint
-      required:
-      - model_name
-      - registered_at
-      properties:
-        model_name:
-          type: string
-          example: username/Meta-Llama-3-8B-rl-step-42-20260216
-          description: Registered model name for downloading the checkpoint
-        registered_at:
-          type: string
-          format: date-time
-          example: '2026-01-02T00:00:00Z'
-          description: Timestamp when the model was registered
-    RL.OptimStepOperation:
-      type: object
-      description: Async optimizer step operation
-      required:
-      - id
-      - status
-      properties:
-        id:
-          type: string
-          example: 550e8400-e29b-41d4-a716-446655440000
-          description: Operation ID
-        status:
-          $ref: '#/components/schemas/RL.TrainingOperationStatus'
-          description: Operation status
-        output:
-          $ref: '#/components/schemas/RL.OptimStepResult'
-          description: Result on success
-        error:
-          $ref: '#/components/schemas/RL.TrainingOperationError'
-          description: Error details on failure
-    RL.TrainingOperationStatus:
+    RL.CheckpointVariant:
       type: string
       enum:
-      - TRAINING_OPERATION_STATUS_UNSPECIFIED
-      - TRAINING_OPERATION_STATUS_PENDING
-      - TRAINING_OPERATION_STATUS_RUNNING
-      - TRAINING_OPERATION_STATUS_COMPLETED
-      - TRAINING_OPERATION_STATUS_FAILED
-      default: TRAINING_OPERATION_STATUS_UNSPECIFIED
-    RL.GRPOLossParams:
-      type: object
-      properties:
-        clip_low:
-          type: number
-          format: float
-          example: 0.2
-          default: '0.2'
-          description: Lower clip bound for importance ratio
-        clip_high:
-          type: number
-          format: float
-          example: 0.28
-          default: '0.28'
-          description: Upper clip bound for importance ratio
-        beta:
-          type: number
-          format: float
-          example: 0.1
-          default: '0.0'
-          description: KL penalty coefficient
-        agg_type:
-          $ref: '#/components/schemas/RL.GRPOLossAggregationType'
-          example: GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
-          default: GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
-          description: Aggregation type for loss computation
-    RL.DType:
-      type: string
-      enum:
-      - D_TYPE_UNSPECIFIED
-      - D_TYPE_INT64
-      - D_TYPE_FLOAT32
-      - D_TYPE_BFLOAT16
-      default: D_TYPE_UNSPECIFIED
-    RL.EncodedText:
+      - CHECKPOINT_VARIANT_UNSPECIFIED
+      - CHECKPOINT_VARIANT_MERGED
+      - CHECKPOINT_VARIANT_ADAPTER
+      default: CHECKPOINT_VARIANT_UNSPECIFIED
+      description: 'Checkpoint variant: merged (full model) or adapter (LoRA weights only)'
+    RL.LossTargetTokens:
       type: object
       required:
-      - tokens
+      - data
       properties:
-        tokens:
-          description: Pre-tokenized text input
+        data:
+          description: Integer array of target tokens
           type: array
           example:
           - 123
@@ -717,39 +571,35 @@ components:
             oneOf:
             - type: string
             - type: integer
-    RL.ForwardBackwardOperation:
+        dtype:
+          description: Data type of the integer array
+          $ref: '#/components/schemas/RL.DType'
+          example: D_TYPE_INT64
+    RL.TrainingSessionsListResponse:
       type: object
-      description: Async forward-backward pass operation
-      required:
-      - id
-      - status
+      description: Paginated list of training sessions
       properties:
-        id:
-          type: string
-          example: 550e8400-e29b-41d4-a716-446655440000
-          description: Operation ID
-        status:
-          $ref: '#/components/schemas/RL.TrainingOperationStatus'
-          example: TRAINING_OPERATION_STATUS_PENDING
-          description: Operation status
-        output:
-          $ref: '#/components/schemas/RL.ForwardBackwardResult'
-          description: Result on success
-        error:
-          $ref: '#/components/schemas/RL.TrainingOperationError'
-          description: Error details on failure
-    RL.SampleRollout:
-      type: object
-      description: Completions generated for a single prompt
-      required:
-      - sequences
-      properties:
-        sequences:
+        data:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/RL.SampleSequence'
-          description: Completions generated for one prompt
+            $ref: '#/components/schemas/RL.TrainingSession'
+          description: List of training sessions
+        meta:
+          $ref: '#/components/schemas/RL.ListMeta'
+          description: Pagination metadata
+    RL.SampleResult:
+      type: object
+      description: Result of a sample operation
+      required:
+      - rollouts
+      properties:
+        rollouts:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/RL.SampleRollout'
+          description: Completions grouped by prompt
     RL.CheckpointFile:
       type: object
       description: A downloadable file within a checkpoint
@@ -772,98 +622,10 @@ components:
           - type: integer
           example: '123456789'
           description: File size in bytes
-    RL.StartTrainingSessionRequest:
+    RL.CrossEntropyLossParams:
       type: object
-      required:
-      - base_model
-      properties:
-        base_model:
-          description: Base model to use for the training session
-          type: string
-          example: meta-llama/Meta-Llama-3-8B-Instruct
-        resume_from_checkpoint_id:
-          description: Checkpoint ID to resume from
-          type: string
-          example: 123e4567-e89b-12d3-a456-426614174000
-        type:
-          $ref: '#/components/schemas/RL.SessionType'
-          default: SESSION_TYPE_TRAINER_AND_GENERATOR
-          example: SESSION_TYPE_TRAINER_ONLY
-          description: Type of the training session. Defaults to TRAINER_AND_GENERATOR when unspecified. TRAINER_ONLY provisions only the trainer and rejects sample requests.
-        lora_config:
-          $ref: '#/components/schemas/RL.LoraConfig'
-    RL.GRPOLossInputs:
-      type: object
-      required:
-      - advantages
-      - generator_logprobs
-      properties:
-        advantages:
-          $ref: '#/components/schemas/RL.LossAdvantages'
-          description: Per-token advantages for GRPO
-        generator_logprobs:
-          $ref: '#/components/schemas/RL.LossLogprobs'
-          description: Generator log probabilities for GRPO
-        reference_logprobs:
-          $ref: '#/components/schemas/RL.LossLogprobs'
-          description: Reference model log probabilities (required if beta > 0)
-    RL.LossMask:
-      type: object
-      required:
-      - data
-      description: Per-token loss mask (1=compute loss, 0=ignore)
-      properties:
-        data:
-          description: Integer array of per-token mask values (0s and 1s)
-          type: array
-          example:
-          - 0
-          - 0
-          - 1
-          items:
-            oneOf:
-            - type: string
-            - type: integer
-        dtype:
-          description: Data type of the integer array (must be D_TYPE_INT64)
-          $ref: '#/components/schemas/RL.DType'
-          example: D_TYPE_INT64
-    RL.InferenceCheckpoint:
-      type: object
-      description: Saved inference checkpoint
-      required:
-      - id
-      - step
-      - created_at
-      properties:
-        id:
-          type: string
-          example: 123e4567-e89b-12d3-a456-426614174000
-          description: Unique identifier for the checkpoint
-        step:
-          oneOf:
-          - type: string
-          - type: integer
-          example: '42'
-          description: Training step at time of save
-        created_at:
-          type: string
-          format: date-time
-          example: '2026-01-02T00:00:00Z'
-          description: Timestamp when the checkpoint was created
-        registration:
-          $ref: '#/components/schemas/RL.InferenceCheckpointRegistration'
-          description: Model registration details
-    RL.TrainingOperationErrorCode:
-      type: string
-      enum:
-      - TRAINING_OPERATION_ERROR_CODE_UNSPECIFIED
-      - TRAINING_OPERATION_ERROR_CODE_RESOURCE_EXHAUSTED
-      - TRAINING_OPERATION_ERROR_CODE_TIMEOUT
-      - TRAINING_OPERATION_ERROR_CODE_INTERNAL_ERROR
-      - TRAINING_OPERATION_ERROR_CODE_SESSION_NOT_ACTIVE
-      - TRAINING_OPERATION_ERROR_CODE_INVALID_INPUT
-      default: TRAINING_OPERATION_ERROR_CODE_UNSPECIFIED
+      description: Cross-entropy loss parameters (currently empty).
+      properties: {}
     RL.LoraConfig:
       type: object
       description: LoRA adapter configuration
@@ -886,49 +648,97 @@ components:
           example: 0.05
           default: '0.05'
           description: Dropout of the LoRA adapter
-    RL.CheckpointDownloadResponse:
-      type: object
-      description: Presigned download URLs for a checkpoint's files
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/RL.CheckpointFile'
-          description: List of files with presigned download URLs
-    RL.TrainingSessionsListResponse:
-      type: object
-      description: Paginated list of training sessions
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/RL.TrainingSession'
-          description: List of training sessions
-        meta:
-          $ref: '#/components/schemas/RL.ListMeta'
-          description: Pagination metadata
-    RL.LossAdvantages:
+    RL.EncodedText:
       type: object
       required:
-      - data
+      - tokens
       properties:
-        data:
-          description: Float array of per-token advantages
+        tokens:
+          description: Pre-tokenized text input
           type: array
           example:
-          - 0.5
-          - 0.5
+          - 123
+          - 456
+          - 789
           items:
-            type: number
-            format: float
-        dtype:
-          description: Data type of the float array (D_TYPE_FLOAT32 or D_TYPE_BFLOAT16)
-          $ref: '#/components/schemas/RL.DType'
-          example: D_TYPE_FLOAT32
+            oneOf:
+            - type: string
+            - type: integer
+    RL.TrainingOperationStatus:
+      type: string
+      enum:
+      - TRAINING_OPERATION_STATUS_UNSPECIFIED
+      - TRAINING_OPERATION_STATUS_PENDING
+      - TRAINING_OPERATION_STATUS_RUNNING
+      - TRAINING_OPERATION_STATUS_COMPLETED
+      - TRAINING_OPERATION_STATUS_FAILED
+      default: TRAINING_OPERATION_STATUS_UNSPECIFIED
+    RL.ModelInput:
+      type: object
+      required:
+      - chunks
+      properties:
+        chunks:
+          description: Input chunks for the model
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/RL.InputChunk'
+    RL.SessionType:
+      description: Type of a training session. TRAINER_AND_GENERATOR provisions both trainer and generator; TRAINER_ONLY provisions only the trainer and rejects generator-dependent operations such as sample.
+      default: SESSION_TYPE_UNSPECIFIED
+      type: string
+      enum:
+      - SESSION_TYPE_UNSPECIFIED
+      - SESSION_TYPE_TRAINER_AND_GENERATOR
+      - SESSION_TYPE_TRAINER_ONLY
+    RL.LossType:
+      type: string
+      enum:
+      - LOSS_TYPE_UNSPECIFIED
+      - LOSS_TYPE_CROSS_ENTROPY
+      - LOSS_TYPE_GRPO
+      default: LOSS_TYPE_UNSPECIFIED
+    RL.GRPOLossInputs:
+      type: object
+      required:
+      - advantages
+      - generator_logprobs
+      properties:
+        advantages:
+          $ref: '#/components/schemas/RL.LossAdvantages'
+          description: Per-token advantages for GRPO
+        generator_logprobs:
+          $ref: '#/components/schemas/RL.LossLogprobs'
+          description: Generator log probabilities for GRPO
+        reference_logprobs:
+          $ref: '#/components/schemas/RL.LossLogprobs'
+          description: Reference model log probabilities (required if beta > 0)
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     RL.AdamWOptimizerParams:
       description: AdamW optimizer parameters
       type: object
@@ -957,6 +767,148 @@ components:
           format: float
           example: 0.1
           default: '0.1'
+    RL.InferenceCheckpointRegistration:
+      type: object
+      description: Model registration details for an inference checkpoint
+      required:
+      - model_name
+      - registered_at
+      properties:
+        model_name:
+          type: string
+          example: username/Meta-Llama-3-8B-rl-step-42-20260216
+          description: Registered model name for downloading the checkpoint
+        registered_at:
+          type: string
+          format: date-time
+          example: '2026-01-02T00:00:00Z'
+          description: Timestamp when the model was registered
+    RL.TrainingOperationError:
+      type: object
+      description: Error details for a failed training operation
+      properties:
+        code:
+          description: Application error code
+          $ref: '#/components/schemas/RL.TrainingOperationErrorCode'
+          example: TRAINING_OPERATION_ERROR_CODE_TIMEOUT
+        message:
+          description: Human-readable error message
+          type: string
+          example: Operation timed out
+    RL.LossMask:
+      type: object
+      required:
+      - data
+      description: Per-token loss mask (1=compute loss, 0=ignore)
+      properties:
+        data:
+          description: Integer array of per-token mask values (0s and 1s)
+          type: array
+          example:
+          - 0
+          - 0
+          - 1
+          items:
+            oneOf:
+            - type: string
+            - type: integer
+        dtype:
+          description: Data type of the integer array (must be D_TYPE_INT64)
+          $ref: '#/components/schemas/RL.DType'
+          example: D_TYPE_INT64
+    RL.LossAdvantages:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          description: Float array of per-token advantages
+          type: array
+          example:
+          - 0.5
+          - 0.5
+          items:
+            type: number
+            format: float
+        dtype:
+          description: Data type of the float array (D_TYPE_FLOAT32 or D_TYPE_BFLOAT16)
+          $ref: '#/components/schemas/RL.DType'
+          example: D_TYPE_FLOAT32
+    RL.TrainingCheckpointResult:
+      type: object
+      description: Result of a save training checkpoint operation
+      required:
+      - checkpoint_id
+      properties:
+        checkpoint_id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+          description: ID of the saved training checkpoint (use for resume via Start)
+    RL.SampleBody:
+      type: object
+      required:
+      - prompts
+      properties:
+        prompts:
+          description: Input prompts as tokenized chunks
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/RL.ModelInput'
+        sampling_params:
+          $ref: '#/components/schemas/RL.SamplingParams'
+          description: Optional sampling parameters
+        num_samples:
+          type: integer
+          format: int64
+          example: 1
+          default: '1'
+          description: Number of completions to generate per prompt
+    RL.OptimStepOperation:
+      type: object
+      description: Async optimizer step operation
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+          description: Operation ID
+        status:
+          $ref: '#/components/schemas/RL.TrainingOperationStatus'
+          description: Operation status
+        output:
+          $ref: '#/components/schemas/RL.OptimStepResult'
+          description: Result on success
+        error:
+          $ref: '#/components/schemas/RL.TrainingOperationError'
+          description: Error details on failure
+    RL.ForwardBackwardBody:
+      type: object
+      required:
+      - samples
+      - loss
+      properties:
+        samples:
+          description: Batch of training samples to process
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/RL.TrainingSample'
+        loss:
+          description: Loss function configuration
+          $ref: '#/components/schemas/RL.LossConfig'
+    RL.TrainingOperationErrorCode:
+      type: string
+      enum:
+      - TRAINING_OPERATION_ERROR_CODE_UNSPECIFIED
+      - TRAINING_OPERATION_ERROR_CODE_RESOURCE_EXHAUSTED
+      - TRAINING_OPERATION_ERROR_CODE_TIMEOUT
+      - TRAINING_OPERATION_ERROR_CODE_INTERNAL_ERROR
+      - TRAINING_OPERATION_ERROR_CODE_SESSION_NOT_ACTIVE
+      - TRAINING_OPERATION_ERROR_CODE_INVALID_INPUT
+      default: TRAINING_OPERATION_ERROR_CODE_UNSPECIFIED
     RL.ListMeta:
       type: object
       description: Pagination metadata for list responses
@@ -974,32 +926,113 @@ components:
           type: string
           example: 123e4567-e89b-12d3-a456-426614174000
           description: Cursor to use as the 'after' parameter for the next page. Empty when has_more is false.
-    RL.GRPOLossAggregationType:
+    RL.InferenceCheckpointResult:
+      type: object
+      description: Result of an inference checkpoint operation
+      required:
+      - model_name
+      properties:
+        model_name:
+          type: string
+          example: username/Meta-Llama-3-8B-rl-step-42-20260216
+          description: Registered model name for downloading the checkpoint
+    RL.ForwardBackwardOperation:
+      type: object
+      description: Async forward-backward pass operation
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+          description: Operation ID
+        status:
+          $ref: '#/components/schemas/RL.TrainingOperationStatus'
+          example: TRAINING_OPERATION_STATUS_PENDING
+          description: Operation status
+        output:
+          $ref: '#/components/schemas/RL.ForwardBackwardResult'
+          description: Result on success
+        error:
+          $ref: '#/components/schemas/RL.TrainingOperationError'
+          description: Error details on failure
+    RL.SampleOperation:
+      type: object
+      description: Async sample operation
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+          description: Operation ID
+        status:
+          $ref: '#/components/schemas/RL.TrainingOperationStatus'
+          example: TRAINING_OPERATION_STATUS_PENDING
+          description: Operation status
+        output:
+          $ref: '#/components/schemas/RL.SampleResult'
+          description: Result on success
+        error:
+          $ref: '#/components/schemas/RL.TrainingOperationError'
+          description: Error details on failure
+    RL.TrainingSessionStatus:
+      description: Status of the training session
+      default: TRAINING_SESSION_STATUS_UNSPECIFIED
       type: string
       enum:
-      - GRPO_LOSS_AGGREGATION_TYPE_UNSPECIFIED
-      - GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
-      - GRPO_LOSS_AGGREGATION_TYPE_TOKEN_MEAN
-      - GRPO_LOSS_AGGREGATION_TYPE_SEQUENCE_MEAN
-      default: GRPO_LOSS_AGGREGATION_TYPE_UNSPECIFIED
-    RL.InputChunk:
+      - TRAINING_SESSION_STATUS_UNSPECIFIED
+      - TRAINING_SESSION_STATUS_CREATING
+      - TRAINING_SESSION_STATUS_RUNNING
+      - TRAINING_SESSION_STATUS_STOPPED
+      - TRAINING_SESSION_STATUS_STOPPING
+      - TRAINING_SESSION_STATUS_ERROR
+      - TRAINING_SESSION_STATUS_EXPIRED
+    RL.ForwardBackwardResult:
       type: object
-      properties:
-        encoded_text:
-          $ref: '#/components/schemas/RL.EncodedText'
-    RL.LossInputs:
-      type: object
-      properties:
-        target_tokens:
-          $ref: '#/components/schemas/RL.LossTargetTokens'
-          description: Target tokens for loss computation
-        loss_mask:
-          $ref: '#/components/schemas/RL.LossMask'
-          description: Per-token loss mask (1=compute loss, 0=ignore)
-        grpo_inputs:
-          $ref: '#/components/schemas/RL.GRPOLossInputs'
+      description: Result of a forward-backward pass operation
       required:
-      - target_tokens
+      - loss
+      properties:
+        loss:
+          type: number
+          format: double
+          example: 2.345
+          description: Loss value
+        metrics:
+          type: object
+          description: Loss-specific metrics (e.g., KL divergence, clip fraction for GRPO)
+          example:
+            loss/clip/high_fraction: 0.1
+            loss/kl_ref/mean: 0.05
+          additionalProperties:
+            type: number
+            format: double
+    RL.TrainingCheckpoint:
+      type: object
+      description: Saved training checkpoint
+      required:
+      - id
+      - step
+      - created_at
+      properties:
+        id:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+          description: Unique identifier for the checkpoint
+        step:
+          oneOf:
+          - type: string
+          - type: integer
+          example: '42'
+          description: Training step at time of save
+        created_at:
+          type: string
+          format: date-time
+          example: '2026-01-02T00:00:00Z'
+          description: Timestamp when the checkpoint was created
     RL.TrainingSession:
       type: object
       description: A training session and its current state
@@ -1066,70 +1099,57 @@ components:
           $ref: '#/components/schemas/RL.SessionType'
           example: SESSION_TYPE_TRAINER_AND_GENERATOR
           description: Type of the training session. TRAINER_AND_GENERATOR provisions both trainer and generator; TRAINER_ONLY provisions only the trainer and rejects generator-dependent operations such as sample.
-    RL.OptimStepResult:
+    RL.SampleRollout:
       type: object
-      description: Result of an optimizer step operation
+      description: Completions generated for a single prompt
       required:
-      - step
+      - sequences
       properties:
-        step:
-          description: Step number
-          oneOf:
-          - type: string
-          - type: integer
-          example: '100'
-    RL.ModelInput:
-      type: object
-      required:
-      - chunks
-      properties:
-        chunks:
-          description: Input chunks for the model
+        sequences:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/RL.InputChunk'
-    RL.SampleBody:
+            $ref: '#/components/schemas/RL.SampleSequence'
+          description: Completions generated for one prompt
+    RL.LossConfig:
       type: object
       required:
-      - prompts
+      - type
       properties:
-        prompts:
-          description: Input prompts as tokenized chunks
+        type:
+          $ref: '#/components/schemas/RL.LossType'
+          description: Type of loss function to use
+          example: LOSS_TYPE_GRPO
+        cross_entropy_params:
+          $ref: '#/components/schemas/RL.CrossEntropyLossParams'
+        grpo_params:
+          $ref: '#/components/schemas/RL.GRPOLossParams'
+    RL.LossLogprobs:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          description: Float array of per-token log probabilities
           type: array
+          example:
+          - -1.2
+          - -0.8
           items:
-            type: object
-            $ref: '#/components/schemas/RL.ModelInput'
-        sampling_params:
-          $ref: '#/components/schemas/RL.SamplingParams'
-          description: Optional sampling parameters
-        num_samples:
-          type: integer
-          format: int64
-          example: 1
-          default: '1'
-          description: Number of completions to generate per prompt
-    RL.SampleOperation:
-      type: object
-      description: Async sample operation
-      required:
-      - id
-      - status
-      properties:
-        id:
-          type: string
-          example: 550e8400-e29b-41d4-a716-446655440000
-          description: Operation ID
-        status:
-          $ref: '#/components/schemas/RL.TrainingOperationStatus'
-          example: TRAINING_OPERATION_STATUS_PENDING
-          description: Operation status
-        output:
-          $ref: '#/components/schemas/RL.SampleResult'
-          description: Result on success
-        error:
-          $ref: '#/components/schemas/RL.TrainingOperationError'
-          description: Error details on failure
+            type: number
+            format: float
+        dtype:
+          description: Data type of the float array (D_TYPE_FLOAT32 or D_TYPE_BFLOAT16)
+          $ref: '#/components/schemas/RL.DType'
+          example: D_TYPE_FLOAT32
+    RL.GRPOLossAggregationType:
+      type: string
+      enum:
+      - GRPO_LOSS_AGGREGATION_TYPE_UNSPECIFIED
+      - GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
+      - GRPO_LOSS_AGGREGATION_TYPE_TOKEN_MEAN
+      - GRPO_LOSS_AGGREGATION_TYPE_SEQUENCE_MEAN
+      default: GRPO_LOSS_AGGREGATION_TYPE_UNSPECIFIED
     RL.SampleSequence:
       type: object
       description: A single generated completion sequence with tokens and logprobs
@@ -1161,136 +1181,26 @@ components:
           type: string
           example: length
           description: Reason for stopping generation
-    RL.InferenceCheckpointOperation:
+    RL.StartTrainingSessionRequest:
       type: object
-      description: Async inference checkpoint operation
       required:
-      - id
-      - status
+      - base_model
       properties:
-        id:
+        base_model:
+          description: Base model to use for the training session
           type: string
-          example: 550e8400-e29b-41d4-a716-446655440000
-          description: Operation ID
-        status:
-          $ref: '#/components/schemas/RL.TrainingOperationStatus'
-          example: TRAINING_OPERATION_STATUS_PENDING
-          description: Operation status
-        output:
-          $ref: '#/components/schemas/RL.InferenceCheckpointResult'
-          description: Result on success
-        error:
-          $ref: '#/components/schemas/RL.TrainingOperationError'
-          description: Error details on failure
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
-    RL.TrainingCheckpoint:
-      type: object
-      description: Saved training checkpoint
-      required:
-      - id
-      - step
-      - created_at
-      properties:
-        id:
+          example: meta-llama/Meta-Llama-3-8B-Instruct
+        resume_from_checkpoint_id:
+          description: Checkpoint ID to resume from
           type: string
           example: 123e4567-e89b-12d3-a456-426614174000
-          description: Unique identifier for the checkpoint
-        step:
-          oneOf:
-          - type: string
-          - type: integer
-          example: '42'
-          description: Training step at time of save
-        created_at:
-          type: string
-          format: date-time
-          example: '2026-01-02T00:00:00Z'
-          description: Timestamp when the checkpoint was created
-    RL.OptimStepBody:
-      type: object
-      properties:
-        learning_rate:
-          description: Learning rate for this step.
-          type: number
-          format: float
-          example: 0.0001
-          default: '0.0001'
-        adamw_params:
-          $ref: '#/components/schemas/RL.AdamWOptimizerParams'
-    RL.InferenceCheckpointResult:
-      type: object
-      description: Result of an inference checkpoint operation
-      required:
-      - model_name
-      properties:
-        model_name:
-          type: string
-          example: username/Meta-Llama-3-8B-rl-step-42-20260216
-          description: Registered model name for downloading the checkpoint
-    RL.CheckpointVariant:
-      type: string
-      enum:
-      - CHECKPOINT_VARIANT_UNSPECIFIED
-      - CHECKPOINT_VARIANT_MERGED
-      - CHECKPOINT_VARIANT_ADAPTER
-      default: CHECKPOINT_VARIANT_UNSPECIFIED
-      description: 'Checkpoint variant: merged (full model) or adapter (LoRA weights only)'
-    RL.TrainingSample:
-      type: object
-      required:
-      - model_input
-      - loss_inputs
-      properties:
-        model_input:
-          description: Model input
-          $ref: '#/components/schemas/RL.ModelInput'
-        loss_inputs:
-          description: Loss function inputs
-          $ref: '#/components/schemas/RL.LossInputs'
-    RL.LossTargetTokens:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          description: Integer array of target tokens
-          type: array
-          example:
-          - 123
-          - 456
-          - 789
-          items:
-            oneOf:
-            - type: string
-            - type: integer
-        dtype:
-          description: Data type of the integer array
-          $ref: '#/components/schemas/RL.DType'
-          example: D_TYPE_INT64
+        type:
+          $ref: '#/components/schemas/RL.SessionType'
+          default: SESSION_TYPE_TRAINER_AND_GENERATOR
+          example: SESSION_TYPE_TRAINER_ONLY
+          description: Type of the training session. Defaults to TRAINER_AND_GENERATOR when unspecified. TRAINER_ONLY provisions only the trainer and rejects sample requests.
+        lora_config:
+          $ref: '#/components/schemas/RL.LoraConfig'
     RL.SamplingParams:
       type: object
       properties:
@@ -1334,26 +1244,116 @@ components:
           - type: integer
           example: '42'
           description: Random seed for reproducibility
-    RL.ForwardBackwardResult:
+    RL.InferenceCheckpoint:
       type: object
-      description: Result of a forward-backward pass operation
+      description: Saved inference checkpoint
       required:
-      - loss
+      - id
+      - step
+      - created_at
       properties:
-        loss:
+        id:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+          description: Unique identifier for the checkpoint
+        step:
+          oneOf:
+          - type: string
+          - type: integer
+          example: '42'
+          description: Training step at time of save
+        created_at:
+          type: string
+          format: date-time
+          example: '2026-01-02T00:00:00Z'
+          description: Timestamp when the checkpoint was created
+        registration:
+          $ref: '#/components/schemas/RL.InferenceCheckpointRegistration'
+          description: Model registration details
+    RL.CheckpointDownloadResponse:
+      type: object
+      description: Presigned download URLs for a checkpoint's files
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/RL.CheckpointFile'
+          description: List of files with presigned download URLs
+    RL.OptimStepResult:
+      type: object
+      description: Result of an optimizer step operation
+      required:
+      - step
+      properties:
+        step:
+          description: Step number
+          oneOf:
+          - type: string
+          - type: integer
+          example: '100'
+    RL.InferenceCheckpointOperation:
+      type: object
+      description: Async inference checkpoint operation
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+          description: Operation ID
+        status:
+          $ref: '#/components/schemas/RL.TrainingOperationStatus'
+          example: TRAINING_OPERATION_STATUS_PENDING
+          description: Operation status
+        output:
+          $ref: '#/components/schemas/RL.InferenceCheckpointResult'
+          description: Result on success
+        error:
+          $ref: '#/components/schemas/RL.TrainingOperationError'
+          description: Error details on failure
+    RL.InputChunk:
+      type: object
+      properties:
+        encoded_text:
+          $ref: '#/components/schemas/RL.EncodedText'
+    RL.GRPOLossParams:
+      type: object
+      properties:
+        clip_low:
           type: number
-          format: double
-          example: 2.345
-          description: Loss value
-        metrics:
-          type: object
-          description: Loss-specific metrics (e.g., KL divergence, clip fraction for GRPO)
-          example:
-            loss/clip/high_fraction: 0.1
-            loss/kl_ref/mean: 0.05
-          additionalProperties:
-            type: number
-            format: double
+          format: float
+          example: 0.2
+          default: '0.2'
+          description: Lower clip bound for importance ratio
+        clip_high:
+          type: number
+          format: float
+          example: 0.28
+          default: '0.28'
+          description: Upper clip bound for importance ratio
+        beta:
+          type: number
+          format: float
+          example: 0.1
+          default: '0.0'
+          description: KL penalty coefficient
+        agg_type:
+          $ref: '#/components/schemas/RL.GRPOLossAggregationType'
+          example: GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
+          default: GRPO_LOSS_AGGREGATION_TYPE_FIXED_HORIZON
+          description: Aggregation type for loss computation
+    RL.DType:
+      type: string
+      enum:
+      - D_TYPE_UNSPECIFIED
+      - D_TYPE_INT64
+      - D_TYPE_FLOAT32
+      - D_TYPE_BFLOAT16
+      default: D_TYPE_UNSPECIFIED
   securitySchemes:
     bearerAuth:
       type: http

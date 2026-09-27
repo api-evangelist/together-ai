@@ -278,14 +278,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    FilePurpose:
-      type: string
-      description: The purpose of the file
-      example: fine-tune
-      enum:
-      - fine-tune
-      - eval
-      - batch-api
     ErrorData:
       type: object
       required:
@@ -311,22 +303,6 @@ components:
           required:
           - type
           - message
-    FileList:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileResponse'
-    FileDeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
     FileType:
       type: string
       description: The type of the file
@@ -336,6 +312,21 @@ components:
       - csv
       - jsonl
       - parquet
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+    FilePurpose:
+      type: string
+      description: The purpose of the file
+      example: fine-tune
+      enum:
+      - fine-tune
+      - eval
+      - batch-api
     FileResponse:
       description: Structured information describing a file uploaded to Together.
       type: object
@@ -374,6 +365,15 @@ components:
         FileType:
           description: The type of the file such as `jsonl`, `csv`, or `parquet`.
           $ref: '#/components/schemas/FileType'
+    FileList:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
   securitySchemes:
     bearerAuth:
       type: http

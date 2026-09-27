@@ -121,6 +121,10 @@ paths:
                 $ref: '#/components/schemas/ModelUploadSuccessResponse'
 components:
   schemas:
+    ModelInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ModelInfo'
     ErrorData:
       type: object
       required:
@@ -211,10 +215,35 @@ components:
           type: string
           description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
           example: my_username/Qwen2.5-72B-Instruct-lora
-    ModelInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ModelInfo'
+    ModelUploadSuccessResponse:
+      type: object
+      required:
+      - data
+      - message
+      properties:
+        data:
+          type: object
+          required:
+          - job_id
+          - model_name
+          - model_id
+          - model_source
+          properties:
+            job_id:
+              type: string
+              example: job-a15dad11-8d8e-4007-97c5-a211304de284
+            model_name:
+              type: string
+              example: necolinehubner/Qwen2.5-72B-Instruct
+            model_id:
+              type: string
+              example: model-c0e32dfc-637e-47b2-bf4e-e9b2e58c9da7
+            model_source:
+              type: string
+              example: huggingface
+        message:
+          type: string
+          example: Processing model weights. Job created.
     ModelInfo:
       type: object
       required:
@@ -258,35 +287,6 @@ components:
           example: 2048
         pricing:
           $ref: '#/components/schemas/Pricing'
-    ModelUploadSuccessResponse:
-      type: object
-      required:
-      - data
-      - message
-      properties:
-        data:
-          type: object
-          required:
-          - job_id
-          - model_name
-          - model_id
-          - model_source
-          properties:
-            job_id:
-              type: string
-              example: job-a15dad11-8d8e-4007-97c5-a211304de284
-            model_name:
-              type: string
-              example: necolinehubner/Qwen2.5-72B-Instruct
-            model_id:
-              type: string
-              example: model-c0e32dfc-637e-47b2-bf4e-e9b2e58c9da7
-            model_source:
-              type: string
-              example: huggingface
-        message:
-          type: string
-          example: Processing model weights. Job created.
   securitySchemes:
     bearerAuth:
       type: http

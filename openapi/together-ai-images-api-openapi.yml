@@ -143,6 +143,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ImageResponseDataUrl:
+      type: object
+      required:
+      - index
+      - url
+      - type
+      properties:
+        index:
+          type: integer
+        url:
+          type: string
+        type:
+          type: string
+          enum:
+          - url
     ImageResponseDataB64:
       type: object
       required:
@@ -181,21 +196,6 @@ components:
       - model
       - object
       - data
-    ImageResponseDataUrl:
-      type: object
-      required:
-      - index
-      - url
-      - type
-      properties:
-        index:
-          type: integer
-        url:
-          type: string
-        type:
-          type: string
-          enum:
-          - url
   securitySchemes:
     bearerAuth:
       type: http

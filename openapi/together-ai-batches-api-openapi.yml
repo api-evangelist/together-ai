@@ -270,6 +270,44 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    BatchErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+    CreateBatchRequest:
+      type: object
+      required:
+      - endpoint
+      - input_file_id
+      properties:
+        endpoint:
+          type: string
+          description: The endpoint to use for batch processing
+          example: /v1/chat/completions
+        input_file_id:
+          type: string
+          description: ID of the uploaded input file containing batch requests
+          example: file-abc123def456ghi789
+        completion_window:
+          type: string
+          description: Time window for batch completion (optional)
+          example: 24h
+        priority:
+          type: integer
+          description: Priority for batch processing (optional)
+          example: 1
+        model_id:
+          type: string
+          description: Model to use for processing batch requests
+          example: Qwen/Qwen3.5-9B
+    BatchJobWithWarning:
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/BatchJob'
+        warning:
+          type: string
     BatchJob:
       type: object
       properties:
@@ -333,44 +371,6 @@ components:
       - CANCELLED
       example: IN_PROGRESS
       description: Current status of the batch job
-    BatchJobWithWarning:
-      type: object
-      properties:
-        job:
-          $ref: '#/components/schemas/BatchJob'
-        warning:
-          type: string
-    BatchErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-    CreateBatchRequest:
-      type: object
-      required:
-      - endpoint
-      - input_file_id
-      properties:
-        endpoint:
-          type: string
-          description: The endpoint to use for batch processing
-          example: /v1/chat/completions
-        input_file_id:
-          type: string
-          description: ID of the uploaded input file containing batch requests
-          example: file-abc123def456ghi789
-        completion_window:
-          type: string
-          description: Time window for batch completion (optional)
-          example: 24h
-        priority:
-          type: integer
-          description: Priority for batch processing (optional)
-          example: 1
-        model_id:
-          type: string
-          description: Model to use for processing batch requests
-          example: Qwen/Qwen3.5-9B
   securitySchemes:
     bearerAuth:
       type: http

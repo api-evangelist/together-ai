@@ -316,6 +316,63 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    v1RemediationStateFilter:
+      description: 'Filter by state(s). Returns remediations matching any of the specified states.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
+      type: array
+      items:
+        type: string
+        enum:
+        - PENDING_APPROVAL
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - CANCELLED
+        - AUTO_RESOLVED
+    protobufAny:
+      type: object
+      description: '`Any` contains an arbitrary serialized protocol buffer message along with a
+
+        URL that describes the type of the serialized message.
+
+
+        Protobuf library provides support to pack/unpack Any values in the form
+
+        of utility functions or additional generated methods of the Any type.
+
+        '
+      properties:
+        '@type':
+          type: string
+          description: 'A URL/resource name that uniquely identifies the type of the serialized
+
+            protocol buffer message. This string must contain at least
+
+            one "/" character. The last segment of the URL''s path must represent
+
+            the fully qualified name of the type (as in
+
+            `path/google.protobuf.Duration`). The name should be in a canonical form
+
+            (e.g., leading "." is not accepted).
+
+            '
+      additionalProperties: true
     v1ListRemediationsResponse:
       type: object
       description: ListRemediationsResponse is the response for ListRemediations.
@@ -334,6 +391,12 @@ components:
         has_next:
           type: boolean
           description: Indicates if there are more results available.
+    CommentBody:
+      type: object
+      properties:
+        comment:
+          type: string
+          description: Comment explaining the action.
     v1RemediationState:
       type: string
       enum:
@@ -411,69 +474,6 @@ components:
             message types for APIs to use.
 
             '
-    CommentBody:
-      type: object
-      properties:
-        comment:
-          type: string
-          description: Comment explaining the action.
-    protobufAny:
-      type: object
-      description: '`Any` contains an arbitrary serialized protocol buffer message along with a
-
-        URL that describes the type of the serialized message.
-
-
-        Protobuf library provides support to pack/unpack Any values in the form
-
-        of utility functions or additional generated methods of the Any type.
-
-        '
-      properties:
-        '@type':
-          type: string
-          description: 'A URL/resource name that uniquely identifies the type of the serialized
-
-            protocol buffer message. This string must contain at least
-
-            one "/" character. The last segment of the URL''s path must represent
-
-            the fully qualified name of the type (as in
-
-            `path/google.protobuf.Duration`). The name should be in a canonical form
-
-            (e.g., leading "." is not accepted).
-
-            '
-      additionalProperties: true
-    v1RemediationStateFilter:
-      description: 'Filter by state(s). Returns remediations matching any of the specified states.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
-      type: array
-      items:
-        type: string
-        enum:
-        - PENDING_APPROVAL
-        - PENDING
-        - RUNNING
-        - SUCCEEDED
-        - FAILED
-        - CANCELLED
-        - AUTO_RESOLVED
     v1RemediationMode:
       type: string
       enum:

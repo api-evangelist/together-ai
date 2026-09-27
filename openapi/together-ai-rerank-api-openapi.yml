@@ -175,6 +175,20 @@ components:
           required:
           - type
           - message
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
     RerankResponse:
       type: object
       required:
@@ -227,20 +241,6 @@ components:
             prompt_tokens: 1837
             completion_tokens: 0
             total_tokens: 1837
-    UsageData:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
   securitySchemes:
     bearerAuth:
       type: http
