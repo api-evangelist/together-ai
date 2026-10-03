@@ -143,6 +143,29 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ImageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          description: The object type, which is always `list`.
+          const: list
+        data:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ImageResponseDataB64'
+            - $ref: '#/components/schemas/ImageResponseDataUrl'
+            discriminator:
+              propertyName: type
+      required:
+      - id
+      - model
+      - object
+      - data
     ImageResponseDataUrl:
       type: object
       required:
@@ -173,29 +196,6 @@ components:
           type: string
           enum:
           - b64_json
-    ImageResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        model:
-          type: string
-        object:
-          description: The object type, which is always `list`.
-          const: list
-        data:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ImageResponseDataB64'
-            - $ref: '#/components/schemas/ImageResponseDataUrl'
-            discriminator:
-              propertyName: type
-      required:
-      - id
-      - model
-      - object
-      - data
   securitySchemes:
     bearerAuth:
       type: http

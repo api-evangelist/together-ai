@@ -417,50 +417,6 @@ components:
         availability_zone:
           type: string
           description: Create the endpoint in a specified availability zone (e.g., us-central-4b)
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
-    Autoscaling:
-      type: object
-      description: Configuration for automatic scaling of replicas based on demand.
-      required:
-      - min_replicas
-      - max_replicas
-      properties:
-        min_replicas:
-          type: integer
-          format: int32
-          description: The minimum number of replicas to maintain, even when there is no load
-          examples:
-          - 2
-        max_replicas:
-          type: integer
-          format: int32
-          description: The maximum number of replicas to scale up to under load
-          examples:
-          - 5
     DedicatedEndpoint:
       type: object
       description: Details about a dedicated endpoint deployment
@@ -529,6 +485,50 @@ components:
           format: date-time
           description: Timestamp when the endpoint was created
           example: 2025-02-04 10:43:55.405000+00:00
+    Autoscaling:
+      type: object
+      description: Configuration for automatic scaling of replicas based on demand.
+      required:
+      - min_replicas
+      - max_replicas
+      properties:
+        min_replicas:
+          type: integer
+          format: int32
+          description: The minimum number of replicas to maintain, even when there is no load
+          examples:
+          - 2
+        max_replicas:
+          type: integer
+          format: int32
+          description: The maximum number of replicas to scale up to under load
+          examples:
+          - 5
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     ListEndpoint:
       type: object
       description: Details about an endpoint when listed via the list endpoint

@@ -94,6 +94,165 @@ paths:
       deprecated: false
 components:
   schemas:
+    ChatCompletionAssistantMessageParam:
+      type: object
+      required:
+      - role
+      properties:
+        content:
+          type: string
+          nullable: true
+        role:
+          type: string
+          enum:
+          - assistant
+        name:
+          type: string
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolChoice'
+        function_call:
+          type: object
+          deprecated: true
+          properties:
+            arguments:
+              type: string
+            name:
+              type: string
+          required:
+          - arguments
+          - name
+    ToolsPart:
+      type: object
+      properties:
+        type:
+          type: string
+          example: tool_type
+        function:
+          type: object
+          properties:
+            description:
+              type: string
+              example: A description of the function.
+            name:
+              type: string
+              example: function_name
+            parameters:
+              type: object
+              additionalProperties: true
+              description: A map of parameter names to their values.
+    ChatCompletionSystemMessageParam:
+      type: object
+      required:
+      - content
+      - role
+      properties:
+        content:
+          type: string
+        role:
+          type: string
+          enum:
+          - system
+        name:
+          type: string
+    ChatCompletionEvent:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ChatCompletionChunk'
+    ResponseFormatJsonSchemaSchema:
+      type: object
+      title: JSON schema
+      description: 'The schema for the response format, described as a JSON Schema object.
+
+        Learn how to build JSON schemas [here](https://json-schema.org/).
+
+        '
+      additionalProperties: true
+    ChatCompletionUserMessageParam:
+      type: object
+      required:
+      - content
+      - role
+      properties:
+        content:
+          $ref: '#/components/schemas/ChatCompletionUserMessageContent'
+        role:
+          type: string
+          enum:
+          - user
+        name:
+          type: string
+    ResponseFormatJsonSchema:
+      type: object
+      title: JSON schema
+      description: 'JSON Schema response format. Used to generate structured JSON responses.
+
+        Learn more about [Structured Outputs](https://docs.together.ai/docs/json-mode).
+
+        '
+      properties:
+        type:
+          type: string
+          description: The type of response format being defined. Always `json_schema`.
+          enum:
+          - json_schema
+          x-stainless-const: true
+        json_schema:
+          type: object
+          title: JSON schema
+          description: 'Structured Outputs configuration options, including a JSON Schema.
+
+            '
+          properties:
+            description:
+              type: string
+              description: 'A description of what the response format is for, used by the model to
+
+                determine how to respond in the format.
+
+                '
+            name:
+              type: string
+              description: 'The name of the response format. Must be a-z, A-Z, 0-9, or contain
+
+                underscores and dashes, with a maximum length of 64.
+
+                '
+            schema:
+              $ref: '#/components/schemas/ResponseFormatJsonSchemaSchema'
+            strict:
+              anyOf:
+              - type: boolean
+                default: false
+                description: 'Whether to enable strict schema adherence when generating the output.
+
+                  If set to true, the model will always follow the exact schema defined
+
+                  in the `schema` field. Only a subset of JSON Schema is supported when
+
+                  `strict` is `true`. To learn more, read the [Structured Outputs
+
+                  guide](https://docs.together.ai/docs/json-mode).
+
+                  '
+              - type: 'null'
+          required:
+          - name
+      required:
+      - type
+      - json_schema
+    FinishReason:
+      type: string
+      enum:
+      - stop
+      - eos
+      - length
+      - tool_calls
+      - function_call
     ChatCompletionChunk:
       type: object
       required:
@@ -184,85 +343,91 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InferenceWarning'
-    LogprobsPart:
+    ChatCompletionToolMessageParam:
       type: object
       properties:
-        token_ids:
-          type: array
-          items:
-            type: number
-          description: List of token IDs corresponding to the logprobs
-        tokens:
-          type: array
-          items:
-            type: string
-          description: List of token strings
-        token_logprobs:
-          type: array
-          items:
-            type: number
-          description: List of token log probabilities
-        top_logprobs:
-          $ref: '#/components/schemas/TopLogprobs'
-    ChatCompletionStream:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionEvent'
-      - $ref: '#/components/schemas/StreamSentinel'
-    ChatCompletionEvent:
-      type: object
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+          - tool
+        content:
+          type: string
+        tool_call_id:
+          type: string
       required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/ChatCompletionChunk'
+      - role
+      - content
+      - tool_call_id
     TopLogprobs:
       description: Top log probabilities for the tokens.
       type: object
       additionalProperties:
         type: number
-    ToolsPart:
+    ToolChoice:
       type: object
+      required:
+      - id
+      - type
+      - function
+      - index
       properties:
+        index:
+          type: number
+        id:
+          type: string
         type:
           type: string
-          example: tool_type
+          enum:
+          - function
         function:
           type: object
+          required:
+          - name
+          - arguments
           properties:
-            description:
-              type: string
-              example: A description of the function.
             name:
               type: string
               example: function_name
-            parameters:
-              type: object
-              additionalProperties: true
-              description: A map of parameter names to their values.
-    ResponseFormatJsonObject:
+            arguments:
+              type: string
+    ChatCompletionMessage:
       type: object
-      title: JSON object
-      description: 'JSON object response format. An older method of generating JSON responses.
-
-        Using `json_schema` is recommended for models that support it. Note that the
-
-        model will not generate JSON without a system or user message instructing it
-
-        to do so.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of response format being defined. Always `json_object`.
-          enum:
-          - json_object
-          x-stainless-const: true
       required:
-      - type
-    ChatCompletionUserMessageContentString:
-      type: string
-      description: A plain text message.
+      - role
+      - content
+      properties:
+        content:
+          type: string
+          nullable: true
+        role:
+          type: string
+          enum:
+          - assistant
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolChoice'
+        function_call:
+          type: object
+          deprecated: true
+          required:
+          - arguments
+          - name
+          properties:
+            arguments:
+              type: string
+            name:
+              type: string
+        reasoning:
+          type: string
+          nullable: true
+    ChatCompletionUserMessageContent:
+      description: The content of the message, which can either be a simple string or a structured format.
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionUserMessageContentString'
+      - $ref: '#/components/schemas/ChatCompletionUserMessageContentMultimodal'
     ChatCompletionRequest:
       type: object
       required:
@@ -423,145 +588,79 @@ components:
           properties:
             enabled:
               type: boolean
-    FinishReason:
-      type: string
-      enum:
-      - stop
-      - eos
-      - length
-      - tool_calls
-      - function_call
-    ResponseFormatJsonSchema:
+    InferenceWarning:
       type: object
-      title: JSON schema
-      description: 'JSON Schema response format. Used to generate structured JSON responses.
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    StreamSentinel:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          title: stream_signal
+          type: string
+          enum:
+          - '[DONE]'
+    ResponseFormatJsonObject:
+      type: object
+      title: JSON object
+      description: 'JSON object response format. An older method of generating JSON responses.
 
-        Learn more about [Structured Outputs](https://docs.together.ai/docs/json-mode).
+        Using `json_schema` is recommended for models that support it. Note that the
+
+        model will not generate JSON without a system or user message instructing it
+
+        to do so.
 
         '
       properties:
         type:
           type: string
-          description: The type of response format being defined. Always `json_schema`.
+          description: The type of response format being defined. Always `json_object`.
           enum:
-          - json_schema
+          - json_object
           x-stainless-const: true
-        json_schema:
-          type: object
-          title: JSON schema
-          description: 'Structured Outputs configuration options, including a JSON Schema.
-
-            '
-          properties:
-            description:
-              type: string
-              description: 'A description of what the response format is for, used by the model to
-
-                determine how to respond in the format.
-
-                '
-            name:
-              type: string
-              description: 'The name of the response format. Must be a-z, A-Z, 0-9, or contain
-
-                underscores and dashes, with a maximum length of 64.
-
-                '
-            schema:
-              $ref: '#/components/schemas/ResponseFormatJsonSchemaSchema'
-            strict:
-              anyOf:
-              - type: boolean
-                default: false
-                description: 'Whether to enable strict schema adherence when generating the output.
-
-                  If set to true, the model will always follow the exact schema defined
-
-                  in the `schema` field. Only a subset of JSON Schema is supported when
-
-                  `strict` is `true`. To learn more, read the [Structured Outputs
-
-                  guide](https://docs.together.ai/docs/json-mode).
-
-                  '
-              - type: 'null'
-          required:
-          - name
       required:
       - type
-      - json_schema
-    ToolChoice:
+    LogprobsPart:
       type: object
-      required:
-      - id
-      - type
-      - function
-      - index
       properties:
-        index:
-          type: number
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          required:
-          - name
-          - arguments
-          properties:
-            name:
-              type: string
-              example: function_name
-            arguments:
-              type: string
-    ChatCompletionMessage:
-      type: object
-      required:
-      - role
-      - content
-      properties:
-        content:
-          type: string
-          nullable: true
-        role:
-          type: string
-          enum:
-          - assistant
-        tool_calls:
+        token_ids:
           type: array
           items:
-            $ref: '#/components/schemas/ToolChoice'
-        function_call:
-          type: object
-          deprecated: true
-          required:
-          - arguments
-          - name
-          properties:
-            arguments:
-              type: string
-            name:
-              type: string
-        reasoning:
-          type: string
-          nullable: true
-    ChatCompletionUserMessageParam:
+            type: number
+          description: List of token IDs corresponding to the logprobs
+        tokens:
+          type: array
+          items:
+            type: string
+          description: List of token strings
+        token_logprobs:
+          type: array
+          items:
+            type: number
+          description: List of token log probabilities
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogprobs'
+    ResponseFormatText:
       type: object
-      required:
-      - content
-      - role
+      title: Text
+      description: 'Default response format. Used to generate text responses.
+
+        '
       properties:
-        content:
-          $ref: '#/components/schemas/ChatCompletionUserMessageContent'
-        role:
+        type:
           type: string
+          description: The type of response format being defined. Always `text`.
           enum:
-          - user
-        name:
-          type: string
+          - text
+          x-stainless-const: true
+      required:
+      - type
     ErrorData:
       type: object
       required:
@@ -587,13 +686,23 @@ components:
           required:
           - type
           - message
-    InferenceWarning:
+    ChatCompletionUserMessageContentString:
+      type: string
+      description: A plain text message.
+    UsageData:
       type: object
-      required:
-      - message
       properties:
-        message:
-          type: string
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
     ChatCompletionFunctionMessageParam:
       type: object
       deprecated: true
@@ -610,6 +719,36 @@ components:
           type: string
         name:
           type: string
+    ChatCompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        choices:
+          $ref: '#/components/schemas/ChatCompletionChoicesData'
+        usage:
+          $ref: '#/components/schemas/UsageData'
+        created:
+          type: integer
+        model:
+          type: string
+        prompt:
+          description: When `echo` is true, the prompt is included in the response. Additionally, when `logprobs` is also provided, log probability information is provided on the prompt.
+          $ref: '#/components/schemas/PromptPart'
+        object:
+          description: The object type, which is always `chat.completion`.
+          const: chat.completion
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/InferenceWarning'
+      required:
+      - choices
+      - id
+      - created
+      - model
+      - object
+      - prompt
     ChatCompletionUserMessageContentMultimodal:
       type: array
       description: A structured message with mixed content types.
@@ -701,113 +840,20 @@ components:
           required:
           - type
           - input_audio
-    ChatCompletionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        choices:
-          $ref: '#/components/schemas/ChatCompletionChoicesData'
-        usage:
-          $ref: '#/components/schemas/UsageData'
-        created:
-          type: integer
-        model:
-          type: string
-        prompt:
-          description: When `echo` is true, the prompt is included in the response. Additionally, when `logprobs` is also provided, log probability information is provided on the prompt.
-          $ref: '#/components/schemas/PromptPart'
-        object:
-          description: The object type, which is always `chat.completion`.
-          const: chat.completion
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/InferenceWarning'
-      required:
-      - choices
-      - id
-      - created
-      - model
-      - object
-      - prompt
-    ResponseFormatJsonSchemaSchema:
-      type: object
-      title: JSON schema
-      description: 'The schema for the response format, described as a JSON Schema object.
-
-        Learn how to build JSON schemas [here](https://json-schema.org/).
-
-        '
-      additionalProperties: true
-    UsageData:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
-    ResponseFormatText:
-      type: object
-      title: Text
-      description: 'Default response format. Used to generate text responses.
-
-        '
-      properties:
-        type:
-          type: string
-          description: The type of response format being defined. Always `text`.
-          enum:
-          - text
-          x-stainless-const: true
-      required:
-      - type
-    StreamSentinel:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          title: stream_signal
-          type: string
-          enum:
-          - '[DONE]'
-    ChatCompletionAssistantMessageParam:
-      type: object
-      required:
-      - role
-      properties:
-        content:
-          type: string
-          nullable: true
-        role:
-          type: string
-          enum:
-          - assistant
-        name:
-          type: string
-        tool_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolChoice'
-        function_call:
-          type: object
-          deprecated: true
-          properties:
-            arguments:
-              type: string
-            name:
-              type: string
-          required:
-          - arguments
-          - name
+    ChatCompletionStream:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionEvent'
+      - $ref: '#/components/schemas/StreamSentinel'
+    PromptPart:
+      type: array
+      items:
+        type: object
+        properties:
+          text:
+            type: string
+            example: <s>[INST] What is the capital of France? [/INST]
+          logprobs:
+            $ref: '#/components/schemas/LogprobsPart'
     ChatCompletionChoicesData:
       type: array
       items:
@@ -829,20 +875,6 @@ components:
             - $ref: '#/components/schemas/LogprobsPart'
           top_logprobs:
             $ref: '#/components/schemas/TopLogprobs'
-    ChatCompletionSystemMessageParam:
-      type: object
-      required:
-      - content
-      - role
-      properties:
-        content:
-          type: string
-        role:
-          type: string
-          enum:
-          - system
-        name:
-          type: string
     ChatCompletionMessageParam:
       oneOf:
       - $ref: '#/components/schemas/ChatCompletionSystemMessageParam'
@@ -850,38 +882,6 @@ components:
       - $ref: '#/components/schemas/ChatCompletionAssistantMessageParam'
       - $ref: '#/components/schemas/ChatCompletionToolMessageParam'
       - $ref: '#/components/schemas/ChatCompletionFunctionMessageParam'
-    ChatCompletionToolMessageParam:
-      type: object
-      properties:
-        name:
-          type: string
-        role:
-          type: string
-          enum:
-          - tool
-        content:
-          type: string
-        tool_call_id:
-          type: string
-      required:
-      - role
-      - content
-      - tool_call_id
-    PromptPart:
-      type: array
-      items:
-        type: object
-        properties:
-          text:
-            type: string
-            example: <s>[INST] What is the capital of France? [/INST]
-          logprobs:
-            $ref: '#/components/schemas/LogprobsPart'
-    ChatCompletionUserMessageContent:
-      description: The content of the message, which can either be a simple string or a structured format.
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionUserMessageContentString'
-      - $ref: '#/components/schemas/ChatCompletionUserMessageContentMultimodal'
   securitySchemes:
     bearerAuth:
       type: http

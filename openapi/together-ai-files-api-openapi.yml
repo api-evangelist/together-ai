@@ -278,55 +278,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
-    FileType:
-      type: string
-      description: The type of the file
-      default: jsonl
-      example: jsonl
-      enum:
-      - csv
-      - jsonl
-      - parquet
-    FileDeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
-    FilePurpose:
-      type: string
-      description: The purpose of the file
-      example: fine-tune
-      enum:
-      - fine-tune
-      - eval
-      - batch-api
     FileResponse:
       description: Structured information describing a file uploaded to Together.
       type: object
@@ -374,6 +325,55 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FileResponse'
+    FileType:
+      type: string
+      description: The type of the file
+      default: jsonl
+      example: jsonl
+      enum:
+      - csv
+      - jsonl
+      - parquet
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    FilePurpose:
+      type: string
+      description: The purpose of the file
+      example: fine-tune
+      enum:
+      - fine-tune
+      - eval
+      - batch-api
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
   securitySchemes:
     bearerAuth:
       type: http

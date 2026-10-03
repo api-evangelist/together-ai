@@ -125,6 +125,87 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ModelInfo'
+    ModelUploadRequest:
+      type: object
+      required:
+      - model_name
+      - model_source
+      properties:
+        model_name:
+          type: string
+          description: The name to give to your uploaded model
+          example: Qwen2.5-72B-Instruct
+        model_source:
+          type: string
+          description: The source location of the model (Hugging Face repo or S3 path)
+          example: unsloth/Qwen2.5-72B-Instruct
+        model_type:
+          type: string
+          description: Whether the model is a full model or an adapter
+          default: model
+          enum:
+          - model
+          - adapter
+          example: model
+        hf_token:
+          type: string
+          description: Hugging Face token (if uploading from Hugging Face)
+          example: hf_examplehuggingfacetoken
+        description:
+          type: string
+          description: A description of your model
+          example: Finetuned Qwen2.5-72B-Instruct by Unsloth
+        base_model:
+          type: string
+          description: The base model to use for an adapter if setting it to run against a serverless pool.  Only used for model_type `adapter`.
+          example: Qwen/Qwen2.5-72B-Instruct
+        lora_model:
+          type: string
+          description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
+          example: my_username/Qwen2.5-72B-Instruct-lora
+    ModelInfo:
+      type: object
+      required:
+      - id
+      - object
+      - created
+      - type
+      properties:
+        id:
+          type: string
+          example: Austism/chronos-hermes-13b
+        object:
+          description: The object type, which is always `model`.
+          const: model
+        created:
+          type: integer
+          example: 1692896905
+        type:
+          enum:
+          - chat
+          - language
+          - code
+          - image
+          - embedding
+          - moderation
+          - rerank
+          example: chat
+        display_name:
+          type: string
+          example: Chronos Hermes (13B)
+        organization:
+          type: string
+          example: Austism
+        link:
+          type: string
+        license:
+          type: string
+          example: other
+        context_length:
+          type: integer
+          example: 2048
+        pricing:
+          $ref: '#/components/schemas/Pricing'
     ErrorData:
       type: object
       required:
@@ -177,44 +258,6 @@ components:
         cached_input:
           type: number
           example: 0.2
-    ModelUploadRequest:
-      type: object
-      required:
-      - model_name
-      - model_source
-      properties:
-        model_name:
-          type: string
-          description: The name to give to your uploaded model
-          example: Qwen2.5-72B-Instruct
-        model_source:
-          type: string
-          description: The source location of the model (Hugging Face repo or S3 path)
-          example: unsloth/Qwen2.5-72B-Instruct
-        model_type:
-          type: string
-          description: Whether the model is a full model or an adapter
-          default: model
-          enum:
-          - model
-          - adapter
-          example: model
-        hf_token:
-          type: string
-          description: Hugging Face token (if uploading from Hugging Face)
-          example: hf_examplehuggingfacetoken
-        description:
-          type: string
-          description: A description of your model
-          example: Finetuned Qwen2.5-72B-Instruct by Unsloth
-        base_model:
-          type: string
-          description: The base model to use for an adapter if setting it to run against a serverless pool.  Only used for model_type `adapter`.
-          example: Qwen/Qwen2.5-72B-Instruct
-        lora_model:
-          type: string
-          description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
-          example: my_username/Qwen2.5-72B-Instruct-lora
     ModelUploadSuccessResponse:
       type: object
       required:
@@ -244,49 +287,6 @@ components:
         message:
           type: string
           example: Processing model weights. Job created.
-    ModelInfo:
-      type: object
-      required:
-      - id
-      - object
-      - created
-      - type
-      properties:
-        id:
-          type: string
-          example: Austism/chronos-hermes-13b
-        object:
-          description: The object type, which is always `model`.
-          const: model
-        created:
-          type: integer
-          example: 1692896905
-        type:
-          enum:
-          - chat
-          - language
-          - code
-          - image
-          - embedding
-          - moderation
-          - rerank
-          example: chat
-        display_name:
-          type: string
-          example: Chronos Hermes (13B)
-        organization:
-          type: string
-          example: Austism
-        link:
-          type: string
-        license:
-          type: string
-          example: other
-        context_length:
-          type: integer
-          example: 2048
-        pricing:
-          $ref: '#/components/schemas/Pricing'
   securitySchemes:
     bearerAuth:
       type: http

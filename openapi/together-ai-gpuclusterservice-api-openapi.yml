@@ -366,15 +366,6 @@ paths:
       x-operation-id-original: GPUClusterService_List
 components:
   schemas:
-    GPUClusters:
-      type: object
-      required:
-      - clusters
-      properties:
-        clusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/GPUClusterInfo'
     GPUClusterControlPlaneNode:
       type: object
       required:
@@ -500,37 +491,15 @@ components:
         slurm_image:
           type: string
           description: Custom Slurm image for Slurm clusters.
-    GPUClustersSharedVolumeCreateRequest:
+    GPUClusters:
       type: object
       required:
-      - volume_name
-      - size_tib
-      - region
+      - clusters
       properties:
-        volume_name:
-          description: Customizable name of the volume to create.
-          type: string
-        size_tib:
-          description: Volume size in whole tebibytes (TiB).
-          type: integer
-        region:
-          type: string
-          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
-    GPUClusterUpdateRequest:
-      type: object
-      properties:
-        cluster_type:
-          description: Type of cluster to update.
-          enum:
-          - KUBERNETES
-          - SLURM
-        num_gpus:
-          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
-          type: integer
-        reservation_end_time:
-          type: string
-          description: Timestamp at which the cluster should be decommissioned. Only accepted for prepaid clusters.
-          format: date-time
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterInfo'
     GPUClusterVolume:
       type: object
       required:
@@ -547,38 +516,37 @@ components:
           type: integer
         status:
           type: string
-    GPUClusterGPUWorkerNode:
+    GPUClusterUpdateRequest:
+      type: object
+      properties:
+        cluster_type:
+          description: Type of cluster to update.
+          enum:
+          - KUBERNETES
+          - SLURM
+        num_gpus:
+          description: Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+          type: integer
+        reservation_end_time:
+          type: string
+          description: Timestamp at which the cluster should be decommissioned. Only accepted for prepaid clusters.
+          format: date-time
+    GPUClustersSharedVolumeCreateRequest:
       type: object
       required:
-      - node_id
-      - node_name
-      - status
-      - host_name
-      - num_cpu_cores
-      - num_gpus
-      - memory_gib
-      - networks
+      - volume_name
+      - size_tib
+      - region
       properties:
-        node_id:
+        volume_name:
+          description: Customizable name of the volume to create.
           type: string
-        node_name:
-          type: string
-        status:
-          type: string
-        host_name:
-          type: string
-        num_cpu_cores:
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
           type: integer
-        num_gpus:
-          type: integer
-        memory_gib:
-          type: number
-        networks:
-          type: array
-          items:
-            type: string
-        instance_id:
+        region:
           type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
     GPUClusterInfo:
       type: object
       required:
@@ -666,13 +634,59 @@ components:
         created_at:
           type: string
           format: date-time
-    GPUClusters_2:
+    GPUClusterGPUWorkerNode:
       type: object
+      required:
+      - node_id
+      - node_name
+      - status
+      - host_name
+      - num_cpu_cores
+      - num_gpus
+      - memory_gib
+      - networks
       properties:
-        clusters:
+        node_id:
+          type: string
+        node_name:
+          type: string
+        status:
+          type: string
+        host_name:
+          type: string
+        num_cpu_cores:
+          type: integer
+        num_gpus:
+          type: integer
+        memory_gib:
+          type: number
+        networks:
           type: array
           items:
-            $ref: '#/components/schemas/GPUClusterInfo_2'
+            type: string
+        instance_id:
+          type: string
+    GPUCLusterDeleteResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+    GPUClusterUpdateResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
+          type: string
+          format: enum
     GPUClusterControlPlaneNode_2:
       type: object
       properties:
@@ -756,6 +770,52 @@ components:
           type: string
           format: enum
       description: GPU Cluster create request
+    GPUClusterCreateResponse:
+      type: object
+      properties:
+        cluster_id:
+          type: string
+        status:
+          enum:
+          - UNKNOWN_STATUS
+          - PENDING
+          - QUEUED
+          - WAITING_CONTROL_PLANE
+          - WAITING_DATA_PLANE
+          - READY
+          - FAILED
+          type: string
+          format: enum
+    GPUClusters_2:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/GPUClusterInfo_2'
+    GPUClusterVolume_2:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+        status:
+          type: string
+    SharedVolumeCreateRequest:
+      type: object
+      properties:
+        volume_name:
+          type: string
+        size_tib:
+          type: integer
+          description: Volume size in whole tebibytes (TiB).
+          format: uint32
+        region:
+          type: string
     GPUClusterUpdateRequest_2:
       type: object
       properties:
@@ -771,23 +831,6 @@ components:
         num_gpus:
           type: integer
           format: uint32
-    GPUClusterVolume_2:
-      type: object
-      properties:
-        volume_id:
-          type: string
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          format: uint32
-        status:
-          type: string
-    GPUCLusterDeleteResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
     GPUClusterGPUWorkerNode_2:
       type: object
       properties:
@@ -812,33 +855,6 @@ components:
           type: array
           items:
             type: string
-    GPUClusterUpdateResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        status:
-          enum:
-          - UNKNOWN_STATUS
-          - PENDING
-          - QUEUED
-          - WAITING_CONTROL_PLANE
-          - WAITING_DATA_PLANE
-          - READY
-          - FAILED
-          type: string
-          format: enum
-    SharedVolumeCreateRequest:
-      type: object
-      properties:
-        volume_name:
-          type: string
-        size_tib:
-          type: integer
-          description: Volume size in whole tebibytes (TiB).
-          format: uint32
-        region:
-          type: string
     GPUClusterInfo_2:
       type: object
       properties:
@@ -894,22 +910,6 @@ components:
         num_gpus:
           type: integer
           format: int32
-    GPUClusterCreateResponse:
-      type: object
-      properties:
-        cluster_id:
-          type: string
-        status:
-          enum:
-          - UNKNOWN_STATUS
-          - PENDING
-          - QUEUED
-          - WAITING_CONTROL_PLANE
-          - WAITING_DATA_PLANE
-          - READY
-          - FAILED
-          type: string
-          format: enum
   securitySchemes:
     bearerAuth:
       type: http

@@ -94,6 +94,116 @@ paths:
       deprecated: false
 components:
   schemas:
+    CompletionChoicesData:
+      type: array
+      items:
+        type: object
+        properties:
+          text:
+            type: string
+            example: The capital of France is Paris. It's located in the north-central part of the country and is one of the most populous and visited cities in the world, known for its iconic landmarks like the Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, and more. Paris is also the capital of the Île-de-France region and is a major global center for art, fashion, gastronomy, and culture.
+          seed:
+            type: integer
+          finish_reason:
+            $ref: '#/components/schemas/FinishReason'
+          logprobs:
+            $ref: '#/components/schemas/LogprobsPart'
+    CompletionToken:
+      type: object
+      required:
+      - id
+      - text
+      - logprob
+      - special
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        logprob:
+          type: number
+        special:
+          type: boolean
+    FinishReason:
+      type: string
+      enum:
+      - stop
+      - eos
+      - length
+      - tool_calls
+      - function_call
+    LogprobsPart:
+      type: object
+      properties:
+        token_ids:
+          type: array
+          items:
+            type: number
+          description: List of token IDs corresponding to the logprobs
+        tokens:
+          type: array
+          items:
+            type: string
+          description: List of token strings
+        token_logprobs:
+          type: array
+          items:
+            type: number
+          description: List of token log probabilities
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogprobs'
+    CompletionChunk:
+      type: object
+      required:
+      - id
+      - token
+      - choices
+      - usage
+      - finish_reason
+      properties:
+        id:
+          type: string
+        token:
+          $ref: '#/components/schemas/CompletionToken'
+        created:
+          type: integer
+        object:
+          description: The object type, which is always `completion.chunk`.
+          const: completion.chunk
+        choices:
+          title: CompletionChoices
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletionChoice'
+        usage:
+          allOf:
+          - $ref: '#/components/schemas/UsageData'
+          - nullable: true
+        seed:
+          type: integer
+        finish_reason:
+          allOf:
+          - $ref: '#/components/schemas/FinishReason'
+          - nullable: true
+    PromptPart:
+      type: array
+      items:
+        type: object
+        properties:
+          text:
+            type: string
+            example: <s>[INST] What is the capital of France? [/INST]
+          logprobs:
+            $ref: '#/components/schemas/LogprobsPart'
+    TopLogprobs:
+      description: Top log probabilities for the tokens.
+      type: object
+      additionalProperties:
+        type: number
+    CompletionStream:
+      oneOf:
+      - $ref: '#/components/schemas/CompletionEvent'
+      - $ref: '#/components/schemas/StreamSentinel'
     ToolChoice:
       type: object
       required:
@@ -121,40 +231,31 @@ components:
               example: function_name
             arguments:
               type: string
-    CompletionChoicesData:
-      type: array
-      items:
-        type: object
-        properties:
-          text:
-            type: string
-            example: The capital of France is Paris. It's located in the north-central part of the country and is one of the most populous and visited cities in the world, known for its iconic landmarks like the Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, and more. Paris is also the capital of the Île-de-France region and is a major global center for art, fashion, gastronomy, and culture.
-          seed:
-            type: integer
-          finish_reason:
-            $ref: '#/components/schemas/FinishReason'
-          logprobs:
-            $ref: '#/components/schemas/LogprobsPart'
-    LogprobsPart:
+    ErrorData:
       type: object
+      required:
+      - error
       properties:
-        token_ids:
-          type: array
-          items:
-            type: number
-          description: List of token IDs corresponding to the logprobs
-        tokens:
-          type: array
-          items:
-            type: string
-          description: List of token strings
-        token_logprobs:
-          type: array
-          items:
-            type: number
-          description: List of token log probabilities
-        top_logprobs:
-          $ref: '#/components/schemas/TopLogprobs'
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     CompletionResponse:
       type: object
       properties:
@@ -182,94 +283,6 @@ components:
       - prompt
       - model
       - object
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
-    CompletionToken:
-      type: object
-      required:
-      - id
-      - text
-      - logprob
-      - special
-      properties:
-        id:
-          type: integer
-        text:
-          type: string
-        logprob:
-          type: number
-        special:
-          type: boolean
-    CompletionChoice:
-      type: object
-      required:
-      - index
-      properties:
-        text:
-          type: string
-        index:
-          type: integer
-        delta:
-          title: CompletionChoiceDelta
-          type: object
-          required:
-          - role
-          properties:
-            token_id:
-              type: integer
-            role:
-              type: string
-              enum:
-              - system
-              - user
-              - assistant
-              - function
-              - tool
-            content:
-              type: string
-              nullable: true
-            reasoning:
-              type: string
-              nullable: true
-            tool_calls:
-              type: array
-              items:
-                $ref: '#/components/schemas/ToolChoice'
-            function_call:
-              type: object
-              deprecated: true
-              nullable: true
-              properties:
-                arguments:
-                  type: string
-                name:
-                  type: string
-              required:
-              - arguments
-              - name
     CompletionRequest:
       type: object
       required:
@@ -368,11 +381,6 @@ components:
           type: integer
           description: Seed value for reproducibility.
           example: 42
-    TopLogprobs:
-      description: Top log probabilities for the tokens.
-      type: object
-      additionalProperties:
-        type: number
     UsageData:
       type: object
       properties:
@@ -387,61 +395,6 @@ components:
       - completion_tokens
       - total_tokens
       nullable: true
-    CompletionChunk:
-      type: object
-      required:
-      - id
-      - token
-      - choices
-      - usage
-      - finish_reason
-      properties:
-        id:
-          type: string
-        token:
-          $ref: '#/components/schemas/CompletionToken'
-        created:
-          type: integer
-        object:
-          description: The object type, which is always `completion.chunk`.
-          const: completion.chunk
-        choices:
-          title: CompletionChoices
-          type: array
-          items:
-            $ref: '#/components/schemas/CompletionChoice'
-        usage:
-          allOf:
-          - $ref: '#/components/schemas/UsageData'
-          - nullable: true
-        seed:
-          type: integer
-        finish_reason:
-          allOf:
-          - $ref: '#/components/schemas/FinishReason'
-          - nullable: true
-    FinishReason:
-      type: string
-      enum:
-      - stop
-      - eos
-      - length
-      - tool_calls
-      - function_call
-    CompletionStream:
-      oneOf:
-      - $ref: '#/components/schemas/CompletionEvent'
-      - $ref: '#/components/schemas/StreamSentinel'
-    PromptPart:
-      type: array
-      items:
-        type: object
-        properties:
-          text:
-            type: string
-            example: <s>[INST] What is the capital of France? [/INST]
-          logprobs:
-            $ref: '#/components/schemas/LogprobsPart'
     StreamSentinel:
       type: object
       required:
@@ -459,6 +412,53 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/CompletionChunk'
+    CompletionChoice:
+      type: object
+      required:
+      - index
+      properties:
+        text:
+          type: string
+        index:
+          type: integer
+        delta:
+          title: CompletionChoiceDelta
+          type: object
+          required:
+          - role
+          properties:
+            token_id:
+              type: integer
+            role:
+              type: string
+              enum:
+              - system
+              - user
+              - assistant
+              - function
+              - tool
+            content:
+              type: string
+              nullable: true
+            reasoning:
+              type: string
+              nullable: true
+            tool_calls:
+              type: array
+              items:
+                $ref: '#/components/schemas/ToolChoice'
+            function_call:
+              type: object
+              deprecated: true
+              nullable: true
+              properties:
+                arguments:
+                  type: string
+                name:
+                  type: string
+              required:
+              - arguments
+              - name
   securitySchemes:
     bearerAuth:
       type: http
