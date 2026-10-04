@@ -86,6 +86,31 @@ paths:
                 $ref: '#/components/schemas/ErrorData'
 components:
   schemas:
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     HardwareWithStatus:
       type: object
       description: Hardware configuration details with optional availability status
@@ -170,31 +195,6 @@ components:
           - available
           - unavailable
           - insufficient
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
   securitySchemes:
     bearerAuth:
       type: http

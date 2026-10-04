@@ -205,38 +205,13 @@ paths:
       - Queue
 components:
   schemas:
-    QueueJobRequest:
+    QueueJobResponse:
       properties:
-        info:
-          description: 'Arbitrary JSON metadata stored with the job and returned in status
-
-            responses. The model and system may add or update keys during
-
-            processing.
-
-            '
-          additionalProperties: true
-          type: object
-        model:
-          description: Required model identifier
+        error:
+          $ref: '#/components/schemas/QueueError'
+        requestId:
+          description: Unique identifier for the submitted job. Use this to poll status or cancel.
           type: string
-        payload:
-          description: Freeform model input. Passed unchanged to the model. Contents are model-specific.
-          additionalProperties: true
-          type: object
-        priority:
-          default: 0
-          description: 'Job priority. Higher values are processed first (strict priority
-
-            ordering). Jobs with equal priority are processed in submission
-
-            order (FIFO).
-
-            '
-          type: integer
-      required:
-      - model
-      - payload
       type: object
     QueueCancelRequest:
       properties:
@@ -325,44 +300,38 @@ components:
             type: string
           type: array
       type: object
-    QueueError:
+    QueueJobRequest:
       properties:
-        code:
-          description: Machine-readable error code
+        info:
+          description: 'Arbitrary JSON metadata stored with the job and returned in status
+
+            responses. The model and system may add or update keys during
+
+            processing.
+
+            '
+          additionalProperties: true
+          type: object
+        model:
+          description: Required model identifier
           type: string
-        message:
-          description: Human-readable error message
-          type: string
-        param:
-          description: The parameter that caused the error, if applicable
-          type: string
-        type:
-          description: Error category (e.g. "invalid_request_error", "not_found_error")
-          type: string
-      type: object
-    QueueMetricsResponse:
-      type: object
+        payload:
+          description: Freeform model input. Passed unchanged to the model. Contents are model-specific.
+          additionalProperties: true
+          type: object
+        priority:
+          default: 0
+          description: 'Job priority. Higher values are processed first (strict priority
+
+            ordering). Jobs with equal priority are processed in submission
+
+            order (FIFO).
+
+            '
+          type: integer
       required:
-      - messages_running
-      - messages_waiting
-      - total_jobs
-      properties:
-        messages_running:
-          description: Number of jobs currently being processed
-          type: integer
-        messages_waiting:
-          description: Number of jobs waiting to be claimed by a worker
-          type: integer
-        total_jobs:
-          description: Total number of active jobs (waiting + running)
-          type: integer
-    QueueJobResponse:
-      properties:
-        error:
-          $ref: '#/components/schemas/QueueError'
-        requestId:
-          description: Unique identifier for the submitted job. Use this to poll status or cancel.
-          type: string
+      - model
+      - payload
       type: object
     QueueCancelResponse:
       type: object
@@ -383,6 +352,37 @@ components:
           - running
           - done
           - failed
+    QueueMetricsResponse:
+      type: object
+      required:
+      - messages_running
+      - messages_waiting
+      - total_jobs
+      properties:
+        messages_running:
+          description: Number of jobs currently being processed
+          type: integer
+        messages_waiting:
+          description: Number of jobs waiting to be claimed by a worker
+          type: integer
+        total_jobs:
+          description: Total number of active jobs (waiting + running)
+          type: integer
+    QueueError:
+      properties:
+        code:
+          description: Machine-readable error code
+          type: string
+        message:
+          description: Human-readable error message
+          type: string
+        param:
+          description: The parameter that caused the error, if applicable
+          type: string
+        type:
+          description: Error category (e.g. "invalid_request_error", "not_found_error")
+          type: string
+      type: object
   securitySchemes:
     bearerAuth:
       type: http

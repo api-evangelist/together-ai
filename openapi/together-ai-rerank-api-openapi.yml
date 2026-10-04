@@ -116,6 +116,72 @@ components:
           required:
           - type
           - message
+    RerankResponse:
+      type: object
+      required:
+      - object
+      - model
+      - results
+      properties:
+        object:
+          description: The object type, which is always `rerank`.
+          const: rerank
+        id:
+          type: string
+          description: Request ID
+          example: 9dfa1a09-5ebc-4a40-970f-586cb8f4ae47
+        model:
+          type: string
+          description: The model to be used for the rerank request.
+          example: salesforce/turboranker-0.8-3778-6328
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - index
+            - relevance_score
+            - document
+            properties:
+              index:
+                type: integer
+              relevance_score:
+                type: number
+              document:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    nullable: true
+          example:
+          - index: 0
+            relevance_score: 0.29980177813003117
+            document:
+              text: '{"title":"Llama","text":"The llama is a domesticated South American camelid, widely used as a meat and pack animal by Andean cultures since the pre-Columbian era."}'
+          - index: 2
+            relevance_score: 0.2752447527354349
+            document:
+              text: '{"title":"Guanaco","text":"The guanaco is a camelid native to South America, closely related to the llama. Guanacos are one of two wild South American camelids; the other species is the vicuña, which lives at higher elevations."}'
+        usage:
+          $ref: '#/components/schemas/UsageData'
+          example:
+            prompt_tokens: 1837
+            completion_tokens: 0
+            total_tokens: 1837
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
     RerankRequest:
       type: object
       properties:
@@ -175,72 +241,6 @@ components:
       - query
       - documents
       additionalProperties: false
-    UsageData:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
-    RerankResponse:
-      type: object
-      required:
-      - object
-      - model
-      - results
-      properties:
-        object:
-          description: The object type, which is always `rerank`.
-          const: rerank
-        id:
-          type: string
-          description: Request ID
-          example: 9dfa1a09-5ebc-4a40-970f-586cb8f4ae47
-        model:
-          type: string
-          description: The model to be used for the rerank request.
-          example: salesforce/turboranker-0.8-3778-6328
-        results:
-          type: array
-          items:
-            type: object
-            required:
-            - index
-            - relevance_score
-            - document
-            properties:
-              index:
-                type: integer
-              relevance_score:
-                type: number
-              document:
-                type: object
-                properties:
-                  text:
-                    type: string
-                    nullable: true
-          example:
-          - index: 0
-            relevance_score: 0.29980177813003117
-            document:
-              text: '{"title":"Llama","text":"The llama is a domesticated South American camelid, widely used as a meat and pack animal by Andean cultures since the pre-Columbian era."}'
-          - index: 2
-            relevance_score: 0.2752447527354349
-            document:
-              text: '{"title":"Guanaco","text":"The guanaco is a camelid native to South America, closely related to the llama. Guanacos are one of two wild South American camelids; the other species is the vicuña, which lives at higher elevations."}'
-        usage:
-          $ref: '#/components/schemas/UsageData'
-          example:
-            prompt_tokens: 1837
-            completion_tokens: 0
-            total_tokens: 1837
   securitySchemes:
     bearerAuth:
       type: http

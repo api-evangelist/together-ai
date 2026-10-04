@@ -151,56 +151,6 @@ apis:
     url: https://docs.together.ai/docs/evaluations-overview
   - type: Documentation
     url: https://docs.together.ai/docs/dedicated-endpoints-overview
-- aid: together-ai:together-ai-chat-api
-  name: Together AI Chat API
-  description: The Chat API from Together AI — 1 operation(s) for chat.
-  humanURL: https://docs.together.ai/reference/chat-completions
-  baseURL: https://api.together.ai/v1
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/together-ai-chat-api-openapi.yml
-  - type: Documentation
-    url: https://docs.together.ai/docs/chat-overview
-  - type: APIReference
-    url: https://docs.together.ai/reference/chat-completions
-  - type: AsyncAPI
-    url: asyncapi/together-ai-asyncapi.yml
-  - type: APIReference
-    url: https://docs.together.ai/reference/completions
-  - type: Documentation
-    url: https://docs.together.ai/docs/embeddings-overview
-  - type: APIReference
-    url: https://docs.together.ai/reference/embeddings
-  - type: Documentation
-    url: https://docs.together.ai/docs/rerank-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/images-overview
-  - type: APIReference
-    url: https://docs.together.ai/reference/images-generations
-  - type: Documentation
-    url: https://docs.together.ai/docs/video-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/audio-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/vision-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/fine-tuning-overview
-  - type: APIReference
-    url: https://docs.together.ai/reference/fine-tunes-create
-  - type: APIReference
-    url: https://docs.together.ai/reference/files
-  - type: APIReference
-    url: https://docs.together.ai/reference/models
-  - type: Documentation
-    url: https://docs.together.ai/docs/batch-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/code-interpreter-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/evaluations-overview
-  - type: Documentation
-    url: https://docs.together.ai/docs/dedicated-endpoints-overview
 - aid: together-ai:together-ai-code-interpreter-api
   name: Together AI Code Interpreter API
   description: The Code Interpreter API from Together AI — 2 operation(s) for code interpreter.
@@ -1428,6 +1378,56 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/together-ai-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.together.ai/docs/chat-overview
+  - type: APIReference
+    url: https://docs.together.ai/reference/chat-completions
+  - type: AsyncAPI
+    url: asyncapi/together-ai-asyncapi.yml
+  - type: APIReference
+    url: https://docs.together.ai/reference/completions
+  - type: Documentation
+    url: https://docs.together.ai/docs/embeddings-overview
+  - type: APIReference
+    url: https://docs.together.ai/reference/embeddings
+  - type: Documentation
+    url: https://docs.together.ai/docs/rerank-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/images-overview
+  - type: APIReference
+    url: https://docs.together.ai/reference/images-generations
+  - type: Documentation
+    url: https://docs.together.ai/docs/video-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/audio-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/vision-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/fine-tuning-overview
+  - type: APIReference
+    url: https://docs.together.ai/reference/fine-tunes-create
+  - type: APIReference
+    url: https://docs.together.ai/reference/files
+  - type: APIReference
+    url: https://docs.together.ai/reference/models
+  - type: Documentation
+    url: https://docs.together.ai/docs/batch-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/code-interpreter-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/evaluations-overview
+  - type: Documentation
+    url: https://docs.together.ai/docs/dedicated-endpoints-overview
+- aid: together-ai:together-ai-chat-completions-api
+  name: Together AI Chat Completions API
+  description: The Chat Completions API from Together AI — 1 operation(s) for chat completions.
+  humanURL: https://docs.together.ai/reference/chat-completions
+  baseURL: https://api.together.ai/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/together-ai-chat-completions-api-openapi.yml
   - type: Documentation
     url: https://docs.together.ai/docs/chat-overview
   - type: APIReference

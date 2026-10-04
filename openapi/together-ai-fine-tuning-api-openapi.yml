@@ -710,133 +710,118 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    LRScheduler:
+    FinetuneEventType:
+      type: string
+      enum:
+      - job_pending
+      - job_start
+      - job_stopped
+      - model_downloading
+      - model_download_complete
+      - training_data_downloading
+      - training_data_download_complete
+      - validation_data_downloading
+      - validation_data_download_complete
+      - wandb_init
+      - training_start
+      - checkpoint_save
+      - billing_limit
+      - epoch_complete
+      - training_complete
+      - model_compressing
+      - model_compression_complete
+      - model_uploading
+      - model_upload_complete
+      - job_complete
+      - job_error
+      - cancel_requested
+      - job_restarted
+      - refund
+      - warning
+    FinetuneJobStatus:
+      type: string
+      enum:
+      - pending
+      - queued
+      - running
+      - compressing
+      - uploading
+      - cancel_requested
+      - cancelled
+      - error
+      - completed
+    FinetuneDeleteResponse:
       type: object
       properties:
-        lr_scheduler_type:
+        message:
           type: string
-          enum:
-          - linear
-          - cosine
-        lr_scheduler_args:
-          oneOf:
-          - $ref: '#/components/schemas/LinearLRSchedulerArgs'
-          - $ref: '#/components/schemas/CosineLRSchedulerArgs'
+          description: Message indicating the result of the deletion
+    FinetuneListEvents:
+      type: object
       required:
-      - lr_scheduler_type
-    FineTuneModelLimits:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FineTuneEvent'
+    FineTuneEvent:
       type: object
-      description: Model limits for fine-tuning.
       required:
-      - model_name
-      - max_num_epochs
-      - max_num_evals
-      - max_learning_rate
-      - min_learning_rate
-      - supports_vision
-      - supports_tools
-      - supports_reasoning
-      - merge_output_lora
-      properties:
-        model_name:
-          type: string
-          description: The name of the model.
-        full_training:
-          type: object
-          description: Limits for full training.
-          required:
-          - max_batch_size
-          - max_batch_size_dpo
-          - min_batch_size
-          properties:
-            max_batch_size:
-              type: integer
-              description: Maximum batch size for SFT full training.
-            max_batch_size_dpo:
-              type: integer
-              description: Maximum batch size for DPO full training.
-            min_batch_size:
-              type: integer
-              description: Minimum batch size for full training.
-        lora_training:
-          type: object
-          description: Limits for LoRA training.
-          required:
-          - max_batch_size
-          - max_batch_size_dpo
-          - min_batch_size
-          - max_rank
-          - target_modules
-          properties:
-            max_batch_size:
-              type: integer
-              description: Maximum batch size for SFT LoRA training.
-            max_batch_size_dpo:
-              type: integer
-              description: Maximum batch size for DPO LoRA training.
-            min_batch_size:
-              type: integer
-              description: Minimum batch size for LoRA training.
-            max_rank:
-              type: integer
-              description: Maximum LoRA rank.
-            target_modules:
-              type: array
-              items:
-                type: string
-              description: Available target modules for LoRA.
-        max_num_epochs:
-          type: integer
-          description: Maximum number of training epochs.
-        max_num_evals:
-          type: integer
-          description: Maximum number of evaluations.
-        max_learning_rate:
-          type: number
-          description: Maximum learning rate.
-        min_learning_rate:
-          type: number
-          description: Minimum learning rate.
-        supports_vision:
-          type: boolean
-          description: Whether the model supports vision/multimodal inputs.
-        supports_tools:
-          type: boolean
-          description: Whether the model supports tool/function calling.
-        supports_reasoning:
-          type: boolean
-          description: Whether the model supports reasoning.
-        merge_output_lora:
-          type: boolean
-          description: Whether to merge the output LoRA.
-    MultimodalParams:
-      type: object
-      properties:
-        train_vision:
-          type: boolean
-          description: Whether to train the vision encoder of the model. Only available for multimodal models.
-    LoRATrainingType:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Lora
-        lora_r:
-          type: integer
-        lora_alpha:
-          type: integer
-        lora_dropout:
-          type: number
-          format: float
-          default: 0
-        lora_trainable_modules:
-          type: string
-          default: all-linear
-      required:
+      - object
+      - created_at
+      - message
       - type
-      - lora_r
-      - lora_alpha
+      - param_count
+      - token_count
+      - total_steps
+      - wandb_url
+      - step
+      - checkpoint_path
+      - model_path
+      - training_offset
+      - hash
+      properties:
+        object:
+          description: The object type, which is always `fine-tune-event`.
+          const: fine-tune-event
+        created_at:
+          type: string
+        level:
+          anyOf:
+          - $ref: '#/components/schemas/FinetuneEventLevels'
+        message:
+          type: string
+        type:
+          $ref: '#/components/schemas/FinetuneEventType'
+        param_count:
+          type: integer
+        token_count:
+          type: integer
+        total_steps:
+          type: integer
+        wandb_url:
+          type: string
+        step:
+          type: integer
+        checkpoint_path:
+          type: string
+        model_path:
+          type: string
+        training_offset:
+          type: integer
+        hash:
+          type: string
+    FinetuneEventLevels:
+      type: string
+      enum:
+      - null
+      - info
+      - warning
+      - error
+      - legacy_info
+      - legacy_iwarning
+      - legacy_ierror
     FinetuneResponseTruncated:
       type: object
       description: A truncated version of the fine-tune response, used for POST /fine-tunes, GET /fine-tunes and POST /fine-tunes/{id}/cancel endpoints
@@ -980,34 +965,39 @@ components:
         progress:
           $ref: '#/components/schemas/FineTuneProgress'
           description: Progress information for the fine-tuning job
-    FinetuneEventType:
-      type: string
-      enum:
-      - job_pending
-      - job_start
-      - job_stopped
-      - model_downloading
-      - model_download_complete
-      - training_data_downloading
-      - training_data_download_complete
-      - validation_data_downloading
-      - validation_data_download_complete
-      - wandb_init
-      - training_start
-      - checkpoint_save
-      - billing_limit
-      - epoch_complete
-      - training_complete
-      - model_compressing
-      - model_compression_complete
-      - model_uploading
-      - model_upload_complete
-      - job_complete
-      - job_error
-      - cancel_requested
-      - job_restarted
-      - refund
-      - warning
+    MultimodalParams:
+      type: object
+      properties:
+        train_vision:
+          type: boolean
+          description: Whether to train the vision encoder of the model. Only available for multimodal models.
+    TrainingMethodDPO:
+      type: object
+      properties:
+        method:
+          type: string
+          enum:
+          - dpo
+        dpo_beta:
+          type: number
+          format: float
+          default: 0.1
+        rpo_alpha:
+          type: number
+          format: float
+          default: 0
+        dpo_normalize_logratios_by_length:
+          type: boolean
+          default: false
+        dpo_reference_free:
+          type: boolean
+          default: false
+        simpo_gamma:
+          type: number
+          format: float
+          default: 0
+      required:
+      - method
     FineTuneProgress:
       type: object
       description: Progress information for a fine-tuning job
@@ -1021,26 +1011,23 @@ components:
         seconds_remaining:
           type: integer
           description: Estimated time remaining in seconds for the fine-tuning job to next state
-    TrainingMethodSFT:
+    FineTuneCheckpoint:
       type: object
-      properties:
-        method:
-          type: string
-          enum:
-          - sft
-        train_on_inputs:
-          oneOf:
-          - type: boolean
-          - type: string
-            enum:
-            - auto
-          type: boolean
-          default: auto
-          description: Whether to mask the user messages in conversational data or prompts in instruction data.
       required:
-      - method
-      - train_on_inputs
-    LinearLRSchedulerArgs:
+      - step
+      - path
+      - created_at
+      - checkpoint_type
+      properties:
+        step:
+          type: integer
+        created_at:
+          type: string
+        path:
+          type: string
+        checkpoint_type:
+          type: string
+    CosineLRSchedulerArgs:
       type: object
       properties:
         min_lr_ratio:
@@ -1048,16 +1035,15 @@ components:
           format: float
           default: 0
           description: The ratio of the final learning rate to the peak learning rate
-    FullTrainingType:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Full
+        num_cycles:
+          type: number
+          format: float
+          default: 0.5
+          description: Number or fraction of cycles for the cosine learning rate scheduler
       required:
-      - type
-    FinetuneTruncatedList:
+      - min_lr_ratio
+      - num_cycles
+    FinetuneListCheckpoints:
       type: object
       required:
       - data
@@ -1065,7 +1051,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/FinetuneResponseTruncated'
+            $ref: '#/components/schemas/FineTuneCheckpoint'
     FinetuneResponse:
       type: object
       required:
@@ -1175,17 +1161,7 @@ components:
           type: string
         progress:
           $ref: '#/components/schemas/FineTuneProgress'
-    FinetuneEventLevels:
-      type: string
-      enum:
-      - null
-      - info
-      - warning
-      - error
-      - legacy_info
-      - legacy_iwarning
-      - legacy_ierror
-    FinetuneListEvents:
+    FinetuneTruncatedList:
       type: object
       required:
       - data
@@ -1193,44 +1169,16 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/FineTuneEvent'
-    CosineLRSchedulerArgs:
+            $ref: '#/components/schemas/FinetuneResponseTruncated'
+    FullTrainingType:
       type: object
       properties:
-        min_lr_ratio:
-          type: number
-          format: float
-          default: 0
-          description: The ratio of the final learning rate to the peak learning rate
-        num_cycles:
-          type: number
-          format: float
-          default: 0.5
-          description: Number or fraction of cycles for the cosine learning rate scheduler
+        type:
+          type: string
+          enum:
+          - Full
       required:
-      - min_lr_ratio
-      - num_cycles
-    FinetuneJobStatus:
-      type: string
-      enum:
-      - pending
-      - queued
-      - running
-      - compressing
-      - uploading
-      - cancel_requested
-      - cancelled
-      - error
-      - completed
-    FinetuneListCheckpoints:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FineTuneCheckpoint'
+      - type
     ErrorData:
       type: object
       required:
@@ -1256,102 +1204,154 @@ components:
           required:
           - type
           - message
-    TrainingMethodDPO:
+    LoRATrainingType:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Lora
+        lora_r:
+          type: integer
+        lora_alpha:
+          type: integer
+        lora_dropout:
+          type: number
+          format: float
+          default: 0
+        lora_trainable_modules:
+          type: string
+          default: all-linear
+      required:
+      - type
+      - lora_r
+      - lora_alpha
+    TrainingMethodSFT:
       type: object
       properties:
         method:
           type: string
           enum:
-          - dpo
-        dpo_beta:
-          type: number
-          format: float
-          default: 0.1
-        rpo_alpha:
-          type: number
-          format: float
-          default: 0
-        dpo_normalize_logratios_by_length:
+          - sft
+        train_on_inputs:
+          oneOf:
+          - type: boolean
+          - type: string
+            enum:
+            - auto
           type: boolean
-          default: false
-        dpo_reference_free:
-          type: boolean
-          default: false
-        simpo_gamma:
-          type: number
-          format: float
-          default: 0
+          default: auto
+          description: Whether to mask the user messages in conversational data or prompts in instruction data.
       required:
       - method
-    FinetuneDeleteResponse:
+      - train_on_inputs
+    FineTuneModelLimits:
       type: object
-      properties:
-        message:
-          type: string
-          description: Message indicating the result of the deletion
-    FineTuneEvent:
-      type: object
+      description: Model limits for fine-tuning.
       required:
-      - object
-      - created_at
-      - message
-      - type
-      - param_count
-      - token_count
-      - total_steps
-      - wandb_url
-      - step
-      - checkpoint_path
-      - model_path
-      - training_offset
-      - hash
+      - model_name
+      - max_num_epochs
+      - max_num_evals
+      - max_learning_rate
+      - min_learning_rate
+      - supports_vision
+      - supports_tools
+      - supports_reasoning
+      - merge_output_lora
       properties:
-        object:
-          description: The object type, which is always `fine-tune-event`.
-          const: fine-tune-event
-        created_at:
+        model_name:
           type: string
-        level:
-          anyOf:
-          - $ref: '#/components/schemas/FinetuneEventLevels'
-        message:
-          type: string
-        type:
-          $ref: '#/components/schemas/FinetuneEventType'
-        param_count:
+          description: The name of the model.
+        full_training:
+          type: object
+          description: Limits for full training.
+          required:
+          - max_batch_size
+          - max_batch_size_dpo
+          - min_batch_size
+          properties:
+            max_batch_size:
+              type: integer
+              description: Maximum batch size for SFT full training.
+            max_batch_size_dpo:
+              type: integer
+              description: Maximum batch size for DPO full training.
+            min_batch_size:
+              type: integer
+              description: Minimum batch size for full training.
+        lora_training:
+          type: object
+          description: Limits for LoRA training.
+          required:
+          - max_batch_size
+          - max_batch_size_dpo
+          - min_batch_size
+          - max_rank
+          - target_modules
+          properties:
+            max_batch_size:
+              type: integer
+              description: Maximum batch size for SFT LoRA training.
+            max_batch_size_dpo:
+              type: integer
+              description: Maximum batch size for DPO LoRA training.
+            min_batch_size:
+              type: integer
+              description: Minimum batch size for LoRA training.
+            max_rank:
+              type: integer
+              description: Maximum LoRA rank.
+            target_modules:
+              type: array
+              items:
+                type: string
+              description: Available target modules for LoRA.
+        max_num_epochs:
           type: integer
-        token_count:
+          description: Maximum number of training epochs.
+        max_num_evals:
           type: integer
-        total_steps:
-          type: integer
-        wandb_url:
-          type: string
-        step:
-          type: integer
-        checkpoint_path:
-          type: string
-        model_path:
-          type: string
-        training_offset:
-          type: integer
-        hash:
-          type: string
-    FineTuneCheckpoint:
+          description: Maximum number of evaluations.
+        max_learning_rate:
+          type: number
+          description: Maximum learning rate.
+        min_learning_rate:
+          type: number
+          description: Minimum learning rate.
+        supports_vision:
+          type: boolean
+          description: Whether the model supports vision/multimodal inputs.
+        supports_tools:
+          type: boolean
+          description: Whether the model supports tool/function calling.
+        supports_reasoning:
+          type: boolean
+          description: Whether the model supports reasoning.
+        merge_output_lora:
+          type: boolean
+          description: Whether to merge the output LoRA.
+    LRScheduler:
       type: object
-      required:
-      - step
-      - path
-      - created_at
-      - checkpoint_type
       properties:
-        step:
-          type: integer
-        created_at:
+        lr_scheduler_type:
           type: string
-        path:
-          type: string
-        checkpoint_type:
-          type: string
+          enum:
+          - linear
+          - cosine
+        lr_scheduler_args:
+          oneOf:
+          - $ref: '#/components/schemas/LinearLRSchedulerArgs'
+          - $ref: '#/components/schemas/CosineLRSchedulerArgs'
+      required:
+      - lr_scheduler_type
+    LinearLRSchedulerArgs:
+      type: object
+      properties:
+        min_lr_ratio:
+          type: number
+          format: float
+          default: 0
+          description: The ratio of the final learning rate to the peak learning rate
   securitySchemes:
     bearerAuth:
       type: http

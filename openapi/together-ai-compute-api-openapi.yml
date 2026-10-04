@@ -316,89 +316,37 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CommentBody:
+    v1ListRemediationsResponse:
       type: object
-      properties:
-        comment:
-          type: string
-          description: Comment explaining the action.
-    v1RemediationState:
-      type: string
-      enum:
-      - PENDING_APPROVAL
-      - PENDING
-      - RUNNING
-      - SUCCEEDED
-      - FAILED
-      - CANCELLED
-      - AUTO_RESOLVED
-      description: 'RemediationState represents the lifecycle state of a remediation.
-
-
-        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
-
-        - `PENDING`: Approved and queued for processing.
-
-        - `RUNNING`: Actively being processed.
-
-        - `SUCCEEDED`: Successfully completed.
-
-        - `FAILED`: Failed with an error.
-
-        - `CANCELLED`: Cancelled by user or system.
-
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
-
-        '
-    rpcStatus:
-      type: object
+      description: ListRemediationsResponse is the response for ListRemediations.
       required:
-      - code
-      - message
-      - details
-      description: 'The `Status` type defines a logical error model that is suitable for
-
-        different programming environments, including REST APIs and RPC APIs. It is
-
-        used by [gRPC](https://github.com/grpc). Each `Status` message contains
-
-        three pieces of data: error code, error message, and error details.
-
-
-        You can find out more about this error model and how to work with it in the
-
-        [API Design Guide](https://cloud.google.com/apis/design/errors).
-
-        '
+      - remediations
+      - has_next
       properties:
-        code:
-          type: integer
-          format: int32
-          description: 'The status code, which should be an enum value of
-
-            [google.rpc.Code][google.rpc.Code].
-
-            '
-        message:
-          type: string
-          description: 'A developer-facing error message, which should be in English. Any
-
-            user-facing error message should be localized and sent in the
-
-            [google.rpc.Status.details][google.rpc.Status.details] field, or localized
-
-            by the client.
-
-            '
-        details:
+        remediations:
           type: array
           items:
-            $ref: '#/components/schemas/protobufAny'
-          description: 'A list of messages that carry the error details.  There is a common set of
+            $ref: '#/components/schemas/v1Remediation'
+          description: The list of remediations.
+        next_page_token:
+          type: string
+          description: Token for the next page.
+        has_next:
+          type: boolean
+          description: Indicates if there are more results available.
+    v1RemediationTrigger:
+      type: string
+      enum:
+      - REMEDIATION_TRIGGER_MANUAL
+      - REMEDIATION_TRIGGER_AUTOMATED
+      description: 'RemediationTrigger specifies how the remediation was triggered.
 
-            message types for APIs to use.
 
-            '
+        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
+
+        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
+
+        '
     v1Remediation:
       type: object
       required:
@@ -478,24 +426,102 @@ components:
           format: date-time
           description: When the remediation was last updated.
           readOnly: true
-    v1ListRemediationsResponse:
+    v1RemediationMode:
+      type: string
+      enum:
+      - REMEDIATION_MODE_VM_ONLY
+      - REMEDIATION_MODE_HOST_AWARE
+      description: 'Remediation mode specifies how the remediation should be performed.
+
+
+        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
+
+        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+
+        '
+    CommentBody:
       type: object
-      description: ListRemediationsResponse is the response for ListRemediations.
-      required:
-      - remediations
-      - has_next
       properties:
-        remediations:
+        comment:
+          type: string
+          description: Comment explaining the action.
+    rpcStatus:
+      type: object
+      required:
+      - code
+      - message
+      - details
+      description: 'The `Status` type defines a logical error model that is suitable for
+
+        different programming environments, including REST APIs and RPC APIs. It is
+
+        used by [gRPC](https://github.com/grpc). Each `Status` message contains
+
+        three pieces of data: error code, error message, and error details.
+
+
+        You can find out more about this error model and how to work with it in the
+
+        [API Design Guide](https://cloud.google.com/apis/design/errors).
+
+        '
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'The status code, which should be an enum value of
+
+            [google.rpc.Code][google.rpc.Code].
+
+            '
+        message:
+          type: string
+          description: 'A developer-facing error message, which should be in English. Any
+
+            user-facing error message should be localized and sent in the
+
+            [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+
+            by the client.
+
+            '
+        details:
           type: array
           items:
-            $ref: '#/components/schemas/v1Remediation'
-          description: The list of remediations.
-        next_page_token:
-          type: string
-          description: Token for the next page.
-        has_next:
-          type: boolean
-          description: Indicates if there are more results available.
+            $ref: '#/components/schemas/protobufAny'
+          description: 'A list of messages that carry the error details.  There is a common set of
+
+            message types for APIs to use.
+
+            '
+    v1RemediationStateFilter:
+      description: 'Filter by state(s). Returns remediations matching any of the specified states.
+
+
+        - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
+
+        - `PENDING`: Approved and queued for processing.
+
+        - `RUNNING`: Actively being processed.
+
+        - `SUCCEEDED`: Successfully completed.
+
+        - `FAILED`: Failed with an error.
+
+        - `CANCELLED`: Cancelled by user or system.
+
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
+      type: array
+      items:
+        type: string
+        enum:
+        - PENDING_APPROVAL
+        - PENDING
+        - RUNNING
+        - SUCCEEDED
+        - FAILED
+        - CANCELLED
+        - AUTO_RESOLVED
     protobufAny:
       type: object
       description: '`Any` contains an arbitrary serialized protocol buffer message along with a
@@ -525,8 +551,17 @@ components:
 
             '
       additionalProperties: true
-    v1RemediationStateFilter:
-      description: 'Filter by state(s). Returns remediations matching any of the specified states.
+    v1RemediationState:
+      type: string
+      enum:
+      - PENDING_APPROVAL
+      - PENDING
+      - RUNNING
+      - SUCCEEDED
+      - FAILED
+      - CANCELLED
+      - AUTO_RESOLVED
+      description: 'RemediationState represents the lifecycle state of a remediation.
 
 
         - `PENDING_APPROVAL`: Awaiting approval before processing can begin.
@@ -541,42 +576,7 @@ components:
 
         - `CANCELLED`: Cancelled by user or system.
 
-        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.'
-      type: array
-      items:
-        type: string
-        enum:
-        - PENDING_APPROVAL
-        - PENDING
-        - RUNNING
-        - SUCCEEDED
-        - FAILED
-        - CANCELLED
-        - AUTO_RESOLVED
-    v1RemediationTrigger:
-      type: string
-      enum:
-      - REMEDIATION_TRIGGER_MANUAL
-      - REMEDIATION_TRIGGER_AUTOMATED
-      description: 'RemediationTrigger specifies how the remediation was triggered.
-
-
-        - `REMEDIATION_TRIGGER_MANUAL`: A user-initiated remediation (either via web UI or API call).
-
-        - `REMEDIATION_TRIGGER_AUTOMATED`: A system-initiated remediation that requires approval.
-
-        '
-    v1RemediationMode:
-      type: string
-      enum:
-      - REMEDIATION_MODE_VM_ONLY
-      - REMEDIATION_MODE_HOST_AWARE
-      description: 'Remediation mode specifies how the remediation should be performed.
-
-
-        - `REMEDIATION_MODE_VM_ONLY`: Deletes the VM and provisions a new one on any available host.
-
-        - `REMEDIATION_MODE_HOST_AWARE`: Cordons the host, deletes the VM, and provisions a new one on a different host.
+        - `AUTO_RESOLVED`: The underlying issue was automatically resolved before processing.
 
         '
   securitySchemes:
