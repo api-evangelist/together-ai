@@ -263,3 +263,65 @@ plans:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - compute
+  - negotiated
+  - object
+  - token
+  plans:
+  - name: Serverless Inference (Pay-as-you-go)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - object
+    - other
+    - token
+    periods:
+    - month
+  - name: Batch API
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Fine-Tuning
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Dedicated Inference Endpoints
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: GPU Clusters
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - per-use
+  - name: Enterprise
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
