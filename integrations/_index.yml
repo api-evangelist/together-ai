@@ -47,3 +47,36 @@
   relationship: system-coverage
   status: not-a-workflow
   arazzo: null
+- slug: together-ai-pipecat
+  label: Pipecat
+  partner: pipecat-ai
+  partner_name: Pipecat
+  type: coverage
+  channel: partner-built
+  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/together
+  source: edge
+  relationship: system-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: together-ai-llamaindex
+  label: LlamaIndex
+  partner: llamaindex
+  partner_name: LlamaIndex
+  type: coverage
+  channel: partner-built
+  evidence: https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/embeddings/llama-index-embeddings-together
+  source: edge
+  relationship: system-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: together-ai-langchain
+  label: LangChain
+  partner: langchain
+  partner_name: LangChain
+  type: coverage
+  channel: partner-built
+  evidence: https://github.com/langchain-ai/langchain-together
+  source: edge
+  relationship: system-coverage
+  status: not-a-workflow
+  arazzo: null
