@@ -47,17 +47,6 @@
   relationship: system-coverage
   status: not-a-workflow
   arazzo: null
-- slug: together-ai-pipecat
-  label: Pipecat
-  partner: pipecat-ai
-  partner_name: Pipecat
-  type: coverage
-  channel: partner-built
-  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/together
-  source: edge
-  relationship: system-coverage
-  status: not-a-workflow
-  arazzo: null
 - slug: together-ai-llamaindex
   label: LlamaIndex
   partner: llamaindex
@@ -76,6 +65,17 @@
   type: coverage
   channel: partner-built
   evidence: https://github.com/langchain-ai/langchain-together
+  source: edge
+  relationship: system-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: together-ai-pipecat
+  label: Pipecat
+  partner: pipecat-ai
+  partner_name: Pipecat
+  type: coverage
+  channel: partner-built
+  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/together
   source: edge
   relationship: system-coverage
   status: not-a-workflow

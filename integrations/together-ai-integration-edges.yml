@@ -77,27 +77,6 @@ edges:
   matched_by: verified-token-table
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
-- partner_name: Pipecat
-  partner: pipecat-ai
-  partner_match: framework
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/together
-  coverage_role:
-  - stt
-  - tts
-  framework_signals:
-    packages:
-    - together
-    roles:
-    - stt
-    - tts
-    vendor_domain: together.ai
-  matched_by: verified-domain-table
-  detected_by: sweep-voice-ai.py
-  first_seen: '2026-10-15'
 - partner_name: LlamaIndex
   partner: llamaindex
   partner_match: framework
@@ -135,6 +114,27 @@ edges:
     vendor_domain: together.ai
   matched_by: verified-domain-table
   detected_by: sweep-rag-vector.py
+  first_seen: '2026-10-15'
+- partner_name: Pipecat
+  partner: pipecat-ai
+  partner_match: framework
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services/together
+  coverage_role:
+  - stt
+  - tts
+  framework_signals:
+    packages:
+    - together
+    roles:
+    - stt
+    - tts
+    vendor_domain: together.ai
+  matched_by: verified-domain-table
+  detected_by: sweep-voice-ai.py
   first_seen: '2026-10-15'
 generated: '2026-10-13'
 method: searched
