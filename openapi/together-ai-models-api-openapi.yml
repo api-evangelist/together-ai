@@ -150,78 +150,6 @@ components:
         message:
           type: string
           example: Processing model weights. Job created.
-    ModelInfo:
-      type: object
-      required:
-      - id
-      - object
-      - created
-      - type
-      properties:
-        id:
-          type: string
-          example: Austism/chronos-hermes-13b
-        object:
-          description: The object type, which is always `model`.
-          const: model
-        created:
-          type: integer
-          example: 1692896905
-        type:
-          enum:
-          - chat
-          - language
-          - code
-          - image
-          - embedding
-          - moderation
-          - rerank
-          example: chat
-        display_name:
-          type: string
-          example: Chronos Hermes (13B)
-        organization:
-          type: string
-          example: Austism
-        link:
-          type: string
-        license:
-          type: string
-          example: other
-        context_length:
-          type: integer
-          example: 2048
-        pricing:
-          $ref: '#/components/schemas/Pricing'
-    ModelInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ModelInfo'
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
     Pricing:
       type: object
       required:
@@ -287,6 +215,78 @@ components:
           type: string
           description: The lora pool to use for an adapter if setting it to run against, say, a dedicated pool.  Only used for model_type `adapter`.
           example: my_username/Qwen2.5-72B-Instruct-lora
+    ErrorData:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
+    ModelInfo:
+      type: object
+      required:
+      - id
+      - object
+      - created
+      - type
+      properties:
+        id:
+          type: string
+          example: Austism/chronos-hermes-13b
+        object:
+          description: The object type, which is always `model`.
+          const: model
+        created:
+          type: integer
+          example: 1692896905
+        type:
+          enum:
+          - chat
+          - language
+          - code
+          - image
+          - embedding
+          - moderation
+          - rerank
+          example: chat
+        display_name:
+          type: string
+          example: Chronos Hermes (13B)
+        organization:
+          type: string
+          example: Austism
+        link:
+          type: string
+        license:
+          type: string
+          example: other
+        context_length:
+          type: integer
+          example: 2048
+        pricing:
+          $ref: '#/components/schemas/Pricing'
+    ModelInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ModelInfo'
   securitySchemes:
     bearerAuth:
       type: http

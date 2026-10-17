@@ -376,22 +376,6 @@ paths:
       x-operation-id-original: SharedVolumeService_List
 components:
   schemas:
-    GPUClustersSharedVolumeDeleteResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-    GPUClustersSharedVolumeUpdateRequest:
-      type: object
-      properties:
-        volume_id:
-          description: ID of the volume to update.
-          type: string
-        size_tib:
-          description: Size of the volume in whole tebibytes (TiB).
-          type: integer
     GPUClustersSharedVolumes:
       type: object
       required:
@@ -401,6 +385,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GPUClustersSharedVolume'
+    GPUClustersSharedVolumeCreateRequest:
+      type: object
+      required:
+      - volume_name
+      - size_tib
+      - region
+      properties:
+        volume_name:
+          description: Customizable name of the volume to create.
+          type: string
+        size_tib:
+          description: Volume size in whole tebibytes (TiB).
+          type: integer
+        region:
+          type: string
+          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
+    GPUClustersSharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          description: ID of the volume to update.
+          type: string
+        size_tib:
+          description: Size of the volume in whole tebibytes (TiB).
+          type: integer
+    GPUClustersSharedVolumeDeleteResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
     GPUClustersSharedVolume:
       type: object
       required:
@@ -425,37 +441,6 @@ components:
           - available
           - bound
           - provisioning
-    GPUClustersSharedVolumeCreateRequest:
-      type: object
-      required:
-      - volume_name
-      - size_tib
-      - region
-      properties:
-        volume_name:
-          description: Customizable name of the volume to create.
-          type: string
-        size_tib:
-          description: Volume size in whole tebibytes (TiB).
-          type: integer
-        region:
-          type: string
-          description: Region name. Usable regions can be found from `client.clusters.list_regions()`
-    SharedVolumes:
-      type: object
-      properties:
-        volumes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SharedVolumeInfo'
-    SharedVolumeUpdateRequest:
-      type: object
-      properties:
-        volume_id:
-          type: string
-        size_tib:
-          type: integer
-          format: uint32
     SharedVolumeInfo:
       type: object
       properties:
@@ -466,11 +451,6 @@ components:
         size_tib:
           type: integer
           format: uint32
-    SharedVolumeDeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     SharedVolumeCreateRequest:
       type: object
       properties:
@@ -482,11 +462,31 @@ components:
           format: uint32
         region:
           type: string
+    SharedVolumes:
+      type: object
+      properties:
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedVolumeInfo'
     SharedVolumeCreateResponse:
       type: object
       properties:
         volume_id:
           type: string
+    SharedVolumeUpdateRequest:
+      type: object
+      properties:
+        volume_id:
+          type: string
+        size_tib:
+          type: integer
+          format: uint32
+    SharedVolumeDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
   securitySchemes:
     bearerAuth:
       type: http

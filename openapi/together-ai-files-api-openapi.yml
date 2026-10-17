@@ -278,6 +278,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    FileType:
+      type: string
+      description: The type of the file
+      default: jsonl
+      example: jsonl
+      enum:
+      - csv
+      - jsonl
+      - parquet
     FilePurpose:
       type: string
       description: The purpose of the file
@@ -286,6 +295,13 @@ components:
       - fine-tune
       - eval
       - batch-api
+    FileDeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
     ErrorData:
       type: object
       required:
@@ -349,13 +365,6 @@ components:
         FileType:
           description: The type of the file such as `jsonl`, `csv`, or `parquet`.
           $ref: '#/components/schemas/FileType'
-    FileDeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        deleted:
-          type: boolean
     FileList:
       required:
       - data
@@ -365,15 +374,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FileResponse'
-    FileType:
-      type: string
-      description: The type of the file
-      default: jsonl
-      example: jsonl
-      enum:
-      - csv
-      - jsonl
-      - parquet
   securitySchemes:
     bearerAuth:
       type: http

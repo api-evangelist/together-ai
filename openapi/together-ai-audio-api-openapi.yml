@@ -484,297 +484,6 @@ paths:
           description: "Switching Protocols - WebSocket connection established successfully.\n\nError message format:\n```json\n{\n  \"type\": \"conversation.item.input_audio_transcription.failed\",\n  \"error\": {\n    \"message\": \"Error description\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"error_code\"\n  }\n}\n```\n"
 components:
   schemas:
-    AudioFileBinary:
-      type: string
-      format: binary
-      description: Audio file to transcribe
-    AudioTranscriptionRequest:
-      type: object
-      required:
-      - file
-      properties:
-        file:
-          oneOf:
-          - $ref: '#/components/schemas/AudioFileBinary'
-          - $ref: '#/components/schemas/AudioFileUrl'
-          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
-        model:
-          type: string
-          description: Model to use for transcription
-          default: openai/whisper-large-v3
-          enum:
-          - openai/whisper-large-v3
-        language:
-          type: string
-          description: Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.
-          default: en
-          example: en
-        prompt:
-          type: string
-          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
-        response_format:
-          type: string
-          description: The format of the response
-          default: json
-          enum:
-          - json
-          - verbose_json
-        temperature:
-          type: number
-          format: float
-          description: Sampling temperature between 0.0 and 1.0
-          default: 0
-          minimum: 0
-          maximum: 1
-        timestamp_granularities:
-          oneOf:
-          - type: string
-            enum:
-            - segment
-            - word
-          - type: array
-            items:
-              type: string
-              enum:
-              - segment
-              - word
-            uniqueItems: true
-            minItems: 1
-            maxItems: 2
-          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
-          default: segment
-          example:
-          - word
-          - segment
-        diarize:
-          type: boolean
-          description: "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n"
-          default: false
-        min_speakers:
-          type: integer
-          description: Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
-        max_speakers:
-          type: integer
-          description: Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
-    AudioSpeechRequest:
-      type: object
-      required:
-      - model
-      - input
-      - voice
-      properties:
-        model:
-          description: 'The name of the model to query.<br> <br> [See all of Together AI''s chat models](https://docs.together.ai/docs/serverless-models#audio-models) The current supported tts models are: - cartesia/sonic - hexgrad/Kokoro-82M - canopylabs/orpheus-3b-0.1-ft
-
-            '
-          example: canopylabs/orpheus-3b-0.1-ft
-          anyOf:
-          - type: string
-            enum:
-            - cartesia/sonic
-            - hexgrad/Kokoro-82M
-            - canopylabs/orpheus-3b-0.1-ft
-          - type: string
-        input:
-          type: string
-          description: Input text to generate the audio for
-        voice:
-          description: 'The voice to use for generating the audio. The voices supported are different for each model. For eg - for canopylabs/orpheus-3b-0.1-ft, one of the voices supported is tara, for hexgrad/Kokoro-82M, one of the voices supported is af_alloy and for cartesia/sonic, one of the voices supported is "friendly sidekick". <br> <br> You can view the voices supported for each model using the /v1/voices endpoint sending the model name as the query parameter. [View all supported voices here](https://docs.together.ai/docs/text-to-speech#supported-voices). <br> <br> `hexgrad/Kokoro-82M` additionally supports voice mixing, where two or more voices are combined into a single blended voice by joining their names with `+` (e.g. `af_bella+af_heart`). Optional per-voice weights can be provided in parentheses (e.g. `af_bella(2)+af_heart(1)`). Other models require a single voice name.
-
-            '
-          type: string
-        response_format:
-          type: string
-          description: The format of audio output. Supported formats are mp3, wav, raw if streaming is false. If streaming is true, the only supported format is raw.
-          default: wav
-          enum:
-          - mp3
-          - wav
-          - raw
-        language:
-          type: string
-          description: 'Language or locale of input text. Accepts ISO 639-1 language codes (e.g., `en`, `fr`, `es`, `zh`) as well as locale codes for region-specific variants. Locale codes must be lowercase (e.g., `zh-hk` for Cantonese).
-
-            '
-          default: en
-          example: en
-        response_encoding:
-          type: string
-          description: Audio encoding of response. Only applicable when response_format is raw or pcm. Cartesia models respect this parameter and support all values. Orpheus, Kokoro, and Minimax models always return pcm_s16le regardless of this setting.
-          default: pcm_f32le
-          enum:
-          - pcm_f32le
-          - pcm_s16le
-          - pcm_mulaw
-          - pcm_alaw
-        sample_rate:
-          type: integer
-          default: 44100
-          description: Sampling rate in Hz for the output audio. Cartesia and Minimax models respect this parameter. Orpheus and Kokoro models always output at 24000 Hz regardless of this setting.
-        bit_rate:
-          type: integer
-          description: Bitrate of the MP3 audio output in bits per second. Only applicable when response_format is mp3. Higher values produce better audio quality at larger file sizes. Default is 128000. Currently supported on Cartesia models.
-          default: 128000
-          enum:
-          - 32000
-          - 64000
-          - 96000
-          - 128000
-          - 192000
-        stream:
-          type: boolean
-          default: false
-          description: 'If true, output is streamed for several characters at a time instead of waiting for the full response. The stream terminates with `data: [DONE]`. If false, return the encoded audio as octet stream'
-        extra_params:
-          type: object
-          description: Additional model-specific parameters that fine-tune speech generation behavior.
-          properties:
-            pronunciation_dict:
-              type: array
-              items:
-                type: string
-              description: A list of pronunciation rules for specific characters or symbols. Each entry uses the format `"<source>/<replacement>"` (e.g., `["omg/oh my god"]`) to override how the model pronounces matching tokens.
-              example:
-              - omg/oh my god
-    AudioTranscriptionJsonResponse:
-      type: object
-      required:
-      - text
-      properties:
-        text:
-          type: string
-          description: The transcribed text
-          example: Hello, world!
-    AudioTranscriptionSpeakerSegment:
-      type: object
-      required:
-      - speaker_id
-      - start
-      - end
-      - words
-      - text
-      - id
-      properties:
-        speaker_id:
-          type: string
-          description: The speaker identifier
-          example: SPEAKER_00
-        start:
-          type: number
-          format: float
-          description: Start time of the speaker segment in seconds
-          example: 0
-        end:
-          type: number
-          format: float
-          description: End time of the speaker segment in seconds
-          example: 30.02
-        words:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionWord'
-          description: Array of words spoken by this speaker in this segment
-        text:
-          type: string
-          description: The full text spoken by this speaker in this segment
-          example: Hello, how are you doing today?
-        id:
-          type: integer
-          description: Unique identifier for the speaker segment
-          example: 1
-    AudioTranscriptionVerboseJsonResponse:
-      type: object
-      required:
-      - language
-      - duration
-      - text
-      - segments
-      properties:
-        language:
-          type: string
-          description: The language of the audio
-          example: english
-        duration:
-          type: number
-          format: float
-          description: The duration of the audio in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The transcribed text
-          example: Hello, world!
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSegment'
-          description: Array of transcription segments
-        words:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionWord'
-          description: Array of transcription words (only when timestamp_granularities includes 'word')
-        speaker_segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSpeakerSegment'
-          description: Array of transcription speaker segments (only when diarize is enabled)
-    AudioTranslationVerboseJsonResponse:
-      type: object
-      required:
-      - language
-      - duration
-      - text
-      - segments
-      properties:
-        language:
-          type: string
-          description: The target language of the translation
-          example: english
-        duration:
-          type: number
-          format: float
-          description: The duration of the audio in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The translated text
-          example: Hello, world!
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionSegment'
-          description: Array of translation segments
-        words:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioTranscriptionWord'
-          description: Array of translation words (only when timestamp_granularities includes 'word')
-    AudioTranscriptionSegment:
-      type: object
-      required:
-      - id
-      - start
-      - end
-      - text
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the segment
-          example: 0
-        start:
-          type: number
-          format: float
-          description: Start time of the segment in seconds
-          example: 0
-        end:
-          type: number
-          format: float
-          description: End time of the segment in seconds
-          example: 3.5
-        text:
-          type: string
-          description: The text content of the segment
-          example: Hello, world!
     AudioTranscriptionWord:
       type: object
       required:
@@ -869,30 +578,231 @@ components:
           example:
           - word
           - segment
-    AudioFileUrl:
-      type: string
-      format: uri
-      description: Public HTTPS URL to audio file
+    AudioSpeechStreamResponse:
+      oneOf:
+      - $ref: '#/components/schemas/AudioSpeechStreamEvent'
+      - $ref: '#/components/schemas/StreamSentinel'
+    StreamSentinel:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          title: stream_signal
+          type: string
+          enum:
+          - '[DONE]'
     AudioTranscriptionResponse:
       oneOf:
       - $ref: '#/components/schemas/AudioTranscriptionJsonResponse'
       - $ref: '#/components/schemas/AudioTranscriptionVerboseJsonResponse'
-    AudioSpeechStreamChunk:
+    AudioTranscriptionSpeakerSegment:
       type: object
       required:
-      - object
-      - model
-      - b64
+      - speaker_id
+      - start
+      - end
+      - words
+      - text
+      - id
       properties:
-        object:
-          description: The object type, which is always `audio.tts.chunk`.
-          const: audio.tts.chunk
+        speaker_id:
+          type: string
+          description: The speaker identifier
+          example: SPEAKER_00
+        start:
+          type: number
+          format: float
+          description: Start time of the speaker segment in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the speaker segment in seconds
+          example: 30.02
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of words spoken by this speaker in this segment
+        text:
+          type: string
+          description: The full text spoken by this speaker in this segment
+          example: Hello, how are you doing today?
+        id:
+          type: integer
+          description: Unique identifier for the speaker segment
+          example: 1
+    AudioSpeechRequest:
+      type: object
+      required:
+      - model
+      - input
+      - voice
+      properties:
+        model:
+          description: 'The name of the model to query.<br> <br> [See all of Together AI''s chat models](https://docs.together.ai/docs/serverless-models#audio-models) The current supported tts models are: - cartesia/sonic - hexgrad/Kokoro-82M - canopylabs/orpheus-3b-0.1-ft
+
+            '
+          example: canopylabs/orpheus-3b-0.1-ft
+          anyOf:
+          - type: string
+            enum:
+            - cartesia/sonic
+            - hexgrad/Kokoro-82M
+            - canopylabs/orpheus-3b-0.1-ft
+          - type: string
+        input:
+          type: string
+          description: Input text to generate the audio for
+        voice:
+          description: 'The voice to use for generating the audio. The voices supported are different for each model. For eg - for canopylabs/orpheus-3b-0.1-ft, one of the voices supported is tara, for hexgrad/Kokoro-82M, one of the voices supported is af_alloy and for cartesia/sonic, one of the voices supported is "friendly sidekick". <br> <br> You can view the voices supported for each model using the /v1/voices endpoint sending the model name as the query parameter. [View all supported voices here](https://docs.together.ai/docs/text-to-speech#supported-voices). <br> <br> `hexgrad/Kokoro-82M` additionally supports voice mixing, where two or more voices are combined into a single blended voice by joining their names with `+` (e.g. `af_bella+af_heart`). Optional per-voice weights can be provided in parentheses (e.g. `af_bella(2)+af_heart(1)`). Other models require a single voice name.
+
+            '
+          type: string
+        response_format:
+          type: string
+          description: The format of audio output. Supported formats are mp3, wav, raw if streaming is false. If streaming is true, the only supported format is raw.
+          default: wav
+          enum:
+          - mp3
+          - wav
+          - raw
+        language:
+          type: string
+          description: 'Language or locale of input text. Accepts ISO 639-1 language codes (e.g., `en`, `fr`, `es`, `zh`) as well as locale codes for region-specific variants. Locale codes must be lowercase (e.g., `zh-hk` for Cantonese).
+
+            '
+          default: en
+          example: en
+        response_encoding:
+          type: string
+          description: Audio encoding of response. Only applicable when response_format is raw or pcm. Cartesia models respect this parameter and support all values. Orpheus, Kokoro, and Minimax models always return pcm_s16le regardless of this setting.
+          default: pcm_f32le
+          enum:
+          - pcm_f32le
+          - pcm_s16le
+          - pcm_mulaw
+          - pcm_alaw
+        sample_rate:
+          type: integer
+          default: 44100
+          description: Sampling rate in Hz for the output audio. Cartesia and Minimax models respect this parameter. Orpheus and Kokoro models always output at 24000 Hz regardless of this setting.
+        bit_rate:
+          type: integer
+          description: Bitrate of the MP3 audio output in bits per second. Only applicable when response_format is mp3. Higher values produce better audio quality at larger file sizes. Default is 128000. Currently supported on Cartesia models.
+          default: 128000
+          enum:
+          - 32000
+          - 64000
+          - 96000
+          - 128000
+          - 192000
+        stream:
+          type: boolean
+          default: false
+          description: 'If true, output is streamed for several characters at a time instead of waiting for the full response. The stream terminates with `data: [DONE]`. If false, return the encoded audio as octet stream'
+        extra_params:
+          type: object
+          description: Additional model-specific parameters that fine-tune speech generation behavior.
+          properties:
+            pronunciation_dict:
+              type: array
+              items:
+                type: string
+              description: A list of pronunciation rules for specific characters or symbols. Each entry uses the format `"<source>/<replacement>"` (e.g., `["omg/oh my god"]`) to override how the model pronounces matching tokens.
+              example:
+              - omg/oh my god
+    AudioTranscriptionRequest:
+      type: object
+      required:
+      - file
+      properties:
+        file:
+          oneOf:
+          - $ref: '#/components/schemas/AudioFileBinary'
+          - $ref: '#/components/schemas/AudioFileUrl'
+          description: Audio file upload or public HTTP/HTTPS URL. Supported formats .wav, .mp3, .m4a, .webm, .flac, .ogg, .opus, .aac.
         model:
           type: string
-          example: cartesia/sonic
-        b64:
+          description: Model to use for transcription
+          default: openai/whisper-large-v3
+          enum:
+          - openai/whisper-large-v3
+        language:
           type: string
-          description: base64 encoded audio stream
+          description: Optional ISO 639-1 language code. If `auto` is provided, language is auto-detected.
+          default: en
+          example: en
+        prompt:
+          type: string
+          description: Optional text to bias decoding. Supported only on Whisper-family models (e.g. `openai/whisper-large-v3`). Other STT models (e.g. `nvidia/parakeet-tdt-0.6b-v3`) accept the field for API compatibility but ignore it.
+        response_format:
+          type: string
+          description: The format of the response
+          default: json
+          enum:
+          - json
+          - verbose_json
+        temperature:
+          type: number
+          format: float
+          description: Sampling temperature between 0.0 and 1.0
+          default: 0
+          minimum: 0
+          maximum: 1
+        timestamp_granularities:
+          oneOf:
+          - type: string
+            enum:
+            - segment
+            - word
+          - type: array
+            items:
+              type: string
+              enum:
+              - segment
+              - word
+            uniqueItems: true
+            minItems: 1
+            maxItems: 2
+          description: Controls level of timestamp detail in verbose_json. Only used when response_format is verbose_json. Can be a single granularity or an array to get multiple levels.
+          default: segment
+          example:
+          - word
+          - segment
+        diarize:
+          type: boolean
+          description: "Whether to enable speaker diarization. When enabled, you will get the speaker id for each word in the transcription. In the response, in the words array, you will get the speaker id for each word. In addition, we also return the speaker_segments array which contains the speaker id for each speaker segment along with the start and end time of the segment along with all the words in the segment. <br> <br> For eg - ... \"speaker_segments\": [\n  \"speaker_id\": \"SPEAKER_00\",\n  \"start\": 0,\n  \"end\": 30.02,\n  \"words\": [\n    {\n      \"id\": 0,\n      \"word\": \"Tijana\",\n      \"start\": 0,\n      \"end\": 11.475,\n      \"speaker_id\": \"SPEAKER_00\"\n    },\n    ...\n"
+          default: false
+        min_speakers:
+          type: integer
+          description: Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
+        max_speakers:
+          type: integer
+          description: Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.
+    AudioTranslationJsonResponse:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: The translated text
+          example: Hello, world!
+    AudioTranscriptionJsonResponse:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: The transcribed text
+          example: Hello, world!
+    AudioFileUrl:
+      type: string
+      format: uri
+      description: Public HTTPS URL to audio file
     ErrorData:
       type: object
       required:
@@ -922,29 +832,119 @@ components:
       oneOf:
       - $ref: '#/components/schemas/AudioTranslationJsonResponse'
       - $ref: '#/components/schemas/AudioTranslationVerboseJsonResponse'
-    StreamSentinel:
+    AudioSpeechStreamChunk:
       type: object
       required:
-      - data
+      - object
+      - model
+      - b64
       properties:
-        data:
-          title: stream_signal
+        object:
+          description: The object type, which is always `audio.tts.chunk`.
+          const: audio.tts.chunk
+        model:
           type: string
-          enum:
-          - '[DONE]'
-    AudioSpeechStreamResponse:
-      oneOf:
-      - $ref: '#/components/schemas/AudioSpeechStreamEvent'
-      - $ref: '#/components/schemas/StreamSentinel'
-    AudioTranslationJsonResponse:
+          example: cartesia/sonic
+        b64:
+          type: string
+          description: base64 encoded audio stream
+    AudioTranscriptionSegment:
       type: object
       required:
+      - id
+      - start
+      - end
       - text
       properties:
+        id:
+          type: integer
+          description: Unique identifier for the segment
+          example: 0
+        start:
+          type: number
+          format: float
+          description: Start time of the segment in seconds
+          example: 0
+        end:
+          type: number
+          format: float
+          description: End time of the segment in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The text content of the segment
+          example: Hello, world!
+    AudioFileBinary:
+      type: string
+      format: binary
+      description: Audio file to transcribe
+    AudioTranslationVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The target language of the translation
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
         text:
           type: string
           description: The translated text
           example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of translation segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of translation words (only when timestamp_granularities includes 'word')
+    AudioTranscriptionVerboseJsonResponse:
+      type: object
+      required:
+      - language
+      - duration
+      - text
+      - segments
+      properties:
+        language:
+          type: string
+          description: The language of the audio
+          example: english
+        duration:
+          type: number
+          format: float
+          description: The duration of the audio in seconds
+          example: 3.5
+        text:
+          type: string
+          description: The transcribed text
+          example: Hello, world!
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSegment'
+          description: Array of transcription segments
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionWord'
+          description: Array of transcription words (only when timestamp_granularities includes 'word')
+        speaker_segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioTranscriptionSpeakerSegment'
+          description: Array of transcription speaker segments (only when diarize is enabled)
   securitySchemes:
     bearerAuth:
       type: http

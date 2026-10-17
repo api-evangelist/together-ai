@@ -205,25 +205,20 @@ paths:
       - Queue
 components:
   schemas:
-    QueueJobResponse:
+    QueueError:
       properties:
-        error:
-          $ref: '#/components/schemas/QueueError'
-        requestId:
-          description: Unique identifier for the submitted job. Use this to poll status or cancel.
+        code:
+          description: Machine-readable error code
           type: string
-      type: object
-    QueueCancelRequest:
-      properties:
-        model:
-          description: Model identifier the job was submitted to
+        message:
+          description: Human-readable error message
           type: string
-        request_id:
-          description: The request ID returned from the submit endpoint
+        param:
+          description: The parameter that caused the error, if applicable
           type: string
-      required:
-      - model
-      - request_id
+        type:
+          description: Error category (e.g. "invalid_request_error", "not_found_error")
+          type: string
       type: object
     QueueJobStatusResponse:
       required:
@@ -300,6 +295,25 @@ components:
             type: string
           type: array
       type: object
+    QueueCancelResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: 'Job status after the cancel attempt. Only pending jobs can be
+
+            canceled. If the job is already running, done, or failed, the status
+
+            is returned unchanged.
+
+            '
+          type: string
+          enum:
+          - canceled
+          - running
+          - done
+          - failed
     QueueJobRequest:
       properties:
         info:
@@ -333,25 +347,26 @@ components:
       - model
       - payload
       type: object
-    QueueCancelResponse:
-      type: object
-      required:
-      - status
+    QueueCancelRequest:
       properties:
-        status:
-          description: 'Job status after the cancel attempt. Only pending jobs can be
-
-            canceled. If the job is already running, done, or failed, the status
-
-            is returned unchanged.
-
-            '
+        model:
+          description: Model identifier the job was submitted to
           type: string
-          enum:
-          - canceled
-          - running
-          - done
-          - failed
+        request_id:
+          description: The request ID returned from the submit endpoint
+          type: string
+      required:
+      - model
+      - request_id
+      type: object
+    QueueJobResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/QueueError'
+        requestId:
+          description: Unique identifier for the submitted job. Use this to poll status or cancel.
+          type: string
+      type: object
     QueueMetricsResponse:
       type: object
       required:
@@ -368,21 +383,6 @@ components:
         total_jobs:
           description: Total number of active jobs (waiting + running)
           type: integer
-    QueueError:
-      properties:
-        code:
-          description: Machine-readable error code
-          type: string
-        message:
-          description: Human-readable error message
-          type: string
-        param:
-          description: The parameter that caused the error, if applicable
-          type: string
-        type:
-          description: Error category (e.g. "invalid_request_error", "not_found_error")
-          type: string
-      type: object
   securitySchemes:
     bearerAuth:
       type: http

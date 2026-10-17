@@ -91,31 +91,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    ErrorData:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              nullable: false
-            type:
-              type: string
-              nullable: false
-            param:
-              type: string
-              nullable: true
-              default: null
-            code:
-              type: string
-              nullable: true
-              default: null
-          required:
-          - type
-          - message
     RerankResponse:
       type: object
       required:
@@ -168,20 +143,31 @@ components:
             prompt_tokens: 1837
             completion_tokens: 0
             total_tokens: 1837
-    UsageData:
+    ErrorData:
       type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
       required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      nullable: true
+      - error
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              nullable: false
+            type:
+              type: string
+              nullable: false
+            param:
+              type: string
+              nullable: true
+              default: null
+            code:
+              type: string
+              nullable: true
+              default: null
+          required:
+          - type
+          - message
     RerankRequest:
       type: object
       properties:
@@ -241,6 +227,20 @@ components:
       - query
       - documents
       additionalProperties: false
+    UsageData:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      nullable: true
   securitySchemes:
     bearerAuth:
       type: http

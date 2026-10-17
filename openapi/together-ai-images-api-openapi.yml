@@ -158,6 +158,21 @@ components:
           type: string
           enum:
           - b64_json
+    ImageResponseDataUrl:
+      type: object
+      required:
+      - index
+      - url
+      - type
+      properties:
+        index:
+          type: integer
+        url:
+          type: string
+        type:
+          type: string
+          enum:
+          - url
     ImageResponse:
       type: object
       properties:
@@ -181,21 +196,6 @@ components:
       - model
       - object
       - data
-    ImageResponseDataUrl:
-      type: object
-      required:
-      - index
-      - url
-      - type
-      properties:
-        index:
-          type: integer
-        url:
-          type: string
-        type:
-          type: string
-          enum:
-          - url
   securitySchemes:
     bearerAuth:
       type: http

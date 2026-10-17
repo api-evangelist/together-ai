@@ -296,6 +296,24 @@ components:
           type: string
           description: Model to use for processing batch requests
           example: Qwen/Qwen3.5-9B
+    BatchJobWithWarning:
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/BatchJob'
+        warning:
+          type: string
+    BatchJobStatus:
+      type: string
+      enum:
+      - VALIDATING
+      - IN_PROGRESS
+      - COMPLETED
+      - FAILED
+      - EXPIRED
+      - CANCELLED
+      example: IN_PROGRESS
+      description: Current status of the batch job
     BatchErrorResponse:
       type: object
       properties:
@@ -353,24 +371,6 @@ components:
           type: string
           format: date-time
           example: '2024-01-15T15:45:30Z'
-    BatchJobStatus:
-      type: string
-      enum:
-      - VALIDATING
-      - IN_PROGRESS
-      - COMPLETED
-      - FAILED
-      - EXPIRED
-      - CANCELLED
-      example: IN_PROGRESS
-      description: Current status of the batch job
-    BatchJobWithWarning:
-      type: object
-      properties:
-        job:
-          $ref: '#/components/schemas/BatchJob'
-        warning:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

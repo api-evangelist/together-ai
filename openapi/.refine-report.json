@@ -35,7 +35,9 @@
     "together-ai-volumes-api-openapi.yml",
     "together-ai-evaluation-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [
     "together-ai-tcloud-openapi.yml: info.title missing"
@@ -83,12 +85,13 @@
     "tag 'GPUClusterService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
     "tag 'RegionService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
     "tag 'SharedVolumeService' spans 2 source specs (together-ai-openapi.yml, together-ai-tcloud-openapi.yml): per-path servers applied",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: together-ai-chat-completions-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 28 total)"
   ],
   "skipped": [
     "together-ai-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "together-ai-batches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "together-ai-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "together-ai-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "together-ai-code-interpreter-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "together-ai-completion-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "together-ai-compute-api-openapi.yml: previously refined output, superseded by openapi/_original/",
