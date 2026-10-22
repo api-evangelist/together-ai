@@ -136,6 +136,24 @@ edges:
   matched_by: verified-token-table
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
+- partner_name: Vercel (own)
+  partner: vercel
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://vercel.com/marketplace/together-ai
+  mirror_of: vercel/integrations/vercel-integration-edges.yml
+  apps:
+  - Together AI
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: AI
+  partner_tier: third-party
 generated: '2026-10-13'
 method: searched
 checked:
@@ -146,3 +164,6 @@ checked:
 - https://github.com/pipecat-ai/pipecat/tree/main/src/pipecat/services
 - https://github.com/run-llama/llama_index/tree/main/llama-index-integrations
 - https://openrouter.ai/api/v1/models
+- vercel/integrations/vercel-integration-edges.yml
+source:
+- vercel/integrations/vercel-integration-edges.yml
